@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Equilibra</string>
+
+    <!-- Bottom navigation / screen titles -->
+    <string name="nav_self_assessment">Me</string>
+    <string name="nav_habits">My 24h</string>
+    <string name="nav_priorities">Priorities</string>
+    <string name="nav_journal">Journal</string>
+    <string name="nav_my_system">My system</string>
+    <string name="steam_mode">STEAM Mode</string>
+
+    <!-- Section questions (STEAM course: each section is titled with its question) -->
+    <string name="question_self_assessment">Who am I and how do I manage my time?</string>
+    <string name="question_habits">What problems, habits and needs do I find in my daily life?</string>
+    <string name="question_priorities">How do I order my priorities?</string>
+    <string name="question_journal">How do I track the results of my decisions?</string>
+    <string name="question_my_system">What does my final balance system look like?</string>
+    <string name="question_steam_mode">A guided 7-day journey to build my balance system.</string>
+
+    <string name="placeholder_coming_soon">This section is coming soon.</string>
 </resources>
