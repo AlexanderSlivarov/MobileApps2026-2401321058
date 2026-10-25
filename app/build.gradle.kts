@@ -31,13 +31,22 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        // Lets java.time (LocalDate) work on API 24-25, below its native API 26.
+        isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
         viewBinding = true
     }
 }
 
+// Room writes a JSON description of each database version here (needed for migrations).
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
