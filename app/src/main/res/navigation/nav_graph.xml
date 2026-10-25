@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navigation Component graph: every screen of the app and how they connect.
+     The five bottom-bar sections use the same ids as res/menu/bottom_nav_menu.xml. -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/selfAssessmentFragment">
+
+    <fragment
+        android:id="@+id/selfAssessmentFragment"
+        android:name="com.equilibra.app.ui.selfassessment.SelfAssessmentFragment"
+        android:label="@string/nav_self_assessment" />
+
+    <fragment
+        android:id="@+id/habitsFragment"
+        android:name="com.equilibra.app.ui.habits.HabitsFragment"
+        android:label="@string/nav_habits" />
+
+    <fragment
+        android:id="@+id/prioritiesFragment"
+        android:name="com.equilibra.app.ui.priorities.PrioritiesFragment"
+        android:label="@string/nav_priorities" />
+
+    <fragment
+        android:id="@+id/journalFragment"
+        android:name="com.equilibra.app.ui.journal.JournalFragment"
+        android:label="@string/nav_journal" />
+
+    <fragment
+        android:id="@+id/mySystemFragment"
+        android:name="com.equilibra.app.ui.mysystem.MySystemFragment"
+        android:label="@string/nav_my_system" />
+
+    <!-- Not in the bottom bar: opened from the toolbar, shows a back arrow. -->
+    <fragment
+        android:id="@+id/steamModeFragment"
+        android:name="com.equilibra.app.ui.steam.SteamModeFragment"
+        android:label="@string/steam_mode" />
+
+</navigation>

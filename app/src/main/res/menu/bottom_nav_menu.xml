@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item ids match the destination ids in nav_graph.xml, so NavigationUI can link them. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/selfAssessmentFragment"
+        android:icon="@drawable/ic_person"
+        android:title="@string/nav_self_assessment" />
+    <item
+        android:id="@+id/habitsFragment"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/nav_habits" />
+    <item
+        android:id="@+id/prioritiesFragment"
+        android:icon="@drawable/ic_list"
+        android:title="@string/nav_priorities" />
+    <item
+        android:id="@+id/journalFragment"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/nav_journal" />
+    <item
+        android:id="@+id/mySystemFragment"
+        android:icon="@drawable/ic_dashboard"
+        android:title="@string/nav_my_system" />
+</menu>
