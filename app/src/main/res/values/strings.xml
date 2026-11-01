@@ -74,4 +74,32 @@
     <string name="task_delete_confirm">Delete this task? This can\'t be undone.</string>
     <string name="error_title_required">Please enter a title</string>
     <string name="error_top_three_full">You already have 3 top tasks. Remove one first.</string>
+
+    <!-- Journal -->
+    <string name="journal_empty">No entries yet. Add how your day went.</string>
+    <string name="journal_add_entry">Add entry</string>
+    <string name="journal_tasks_format">Tasks: %1$d of %2$d done (%3$d%%)</string>
+    <string name="journal_tasks_none_planned">Tasks: %1$d done, none planned</string>
+    <string name="journal_levels_format">Energy %1$d/5 · Motivation %2$d/5</string>
+    <string name="journal_had_rest">Had rest</string>
+    <string name="journal_no_rest">No rest</string>
+    <string name="journal_correction_needed">Correction needed</string>
+    <string name="journal_on_track">On track</string>
+
+    <!-- Journal add / edit -->
+    <string name="journal_edit_title">Journal entry</string>
+    <string name="journal_date">Day</string>
+    <string name="journal_tasks">Tasks</string>
+    <string name="journal_tasks_done">Done</string>
+    <string name="journal_tasks_planned">Planned</string>
+    <string name="journal_energy">Energy (1–5)</string>
+    <string name="journal_motivation">Motivation (1–5)</string>
+    <string name="journal_rest_question">I had time to rest</string>
+    <string name="journal_correction_question">A correction is needed</string>
+    <string name="journal_note_hint">Note (optional)</string>
+    <string name="journal_delete">Delete entry</string>
+    <string name="journal_delete_confirm">Delete this journal entry? This can\'t be undone.</string>
+    <string name="error_enter_number">Enter a number</string>
+    <string name="error_done_more_than_planned">Can\'t be more than planned</string>
+    <string name="error_date_taken">There is already an entry for this day. Edit that one instead.</string>
 </resources>

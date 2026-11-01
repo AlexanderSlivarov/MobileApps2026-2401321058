@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.journal.JournalEditFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Day -->
+        <TextView
+            style="@style/Widget.Equilibra.SectionLabel"
+            android:layout_marginTop="0dp"
+            android:text="@string/journal_date" />
+
+        <Button
+            android:id="@+id/button_date"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Nov 1, 2026" />
+
+        <!-- Tasks: done of planned -->
+        <TextView
+            style="@style/Widget.Equilibra.SectionLabel"
+            android:text="@string/journal_tasks" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_done"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:hint="@string/journal_tasks_done">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_planned"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:hint="@string/journal_tasks_planned">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_planned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Energy and motivation, 1-5 -->
+        <TextView
+            style="@style/Widget.Equilibra.SectionLabel"
+            android:text="@string/journal_energy" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_energy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/journal_energy"
+            android:stepSize="1"
+            android:value="3"
+            android:valueFrom="1"
+            android:valueTo="5" />
+
+        <TextView
+            style="@style/Widget.Equilibra.SectionLabel"
+            android:layout_marginTop="8dp"
+            android:text="@string/journal_motivation" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_motivation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/journal_motivation"
+            android:stepSize="1"
+            android:value="3"
+            android:valueFrom="1"
+            android:valueTo="5" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_rest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/journal_rest_question" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_correction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_correction_question" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/journal_note_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/action_save" />
+
+        <Button
+            android:id="@+id/button_delete"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/journal_delete"
+            android:textColor="?attr/colorError"
+            android:visibility="gone" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

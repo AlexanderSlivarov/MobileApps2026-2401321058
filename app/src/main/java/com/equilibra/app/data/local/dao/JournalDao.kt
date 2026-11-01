@@ -23,6 +23,9 @@ interface JournalDao {
     @Query("SELECT * FROM journal_entries WHERE date = :date")
     suspend fun getByDate(date: LocalDate): JournalEntryEntity?
 
+    @Query("SELECT * FROM journal_entries WHERE id = :id")
+    suspend fun getById(id: Long): JournalEntryEntity?
+
     @Insert
     suspend fun insert(entry: JournalEntryEntity): Long
 

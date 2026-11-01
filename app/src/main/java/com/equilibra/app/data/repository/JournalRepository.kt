@@ -24,20 +24,13 @@ class JournalRepository
             to: LocalDate,
         ): Flow<List<JournalEntryEntity>> = journalDao.observeBetween(from, to)
 
-        suspend fun getEntry(date: LocalDate): JournalEntryEntity? = journalDao.getByDate(date)
+        suspend fun getEntryByDate(date: LocalDate): JournalEntryEntity? = journalDao.getByDate(date)
 
-        /**
-         * One entry per day: if that date already has an entry it is updated,
-         * otherwise a new one is created.
-         */
-        suspend fun saveEntry(entry: JournalEntryEntity) {
-            val existing = journalDao.getByDate(entry.date)
-            if (existing == null) {
-                journalDao.insert(entry.copy(id = 0))
-            } else {
-                journalDao.update(entry.copy(id = existing.id))
-            }
-        }
+        suspend fun getEntryById(id: Long): JournalEntryEntity? = journalDao.getById(id)
+
+        suspend fun addEntry(entry: JournalEntryEntity): Long = journalDao.insert(entry)
+
+        suspend fun updateEntry(entry: JournalEntryEntity) = journalDao.update(entry)
 
         suspend fun deleteEntry(entry: JournalEntryEntity) = journalDao.delete(entry)
 

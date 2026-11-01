@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -35,12 +36,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Keep content out from under the status bar, and lift it above the keyboard
-        // when one is open. The bottom bar handles the navigation-bar inset itself.
+        // Keep content out from under the status bar. While the keyboard is open, hide the
+        // bottom bar and end the screen right above the keyboard, so the form has room.
+        // When the keyboard is closed, the bottom bar handles the navigation-bar inset itself.
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val keyboard = insets.getInsets(WindowInsetsCompat.Type.ime())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, keyboard.bottom)
+            val keyboardOpen = insets.isVisible(WindowInsetsCompat.Type.ime())
+            binding.bottomNav.isVisible = !keyboardOpen
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, if (keyboardOpen) keyboard.bottom else 0)
             insets
         }
 
