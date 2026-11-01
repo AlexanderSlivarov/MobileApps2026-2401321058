@@ -35,11 +35,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Keep content out from under the status bar. The bottom bar handles
-        // the navigation-bar inset itself.
+        // Keep content out from under the status bar, and lift it above the keyboard
+        // when one is open. The bottom bar handles the navigation-bar inset itself.
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            val keyboard = insets.getInsets(WindowInsetsCompat.Type.ime())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, keyboard.bottom)
             insets
         }
 

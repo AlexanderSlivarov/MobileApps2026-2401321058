@@ -21,6 +21,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Measures how much code the unit tests cover:
+            // ./gradlew createDebugUnitTestCoverageReport
+            enableUnitTestCoverage = true
+        }
         release {
             optimization {
                 enable = true
@@ -74,6 +79,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 }

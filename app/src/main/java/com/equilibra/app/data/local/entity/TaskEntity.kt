@@ -2,7 +2,6 @@ package com.equilibra.app.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDate
 
 /**
  * A task for the "Priorities" section.
@@ -17,7 +16,6 @@ data class TaskEntity(
     val isImportant: Boolean,
     val status: TaskStatus = TaskStatus.TODO,
     val isTopThree: Boolean = false,
-    val dueDate: LocalDate? = null,
     val createdAt: Long = System.currentTimeMillis(),
 )
 

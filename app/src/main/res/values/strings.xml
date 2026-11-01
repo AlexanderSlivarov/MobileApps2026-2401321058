@@ -18,4 +18,60 @@
     <string name="question_steam_mode">A guided 7-day journey to build my balance system.</string>
 
     <string name="placeholder_coming_soon">This section is coming soon.</string>
+
+    <!-- Common actions -->
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+
+    <!-- Priorities -->
+    <string name="top_three_title">Top 3 this week</string>
+    <string name="top_three_empty">Mark up to 3 tasks as Top 3 to focus your week.</string>
+    <string name="top_three_icon">Top 3 task</string>
+    <string name="view_matrix">Eisenhower matrix</string>
+    <string name="view_kanban">Kanban</string>
+    <string name="quadrant_do_first">Do first</string>
+    <string name="quadrant_do_first_hint">Urgent and important</string>
+    <string name="quadrant_schedule">Schedule</string>
+    <string name="quadrant_schedule_hint">Important, not urgent</string>
+    <string name="quadrant_delegate">Delegate</string>
+    <string name="quadrant_delegate_hint">Urgent, not important</string>
+    <string name="quadrant_eliminate">Eliminate</string>
+    <string name="quadrant_eliminate_hint">Neither urgent nor important</string>
+    <string name="status_todo">To do</string>
+    <string name="status_in_progress">In progress</string>
+    <string name="status_done">Done</string>
+    <string name="group_empty">No tasks</string>
+    <plurals name="task_count">
+        <item quantity="one">%d task</item>
+        <item quantity="other">%d tasks</item>
+    </plurals>
+    <string name="move_back">Move to previous column</string>
+    <string name="move_forward">Move to next column</string>
+    <string name="add_task">Add task</string>
+    <string name="my_method_title">My method</string>
+    <string name="my_method_empty">Describe your rules for deciding what comes first.</string>
+    <string name="my_method_hint">My prioritization rules</string>
+
+    <!-- Share (extra feature: Share Intent) -->
+    <string name="share_priorities">Share my priorities</string>
+    <string name="share_chooser_title">Share with</string>
+    <string name="share_subject">My priorities – Equilibra</string>
+    <string name="share_none">–</string>
+
+    <!-- Task add / edit -->
+    <string name="task_edit_title">Task</string>
+    <string name="task_title_hint">Title</string>
+    <string name="task_description_hint">Description (optional)</string>
+    <string name="task_priority">Priority</string>
+    <string name="task_urgent">Urgent</string>
+    <string name="task_important">Important</string>
+    <string name="task_quadrant_format">Quadrant: %1$s (%2$s)</string>
+    <string name="task_status">Status</string>
+    <string name="task_top_three">Top 3 this week</string>
+    <string name="task_delete">Delete task</string>
+    <string name="task_delete_confirm">Delete this task? This can\'t be undone.</string>
+    <string name="error_title_required">Please enter a title</string>
+    <string name="error_top_three_full">You already have 3 top tasks. Remove one first.</string>
 </resources>

@@ -4,7 +4,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/selfAssessmentFragment">
+    app:startDestination="@id/prioritiesFragment">
 
     <fragment
         android:id="@+id/selfAssessmentFragment"
@@ -19,7 +19,22 @@
     <fragment
         android:id="@+id/prioritiesFragment"
         android:name="com.equilibra.app.ui.priorities.PrioritiesFragment"
-        android:label="@string/nav_priorities" />
+        android:label="@string/nav_priorities">
+        <action
+            android:id="@+id/action_priorities_to_taskEdit"
+            app:destination="@id/taskEditFragment" />
+    </fragment>
+
+    <!-- Add / edit a task. taskId = -1 means a new task. -->
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.equilibra.app.ui.task.TaskEditFragment"
+        android:label="@string/task_edit_title">
+        <argument
+            android:name="taskId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/journalFragment"
