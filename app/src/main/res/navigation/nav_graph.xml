@@ -14,7 +14,27 @@
     <fragment
         android:id="@+id/habitsFragment"
         android:name="com.equilibra.app.ui.habits.HabitsFragment"
-        android:label="@string/nav_habits" />
+        android:label="@string/nav_habits">
+        <action
+            android:id="@+id/action_habits_to_activityEdit"
+            app:destination="@id/activityEditFragment" />
+    </fragment>
+
+    <!-- Add / edit an activity. activityId = -1 means a new activity.
+         date = the day shown in the list (days since 1970-01-01), used for a new activity. -->
+    <fragment
+        android:id="@+id/activityEditFragment"
+        android:name="com.equilibra.app.ui.habits.ActivityEditFragment"
+        android:label="@string/activity_edit_title">
+        <argument
+            android:name="activityId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+        <argument
+            android:name="date"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/prioritiesFragment"

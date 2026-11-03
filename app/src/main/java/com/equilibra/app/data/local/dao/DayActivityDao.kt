@@ -23,6 +23,9 @@ interface DayActivityDao {
     @Query("SELECT * FROM day_activities ORDER BY date, startMinute")
     fun observeAll(): Flow<List<DayActivityEntity>>
 
+    @Query("SELECT * FROM day_activities WHERE id = :id")
+    suspend fun getById(id: Long): DayActivityEntity?
+
     @Insert
     suspend fun insert(activity: DayActivityEntity): Long
 

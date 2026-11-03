@@ -102,4 +102,36 @@
     <string name="error_enter_number">Enter a number</string>
     <string name="error_done_more_than_planned">Can\'t be more than planned</string>
     <string name="error_date_taken">There is already an entry for this day. Edit that one instead.</string>
+
+    <!-- My 24h -->
+    <string name="habits_empty">No activities for this day yet. Add what you did, from waking up to going to sleep.</string>
+    <string name="habits_add_activity">Add activity</string>
+    <string name="habits_choose_day">Choose the day to show</string>
+    <string name="activity_time_format">%1$s – %2$s · %3$s</string>
+    <string name="duration_hours_minutes">%1$d h %2$d min</string>
+    <string name="duration_hours">%1$d h</string>
+    <string name="duration_minutes">%1$d min</string>
+    <string name="category_sleep">Sleep</string>
+    <string name="category_study">Study</string>
+    <string name="category_work">Work</string>
+    <string name="category_meals">Meals</string>
+    <string name="category_sport">Sport</string>
+    <string name="category_hobbies">Hobbies</string>
+    <string name="category_friends_family">Friends and family</string>
+    <string name="category_rest">Rest</string>
+    <string name="category_screen_time">Screen time</string>
+    <string name="category_commute">Commute</string>
+    <string name="category_chores">Chores</string>
+    <string name="category_other">Other</string>
+
+    <!-- My 24h add / edit -->
+    <string name="activity_edit_title">Activity</string>
+    <string name="activity_title_hint">What did you do?</string>
+    <string name="activity_category">Category</string>
+    <string name="activity_start">Start</string>
+    <string name="activity_end">End</string>
+    <string name="activity_duration_format">Duration: %1$s</string>
+    <string name="activity_delete">Delete activity</string>
+    <string name="activity_delete_confirm">Delete this activity? This can\'t be undone.</string>
+    <string name="error_same_start_end">Start and end can\'t be the same time.</string>
 </resources>

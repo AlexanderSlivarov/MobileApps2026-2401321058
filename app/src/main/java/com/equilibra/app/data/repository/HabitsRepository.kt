@@ -26,6 +26,8 @@ class HabitsRepository
 
         fun observeAllActivities(): Flow<List<DayActivityEntity>> = activityDao.observeAll()
 
+        suspend fun getActivityById(id: Long): DayActivityEntity? = activityDao.getById(id)
+
         suspend fun addActivity(activity: DayActivityEntity): Long = activityDao.insert(activity)
 
         suspend fun updateActivity(activity: DayActivityEntity) = activityDao.update(activity)
