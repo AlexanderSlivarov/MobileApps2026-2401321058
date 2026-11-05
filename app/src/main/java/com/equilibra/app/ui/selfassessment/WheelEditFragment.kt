@@ -19,7 +19,7 @@ import com.equilibra.app.data.local.entity.WheelSector
 import com.equilibra.app.databinding.FragmentWheelEditBinding
 import com.equilibra.app.databinding.ItemWheelSliderBinding
 import com.equilibra.app.ui.common.colorRes
-import com.equilibra.app.ui.common.labelRes
+import com.equilibra.app.ui.common.sectorLabel
 import com.equilibra.app.ui.common.toDisplayString
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
@@ -85,9 +85,9 @@ class WheelEditFragment : Fragment() {
         WheelSector.entries.forEach { sector ->
             val row = ItemWheelSliderBinding.inflate(layoutInflater, binding.layoutSliders, true)
             val color = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), sector.colorRes))
-            row.textSector.setText(sector.labelRes)
+            row.textSector.text = requireContext().sectorLabel(sector)
             row.textSector.setTextColor(color)
-            row.slider.contentDescription = getString(sector.labelRes)
+            row.slider.contentDescription = requireContext().sectorLabel(sector)
             row.slider.trackActiveTintList = color
             row.slider.thumbTintList = color
             // All rows come from the same layout, so they share view ids. Android would restore

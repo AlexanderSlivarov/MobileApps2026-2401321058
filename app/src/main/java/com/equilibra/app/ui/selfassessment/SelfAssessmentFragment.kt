@@ -23,6 +23,7 @@ import com.equilibra.app.databinding.ItemWheelLegendBinding
 import com.equilibra.app.domain.BalanceWheel
 import com.equilibra.app.ui.common.colorRes
 import com.equilibra.app.ui.common.labelRes
+import com.equilibra.app.ui.common.sectorLabel
 import com.equilibra.app.ui.common.toDisplayString
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,7 +97,7 @@ class SelfAssessmentFragment : Fragment() {
                 val row = ItemWheelLegendBinding.inflate(layoutInflater, binding.layoutLegend, true)
                 row.viewDot.backgroundTintList =
                     ColorStateList.valueOf(ContextCompat.getColor(requireContext(), sector.colorRes))
-                row.textSector.setText(sector.labelRes)
+                row.textSector.text = requireContext().sectorLabel(sector)
                 val now = currentScores.getValue(sector)
                 // With a start to compare with, show how the score changed, e.g. "2 → 4".
                 row.textScore.text =
@@ -109,11 +110,6 @@ class SelfAssessmentFragment : Fragment() {
         wheels.asReversed().forEach { wheel ->
             val row = ItemWheelAssessmentBinding.inflate(layoutInflater, binding.layoutWheels, true)
             row.textTitle.text = describe(wheel)
-            row.textAverage.text =
-                getString(
-                    R.string.wheel_average_format,
-                    getString(R.string.wheel_out_of_five_format, BalanceWheel.average(BalanceWheel.scoresOf(wheel))),
-                )
             row.root.setOnClickListener { openWheelEditor(wheel.assessment.id) }
         }
     }

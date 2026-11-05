@@ -33,10 +33,11 @@
     <color name="md_surface_container_highest">#34354F</color>
 
     <!-- Balance wheel sectors (night: lighter tones that read well on navy) -->
-    <color name="sector_study_motivation">#C6C2FF</color>
-    <color name="sector_work_motivation">#F2C14E</color>
-    <color name="sector_calm">#7FD8C4</color>
-    <color name="sector_friends">#FF9EC4</color>
-    <color name="sector_hobbies">#D2B4FF</color>
-    <color name="sector_rest">#8EC5FF</color>
+    <color name="sector_stress">#FF8A80</color>
+    <color name="sector_workload">#F2C14E</color>
+    <color name="sector_motivation">#C6C2FF</color>
+    <color name="sector_organization">#D2B4FF</color>
+    <color name="sector_free_time">#FF9EC4</color>
+    <color name="sector_study_efficiency">#7FD8C4</color>
+    <color name="sector_rest_quality">#8EC5FF</color>
 </resources>

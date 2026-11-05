@@ -19,13 +19,5 @@
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceTitleSmall"
             tools:text="Start · Nov 1, 2026" />
-
-        <TextView
-            android:id="@+id/text_average"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            tools:text="Average 3.2 / 5" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

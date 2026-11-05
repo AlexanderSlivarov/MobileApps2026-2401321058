@@ -18,8 +18,13 @@ object BalanceWheel {
         return WheelSector.entries.associateWith { stored[it] ?: DEFAULT_SCORE }
     }
 
-    /** Average over all sectors, e.g. 3.5. */
-    fun average(scores: Map<WheelSector, Int>): Double = scores.values.average()
+    /**
+     * Lecture 1: "for stress and workload a high score is not necessarily positive".
+     * For these two, a lower score is the better state. For all others, higher is better.
+     */
+    val HIGH_IS_NOT_GOOD: Set<WheelSector> = setOf(WheelSector.STRESS, WheelSector.WORKLOAD)
+
+    fun isHighGood(sector: WheelSector): Boolean = sector !in HIGH_IS_NOT_GOOD
 
     /**
      * Which two ratings the wheel shows: the newest one, and the starting one to compare

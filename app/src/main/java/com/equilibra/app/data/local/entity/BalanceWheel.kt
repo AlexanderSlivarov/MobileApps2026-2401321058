@@ -36,7 +36,7 @@ data class WheelAssessmentEntity(
 data class WheelRatingEntity(
     val assessmentId: Long,
     val sector: WheelSector,
-    /** 1-5, 5 ALWAYS means a good state. */
+    /** 1 = low, 5 = high. For STRESS and WORKLOAD a high score is not a good state. */
     val score: Int,
 )
 
@@ -50,12 +50,16 @@ data class WheelAssessmentWithRatings(
 /** START = before, FINAL = after, CHECK_IN = anything in between. */
 enum class WheelKind { START, CHECK_IN, FINAL }
 
-/** Sectors are phrased so that a high score is always good ("calm", not "workload"). */
+/**
+ * The seven indicators of "Where am I now?" from Lecture 1, in the lecture's order.
+ * Room stores each one by its name (TEXT).
+ */
 enum class WheelSector {
-    STUDY_MOTIVATION,
-    WORK_MOTIVATION,
-    CALM,
-    FRIENDS,
-    HOBBIES,
-    REST,
+    STRESS,
+    WORKLOAD,
+    MOTIVATION,
+    ORGANIZATION,
+    FREE_TIME,
+    STUDY_EFFICIENCY,
+    REST_QUALITY,
 }

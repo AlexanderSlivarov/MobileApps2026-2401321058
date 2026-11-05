@@ -39,28 +39,28 @@
     <string name="self_saved">Saved</string>
 
     <!-- Balance wheel -->
-    <string name="wheel_title">My balance wheel</string>
+    <string name="wheel_title">Where am I now?</string>
     <string name="wheel_empty">No rating yet. Rate your balance to draw your starting wheel.</string>
     <string name="wheel_add">Rate my balance</string>
     <string name="wheel_shown_format">Filled: %1$s</string>
     <string name="wheel_compare_format">Dashed: %1$s</string>
     <string name="wheel_kind_date_format" translatable="false">%1$s · %2$s</string>
-    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
-    <string name="wheel_average_format">Average %1$s</string>
-    <string name="wheel_out_of_five_format" translatable="false">%1$.1f / 5</string>
+    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
     <string name="wheel_kind_start">Start</string>
     <string name="wheel_kind_check_in">Check-in</string>
     <string name="wheel_kind_final">Final</string>
-    <string name="sector_study_motivation">Study motivation</string>
-    <string name="sector_work_motivation">Work motivation</string>
-    <string name="sector_calm">Calm</string>
-    <string name="sector_friends">Time with friends</string>
-    <string name="sector_hobbies">Hobbies</string>
-    <string name="sector_rest">Rest</string>
+    <string name="sector_stress">Stress</string>
+    <string name="sector_workload">Workload</string>
+    <string name="sector_motivation">Motivation</string>
+    <string name="sector_organization">Organization</string>
+    <string name="sector_free_time">Free time</string>
+    <string name="sector_study_efficiency">Study efficiency</string>
+    <string name="sector_rest_quality">Quality of rest</string>
+    <string name="sector_lower_is_better_format">%1$s (lower is better)</string>
 
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">Balance wheel</string>
-    <string name="wheel_scale_hint">Rate each area from 1 to 5. 5 always means a good state.</string>
+    <string name="wheel_scale_hint">Rate each indicator from 1 (low) to 5 (high). For stress and workload, a high score is not necessarily positive.</string>
     <string name="wheel_date">Day</string>
     <string name="wheel_kind">Which rating is this?</string>
     <string name="wheel_delete">Delete rating</string>

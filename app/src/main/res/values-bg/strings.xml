@@ -40,25 +40,26 @@
     <string name="self_saved">Запазено</string>
 
     <!-- Balance wheel -->
-    <string name="wheel_title">Моето колело на баланса</string>
+    <string name="wheel_title">Къде съм сега?</string>
     <string name="wheel_empty">Все още няма оценка. Оцени баланса си, за да начертаеш началното си колело.</string>
     <string name="wheel_add">Оцени баланса си</string>
     <string name="wheel_shown_format">Запълнено: %1$s</string>
     <string name="wheel_compare_format">Пунктир: %1$s</string>
-    <string name="wheel_average_format">Средно %1$s</string>
     <string name="wheel_kind_start">Начална</string>
     <string name="wheel_kind_check_in">Междинна</string>
     <string name="wheel_kind_final">Крайна</string>
-    <string name="sector_study_motivation">Мотивация за учене</string>
-    <string name="sector_work_motivation">Мотивация за работа</string>
-    <string name="sector_calm">Спокойствие</string>
-    <string name="sector_friends">Време с приятели</string>
-    <string name="sector_hobbies">Хобита</string>
-    <string name="sector_rest">Почивка</string>
+    <string name="sector_stress">Стрес</string>
+    <string name="sector_workload">Натовареност</string>
+    <string name="sector_motivation">Мотивация</string>
+    <string name="sector_organization">Организация</string>
+    <string name="sector_free_time">Свободно време</string>
+    <string name="sector_study_efficiency">Учебна ефективност</string>
+    <string name="sector_rest_quality">Качество на почивката</string>
+    <string name="sector_lower_is_better_format">%1$s (по-ниско е по-добре)</string>
 
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">Колело на баланса</string>
-    <string name="wheel_scale_hint">Оцени всяка област от 1 до 5. 5 винаги означава добро състояние.</string>
+    <string name="wheel_scale_hint">Оцени всеки показател от 1 (ниско) до 5 (високо). При стрес и натовареност високата оценка не е непременно положителна.</string>
     <string name="wheel_date">Ден</string>
     <string name="wheel_kind">Каква е тази оценка?</string>
     <string name="wheel_delete">Изтрий оценката</string>

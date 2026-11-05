@@ -3,6 +3,7 @@ package com.equilibra.app.di
 import android.content.Context
 import androidx.room.Room
 import com.equilibra.app.data.local.EquilibraDatabase
+import com.equilibra.app.data.local.MIGRATION_2_3
 import com.equilibra.app.data.local.dao.BalanceWheelDao
 import com.equilibra.app.data.local.dao.DecisionDao
 import com.equilibra.app.data.local.dao.FindingDao
@@ -27,7 +28,12 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context,
-    ): EquilibraDatabase = Room.databaseBuilder(context, EquilibraDatabase::class.java, EquilibraDatabase.NAME).build()
+    ): EquilibraDatabase =
+        Room
+            .databaseBuilder(context, EquilibraDatabase::class.java, EquilibraDatabase.NAME)
+            // 1 -> 2 is an AutoMigration (declared on EquilibraDatabase); 2 -> 3 is written by hand.
+            .addMigrations(MIGRATION_2_3)
+            .build()
 
     @Provides
     fun provideTaskDao(db: EquilibraDatabase): TaskDao = db.taskDao()
