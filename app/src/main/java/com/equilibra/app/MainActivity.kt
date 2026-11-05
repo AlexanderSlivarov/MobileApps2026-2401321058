@@ -1,12 +1,8 @@
 package com.equilibra.app
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -14,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.equilibra.app.databinding.ActivityMainBinding
@@ -61,27 +56,12 @@ class MainActivity : AppCompatActivity() {
                     R.id.selfAssessmentFragment,
                     R.id.habitsFragment,
                     R.id.prioritiesFragment,
-                    R.id.journalFragment,
+                    R.id.decisionsFragment,
                     R.id.mySystemFragment,
                 ),
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
-
-        // Toolbar menu (STEAM Mode). Passing `this` ties it to the activity lifecycle.
-        addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    menuInflater.inflate(R.menu.main_toolbar_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean = menuItem.onNavDestinationSelected(navController)
-            },
-            this,
-        )
     }
 
     override fun onSupportNavigateUp(): Boolean = navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

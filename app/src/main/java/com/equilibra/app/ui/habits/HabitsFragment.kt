@@ -1,33 +1,32 @@
 package com.equilibra.app.ui.habits
 
-import android.app.DatePickerDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
+import com.equilibra.app.data.local.entity.FindingEntity
+import com.equilibra.app.data.local.entity.FindingType
+import com.equilibra.app.databinding.DialogFindingBinding
 import com.equilibra.app.databinding.FragmentHabitsBinding
-import com.equilibra.app.ui.common.toDisplayString
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
-/** Section 2: "What problems, habits and needs do I find in my daily life?" (basic version: My 24 hours). */
+/** Section 2: "What problems, habits and needs do I find in my daily life?" */
 @AndroidEntryPoint
 class HabitsFragment : Fragment() {
     private var _binding: FragmentHabitsBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog: Dialog? = null
+    private var dialog: AlertDialog? = null
 
     private val viewModel: HabitsViewModel by viewModels()
 
@@ -46,21 +45,15 @@ class HabitsFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ActivityAdapter { activity -> openEditor(activity.id) }
-        binding.recyclerActivities.adapter = adapter
-        binding.buttonDate.setOnClickListener { pickDate() }
-        binding.fabAddActivity.setOnClickListener { openEditor(ActivityEditViewModel.NEW_ACTIVITY_ID) }
+        val adapter = FindingAdapter { finding -> showFindingDialog(finding) }
+        binding.recyclerFindings.adapter = adapter
+        binding.fabAddFinding.setOnClickListener { showFindingDialog(null) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.selectedDate.collect { date -> binding.buttonDate.text = date.toDisplayString() }
-                }
-                launch {
-                    viewModel.activities.collect { activities ->
-                        adapter.submitList(activities)
-                        binding.textEmpty.isVisible = activities.isEmpty()
-                    }
+                viewModel.findings.collect { findings ->
+                    adapter.submitList(findings)
+                    binding.textEmpty.isVisible = findings.isEmpty()
                 }
             }
         }
@@ -74,27 +67,54 @@ class HabitsFragment : Fragment() {
         _binding = null
     }
 
-    private fun pickDate() {
-        val current = viewModel.selectedDate.value
-        // DatePickerDialog counts months from 0, LocalDate from 1.
-        dialog =
-            DatePickerDialog(
-                requireContext(),
-                { _, year, month, day -> viewModel.selectedDate.value = LocalDate.of(year, month + 1, day) },
-                current.year,
-                current.monthValue - 1,
-                current.dayOfMonth,
-            ).apply { show() }
+    /** Add a finding ([finding] = null) or edit / delete an existing one, in a plain dialog. */
+    private fun showFindingDialog(finding: FindingEntity?) {
+        val form = DialogFindingBinding.inflate(layoutInflater)
+        form.editFinding.setText(finding?.text)
+        form.chipGroupType.check(chipOf(finding?.type ?: FindingType.PROBLEM))
+
+        val builder =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(if (finding == null) R.string.finding_add else R.string.finding_edit)
+                .setView(form.root)
+                .setPositiveButton(R.string.action_save, null)
+                .setNegativeButton(R.string.action_cancel, null)
+        if (finding != null) builder.setNeutralButton(R.string.action_delete) { _, _ -> confirmDelete(finding) }
+        val shown = builder.show()
+
+        // Set the Save click here, not in setPositiveButton, so the dialog stays open on an empty text.
+        shown.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val text = form.editFinding.text.toString()
+            if (text.isBlank()) {
+                form.layoutFinding.error = getString(R.string.error_text_required)
+            } else {
+                viewModel.save(finding, text, typeOf(form.chipGroupType.checkedChipId))
+                shown.dismiss()
+            }
+        }
+        dialog = shown
     }
 
-    /** A new activity starts on the day that is shown in the list. */
-    private fun openEditor(activityId: Long) {
-        findNavController().navigate(
-            R.id.action_habits_to_activityEdit,
-            bundleOf(
-                ActivityEditViewModel.ARG_ACTIVITY_ID to activityId,
-                ActivityEditViewModel.ARG_DATE to viewModel.selectedDate.value.toEpochDay(),
-            ),
-        )
+    private fun confirmDelete(finding: FindingEntity) {
+        dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.finding_delete_confirm)
+                .setPositiveButton(R.string.action_delete) { _, _ -> viewModel.delete(finding) }
+                .setNegativeButton(R.string.action_cancel, null)
+                .show()
     }
+
+    private fun chipOf(type: FindingType): Int =
+        when (type) {
+            FindingType.PROBLEM -> R.id.chip_problem
+            FindingType.HABIT -> R.id.chip_habit
+            FindingType.NEED -> R.id.chip_need
+        }
+
+    private fun typeOf(chipId: Int): FindingType =
+        when (chipId) {
+            R.id.chip_habit -> FindingType.HABIT
+            R.id.chip_need -> FindingType.NEED
+            else -> FindingType.PROBLEM
+        }
 }

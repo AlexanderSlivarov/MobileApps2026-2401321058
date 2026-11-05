@@ -78,78 +78,10 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Personality type from 16Personalities -->
+        <!-- The two parts of the section question -->
         <TextView
             style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_personality" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/self_personality_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_personality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Three superpowers -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_superpowers" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/self_superpower_1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_superpower_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/self_superpower_2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_superpower_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/self_superpower_3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_superpower_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Longer answers -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_improve" />
+            android:text="@string/self_who_am_i" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -157,17 +89,17 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_improve"
+                android:id="@+id/edit_who_am_i"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|start"
                 android:inputType="textMultiLine|textCapSentences"
-                android:minLines="2" />
+                android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_more_time" />
+            android:text="@string/self_manage_time" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -175,48 +107,12 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_more_time"
+                android:id="@+id/edit_manage_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|start"
                 android:inputType="textMultiLine|textCapSentences"
-                android:minLines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_how_i_plan" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_how_i_plan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/self_stress" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_stress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="2" />
+                android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

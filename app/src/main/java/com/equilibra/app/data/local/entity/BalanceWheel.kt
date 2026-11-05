@@ -47,7 +47,7 @@ data class WheelAssessmentWithRatings(
     val ratings: List<WheelRatingEntity>,
 )
 
-/** START = before (STEAM day 1), FINAL = after (day 7), CHECK_IN = anything in between. */
+/** START = before, FINAL = after, CHECK_IN = anything in between. */
 enum class WheelKind { START, CHECK_IN, FINAL }
 
 /** Sectors are phrased so that a high score is always good ("calm", not "workload"). */

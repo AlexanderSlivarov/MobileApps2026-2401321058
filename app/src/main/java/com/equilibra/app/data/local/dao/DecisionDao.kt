@@ -10,8 +10,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DecisionDao {
-    @Query("SELECT * FROM decisions ORDER BY startDate DESC")
+    /** Newest decisions first. */
+    @Query("SELECT * FROM decisions ORDER BY startDate DESC, id DESC")
     fun observeAll(): Flow<List<DecisionEntity>>
+
+    @Query("SELECT * FROM decisions WHERE id = :id")
+    suspend fun getById(id: Long): DecisionEntity?
 
     @Insert
     suspend fun insert(decision: DecisionEntity): Long

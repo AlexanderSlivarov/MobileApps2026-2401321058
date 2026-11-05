@@ -1,4 +1,4 @@
-package com.equilibra.app.ui.journal
+package com.equilibra.app.ui.decisions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,24 +13,24 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
-import com.equilibra.app.databinding.FragmentJournalBinding
+import com.equilibra.app.databinding.FragmentDecisionsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/** Section 4: "How do I track the results of my decisions?" (basic version: the daily journal). */
+/** Section 4: "How do I track the results of my decisions?" */
 @AndroidEntryPoint
-class JournalFragment : Fragment() {
-    private var _binding: FragmentJournalBinding? = null
+class DecisionsFragment : Fragment() {
+    private var _binding: FragmentDecisionsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: JournalViewModel by viewModels()
+    private val viewModel: DecisionsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentJournalBinding.inflate(inflater, container, false)
+        _binding = FragmentDecisionsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,15 +40,15 @@ class JournalFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = JournalAdapter { entry -> openEditor(entry.id) }
-        binding.recyclerEntries.adapter = adapter
-        binding.fabAddEntry.setOnClickListener { openEditor(JournalEditViewModel.NEW_ENTRY_ID) }
+        val adapter = DecisionAdapter { decision -> openEditor(decision.id) }
+        binding.recyclerDecisions.adapter = adapter
+        binding.fabAddDecision.setOnClickListener { openEditor(DecisionEditViewModel.NEW_DECISION_ID) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.entries.collect { entries ->
-                    adapter.submitList(entries)
-                    binding.textEmpty.isVisible = entries.isEmpty()
+                viewModel.decisions.collect { decisions ->
+                    adapter.submitList(decisions)
+                    binding.textEmpty.isVisible = decisions.isEmpty()
                 }
             }
         }
@@ -59,10 +59,10 @@ class JournalFragment : Fragment() {
         _binding = null
     }
 
-    private fun openEditor(entryId: Long) {
+    private fun openEditor(decisionId: Long) {
         findNavController().navigate(
-            R.id.action_journal_to_journalEdit,
-            bundleOf(JournalEditViewModel.ARG_ENTRY_ID to entryId),
+            R.id.action_decisions_to_decisionEdit,
+            bundleOf(DecisionEditViewModel.ARG_DECISION_ID to decisionId),
         )
     }
 }

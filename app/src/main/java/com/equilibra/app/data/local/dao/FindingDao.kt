@@ -10,8 +10,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FindingDao {
-    @Query("SELECT * FROM findings ORDER BY createdAt DESC")
+    /** Newest first. */
+    @Query("SELECT * FROM findings ORDER BY id DESC")
     fun observeAll(): Flow<List<FindingEntity>>
+
+    @Query("SELECT * FROM findings WHERE id = :id")
+    suspend fun getById(id: Long): FindingEntity?
 
     @Insert
     suspend fun insert(finding: FindingEntity): Long

@@ -112,7 +112,7 @@ class SelfAssessmentFragment : Fragment() {
             row.textAverage.text =
                 getString(
                     R.string.wheel_average_format,
-                    getString(R.string.summary_out_of_five_format, BalanceWheel.average(BalanceWheel.scoresOf(wheel))),
+                    getString(R.string.wheel_out_of_five_format, BalanceWheel.average(BalanceWheel.scoresOf(wheel))),
                 )
             row.root.setOnClickListener { openWheelEditor(wheel.assessment.id) }
         }
@@ -134,27 +134,15 @@ class SelfAssessmentFragment : Fragment() {
     }
 
     private fun fillForm(profile: ProfileEntity) {
-        binding.editPersonality.setText(profile.personalityType)
-        binding.editSuperpower1.setText(profile.superpower1)
-        binding.editSuperpower2.setText(profile.superpower2)
-        binding.editSuperpower3.setText(profile.superpower3)
-        binding.editImprove.setText(profile.wantToImprove)
-        binding.editMoreTime.setText(profile.moreTimeFor)
-        binding.editHowIPlan.setText(profile.howIPlan)
-        binding.editStress.setText(profile.stressCoping)
+        binding.editWhoAmI.setText(profile.whoAmI)
+        binding.editManageTime.setText(profile.howIManageTime)
     }
 
     private fun save() {
         val form =
             SelfAssessmentForm(
-                personalityType = binding.editPersonality.text.toString(),
-                superpower1 = binding.editSuperpower1.text.toString(),
-                superpower2 = binding.editSuperpower2.text.toString(),
-                superpower3 = binding.editSuperpower3.text.toString(),
-                wantToImprove = binding.editImprove.text.toString(),
-                moreTimeFor = binding.editMoreTime.text.toString(),
-                howIPlan = binding.editHowIPlan.text.toString(),
-                stressCoping = binding.editStress.text.toString(),
+                whoAmI = binding.editWhoAmI.text.toString(),
+                howIManageTime = binding.editManageTime.text.toString(),
             )
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.save(form)

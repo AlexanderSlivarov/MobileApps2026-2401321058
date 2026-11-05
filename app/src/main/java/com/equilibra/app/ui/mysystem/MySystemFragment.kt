@@ -1,26 +1,37 @@
 package com.equilibra.app.ui.mysystem
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.equilibra.app.R
+import com.equilibra.app.data.local.entity.DecisionResult
+import com.equilibra.app.data.local.entity.FindingType
+import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
+import com.equilibra.app.databinding.DialogTextInputBinding
 import com.equilibra.app.databinding.FragmentMySystemBinding
-import com.equilibra.app.domain.SystemSummary
+import com.equilibra.app.domain.BalanceWheel
+import com.equilibra.app.ui.common.labelRes
+import com.equilibra.app.ui.common.toDisplayString
+import com.equilibra.app.ui.decisions.labelRes
+import com.equilibra.app.ui.habits.labelRes
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/** Section 5: "What does my final balance system look like?" (basic version: summary numbers + Share). */
+/** Section 5: "What does my final balance system look like?" */
 @AndroidEntryPoint
 class MySystemFragment : Fragment() {
     private var _binding: FragmentMySystemBinding? = null
     private val binding get() = _binding!!
+
+    private var dialog: AlertDialog? = null
 
     private val viewModel: MySystemViewModel by viewModels()
 
@@ -38,62 +49,83 @@ class MySystemFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonShare.setOnClickListener { shareSummary() }
+        binding.buttonEditRules.setOnClickListener { showRulesDialog() }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.summary.collect { summary ->
-                    binding.textPriorities.text = prioritiesText(summary)
-                    binding.textJournal.text = journalText(summary)
-                    binding.textActivities.text = activitiesText(summary)
-                }
+                viewModel.uiState.collect { state -> show(state) }
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // An open dialog holds the activity, so close it together with the view.
+        dialog?.dismiss()
+        dialog = null
         _binding = null
     }
 
-    private fun prioritiesText(summary: SystemSummary): String =
-        getString(R.string.summary_tasks_format, summary.tasksDone, summary.tasksTotal)
-
-    private fun journalText(summary: SystemSummary): String =
-        listOf(
-            getString(R.string.summary_journal_days_format, summary.journalDays),
-            getString(
-                R.string.summary_completion_format,
-                summary.averageCompletion?.let { getString(R.string.summary_percent_format, it) } ?: noData(),
-            ),
-            getString(R.string.summary_energy_format, summary.averageEnergy?.let(::outOfFive) ?: noData()),
-            getString(R.string.summary_motivation_format, summary.averageMotivation?.let(::outOfFive) ?: noData()),
-        ).joinToString("\n")
-
-    private fun activitiesText(summary: SystemSummary): String =
-        getString(R.string.summary_activities_format, summary.activitiesCount, summary.activityDays)
-
-    /** An average with one decimal, e.g. "3.4 / 5". */
-    private fun outOfFive(value: Double): String = getString(R.string.summary_out_of_five_format, value)
-
-    private fun noData(): String = getString(R.string.share_none)
-
-    /** Extra feature reused: Share Intent with the summary as plain text (see PrioritiesFragment). */
-    private fun shareSummary() {
-        val summary = viewModel.summary.value
-        val text =
-            listOf(
-                getString(R.string.summary_share_subject),
-                getString(R.string.nav_priorities) + "\n" + prioritiesText(summary),
-                getString(R.string.nav_journal) + "\n" + journalText(summary),
-                getString(R.string.nav_habits) + "\n" + activitiesText(summary),
-            ).joinToString("\n\n")
-        val shareIntent =
-            Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.summary_share_subject))
-                putExtra(Intent.EXTRA_TEXT, text)
+    private fun show(state: MySystemUiState) {
+        // 1. Self-assessment: the balance wheel, start (dashed) and now (filled).
+        binding.wheelView.setScores(
+            state.wheelNow?.let(BalanceWheel::scoresOf),
+            state.wheelStart?.let(BalanceWheel::scoresOf),
+        )
+        binding.textWheel.text =
+            if (state.wheelNow == null) {
+                getString(R.string.wheel_empty)
+            } else {
+                listOfNotNull(
+                    state.wheelStart?.let { getString(R.string.wheel_compare_format, describe(it)) },
+                    getString(R.string.wheel_shown_format, describe(state.wheelNow)),
+                ).joinToString("\n")
             }
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)))
+
+        // 2. Habit analysis: how many problems, habits and needs I found.
+        binding.textFindings.text =
+            FindingType.entries.joinToString("\n") { type ->
+                getString(R.string.count_format, getString(type.labelRes), state.findingCounts[type] ?: 0)
+            }
+
+        // 3. Prioritization: my priorities in order.
+        binding.textPriorities.text =
+            if (state.priorities.isEmpty()) {
+                getString(R.string.share_none)
+            } else {
+                state.priorities.mapIndexed { index, task -> "${index + 1}. ${task.title}" }.joinToString("\n")
+            }
+
+        // 4. Balance tracking: how my decisions turned out.
+        binding.textDecisions.text =
+            DecisionResult.entries.joinToString("\n") { result ->
+                getString(R.string.count_format, getString(result.labelRes), state.decisionCounts[result] ?: 0)
+            }
+
+        // 5. The answer itself: my final balance rules.
+        binding.textRules.text = state.finalRules.ifBlank { getString(R.string.rules_empty) }
+    }
+
+    /** E.g. "Start · Nov 1, 2026". */
+    private fun describe(wheel: WheelAssessmentWithRatings): String =
+        getString(
+            R.string.wheel_kind_date_format,
+            getString(wheel.assessment.kind.labelRes),
+            wheel.assessment.date.toDisplayString(),
+        )
+
+    private fun showRulesDialog() {
+        val input = DialogTextInputBinding.inflate(layoutInflater)
+        input.layoutInput.hint = getString(R.string.rules_hint)
+        input.editInput.setText(viewModel.uiState.value.finalRules)
+
+        dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.rules_title)
+                .setView(input.root)
+                .setPositiveButton(R.string.action_save) { _, _ ->
+                    viewModel.saveFinalRules(input.editInput.text.toString())
+                }.setNegativeButton(R.string.action_cancel, null)
+                .show()
     }
 }

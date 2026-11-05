@@ -3,11 +3,9 @@ package com.equilibra.app.ui.priorities
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.equilibra.app.data.local.entity.TaskEntity
-import com.equilibra.app.data.local.entity.TaskStatus
 import com.equilibra.app.data.repository.ProfileRepository
 import com.equilibra.app.data.repository.TaskRepository
-import com.equilibra.app.domain.Quadrant
-import com.equilibra.app.domain.TaskPriorities
+import com.equilibra.app.domain.PriorityOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,11 +15,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/** Everything the Priorities screen shows, already grouped and ready to draw. */
+/** Everything the Priorities screen shows: my priorities in order and "My method". */
 data class PrioritiesUiState(
-    val quadrants: Map<Quadrant, List<TaskEntity>> = emptyMap(),
-    val columns: Map<TaskStatus, List<TaskEntity>> = emptyMap(),
-    val topThree: List<TaskEntity> = emptyList(),
+    val tasks: List<TaskEntity> = emptyList(),
     val method: String = "",
 )
 
@@ -36,26 +32,39 @@ class PrioritiesViewModel
         private val taskRepository: TaskRepository,
         private val profileRepository: ProfileRepository,
     ) : ViewModel() {
-        /** Rebuilt automatically whenever tasks or the profile change in the database. */
+        /** Rebuilt automatically whenever the priorities or the profile change in the database. */
         val uiState: StateFlow<PrioritiesUiState> =
             combine(taskRepository.observeTasks(), profileRepository.observeProfile()) { tasks, profile ->
-                PrioritiesUiState(
-                    // The matrix is for deciding what to do next, so finished tasks are left out.
-                    quadrants = TaskPriorities.groupByQuadrant(tasks.filter { it.status != TaskStatus.DONE }),
-                    columns = TaskPriorities.groupByStatus(tasks),
-                    topThree = tasks.filter { it.isTopThree },
-                    method = profile.prioritizationMethod,
-                )
+                PrioritiesUiState(tasks = tasks, method = profile.prioritizationMethod)
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PrioritiesUiState())
 
-        /** Which view is shown: false = Eisenhower matrix, true = Kanban. Kept here so it survives rotation. */
-        var showKanban = false
-
-        fun moveTask(
-            task: TaskEntity,
-            status: TaskStatus,
+        /** Adds a new priority when [existing] is null, otherwise renames it. */
+        fun save(
+            existing: TaskEntity?,
+            title: String,
         ) {
-            viewModelScope.launch { taskRepository.moveTask(task.id, status) }
+            viewModelScope.launch {
+                if (existing == null) {
+                    taskRepository.addTask(title.trim())
+                } else {
+                    taskRepository.updateTask(existing.copy(title = title.trim()))
+                }
+            }
+        }
+
+        fun delete(task: TaskEntity) {
+            viewModelScope.launch { taskRepository.deleteTask(task) }
+        }
+
+        /** Moves a priority one place up or down in my order. */
+        fun move(
+            task: TaskEntity,
+            up: Boolean,
+        ) {
+            viewModelScope.launch {
+                val changed = PriorityOrder.move(uiState.value.tasks, task.id, up)
+                if (changed.isNotEmpty()) taskRepository.updateTasks(changed)
+            }
         }
 
         fun saveMethod(text: String) {

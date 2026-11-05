@@ -29,64 +29,29 @@
     <fragment
         android:id="@+id/habitsFragment"
         android:name="com.equilibra.app.ui.habits.HabitsFragment"
-        android:label="@string/nav_habits">
-        <action
-            android:id="@+id/action_habits_to_activityEdit"
-            app:destination="@id/activityEditFragment" />
-    </fragment>
-
-    <!-- Add / edit an activity. activityId = -1 means a new activity.
-         date = the day shown in the list (days since 1970-01-01), used for a new activity. -->
-    <fragment
-        android:id="@+id/activityEditFragment"
-        android:name="com.equilibra.app.ui.habits.ActivityEditFragment"
-        android:label="@string/activity_edit_title">
-        <argument
-            android:name="activityId"
-            android:defaultValue="-1L"
-            app:argType="long" />
-        <argument
-            android:name="date"
-            android:defaultValue="0L"
-            app:argType="long" />
-    </fragment>
+        android:label="@string/nav_habits" />
 
     <fragment
         android:id="@+id/prioritiesFragment"
         android:name="com.equilibra.app.ui.priorities.PrioritiesFragment"
-        android:label="@string/nav_priorities">
+        android:label="@string/nav_priorities" />
+
+    <fragment
+        android:id="@+id/decisionsFragment"
+        android:name="com.equilibra.app.ui.decisions.DecisionsFragment"
+        android:label="@string/nav_decisions">
         <action
-            android:id="@+id/action_priorities_to_taskEdit"
-            app:destination="@id/taskEditFragment" />
+            android:id="@+id/action_decisions_to_decisionEdit"
+            app:destination="@id/decisionEditFragment" />
     </fragment>
 
-    <!-- Add / edit a task. taskId = -1 means a new task. -->
+    <!-- Add / edit a decision. decisionId = -1 means a new decision. -->
     <fragment
-        android:id="@+id/taskEditFragment"
-        android:name="com.equilibra.app.ui.task.TaskEditFragment"
-        android:label="@string/task_edit_title">
+        android:id="@+id/decisionEditFragment"
+        android:name="com.equilibra.app.ui.decisions.DecisionEditFragment"
+        android:label="@string/decision_edit_title">
         <argument
-            android:name="taskId"
-            android:defaultValue="-1L"
-            app:argType="long" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/journalFragment"
-        android:name="com.equilibra.app.ui.journal.JournalFragment"
-        android:label="@string/nav_journal">
-        <action
-            android:id="@+id/action_journal_to_journalEdit"
-            app:destination="@id/journalEditFragment" />
-    </fragment>
-
-    <!-- Add / edit a journal entry. entryId = -1 means a new entry. -->
-    <fragment
-        android:id="@+id/journalEditFragment"
-        android:name="com.equilibra.app.ui.journal.JournalEditFragment"
-        android:label="@string/journal_edit_title">
-        <argument
-            android:name="entryId"
+            android:name="decisionId"
             android:defaultValue="-1L"
             app:argType="long" />
     </fragment>
@@ -95,11 +60,5 @@
         android:id="@+id/mySystemFragment"
         android:name="com.equilibra.app.ui.mysystem.MySystemFragment"
         android:label="@string/nav_my_system" />
-
-    <!-- Not in the bottom bar: opened from the toolbar, shows a back arrow. -->
-    <fragment
-        android:id="@+id/steamModeFragment"
-        android:name="com.equilibra.app.ui.steam.SteamModeFragment"
-        android:label="@string/steam_mode" />
 
 </navigation>

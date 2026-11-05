@@ -3,149 +3,35 @@
 
     <!-- Bottom navigation / screen titles -->
     <string name="nav_self_assessment">Me</string>
-    <string name="nav_habits">My 24h</string>
+    <string name="nav_habits">Habits</string>
     <string name="nav_priorities">Priorities</string>
-    <string name="nav_journal">Journal</string>
+    <string name="nav_decisions">Decisions</string>
     <string name="nav_my_system">My system</string>
-    <string name="steam_mode">STEAM Mode</string>
 
     <!-- Section questions (STEAM course: each section is titled with its question) -->
     <string name="question_self_assessment">Who am I and how do I manage my time?</string>
     <string name="question_habits">What problems, habits and needs do I find in my daily life?</string>
     <string name="question_priorities">How do I order my priorities?</string>
-    <string name="question_journal">How do I track the results of my decisions?</string>
+    <string name="question_decisions">How do I track the results of my decisions?</string>
     <string name="question_my_system">What does my final balance system look like?</string>
-    <string name="question_steam_mode">A guided 7-day journey to build my balance system.</string>
 
-    <string name="placeholder_coming_soon">This section is coming soon.</string>
+    <!-- Section names (STEAM course mandatory content), used on My system -->
+    <string name="section_self_assessment">Self-assessment</string>
+    <string name="section_habits">Habit analysis</string>
+    <string name="section_priorities">Prioritization</string>
+    <string name="section_decisions">Balance tracking</string>
 
     <!-- Common actions -->
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
-
-    <!-- Priorities -->
-    <string name="top_three_title">Top 3 this week</string>
-    <string name="top_three_empty">Mark up to 3 tasks as Top 3 to focus your week.</string>
-    <string name="top_three_icon">Top 3 task</string>
-    <string name="view_matrix">Eisenhower matrix</string>
-    <string name="view_kanban">Kanban</string>
-    <string name="quadrant_do_first">Do first</string>
-    <string name="quadrant_do_first_hint">Urgent and important</string>
-    <string name="quadrant_schedule">Schedule</string>
-    <string name="quadrant_schedule_hint">Important, not urgent</string>
-    <string name="quadrant_delegate">Delegate</string>
-    <string name="quadrant_delegate_hint">Urgent, not important</string>
-    <string name="quadrant_eliminate">Eliminate</string>
-    <string name="quadrant_eliminate_hint">Neither urgent nor important</string>
-    <string name="status_todo">To do</string>
-    <string name="status_in_progress">In progress</string>
-    <string name="status_done">Done</string>
-    <string name="group_empty">No tasks</string>
-    <plurals name="task_count">
-        <item quantity="one">%d task</item>
-        <item quantity="other">%d tasks</item>
-    </plurals>
-    <string name="move_back">Move to previous column</string>
-    <string name="move_forward">Move to next column</string>
-    <string name="add_task">Add task</string>
-    <string name="my_method_title">My method</string>
-    <string name="my_method_empty">Describe your rules for deciding what comes first.</string>
-    <string name="my_method_hint">My prioritization rules</string>
-
-    <!-- Share (extra feature: Share Intent) -->
-    <string name="share_priorities">Share my priorities</string>
-    <string name="share_chooser_title">Share with</string>
-    <string name="share_subject">My priorities – Equilibra</string>
-    <string name="share_none">–</string>
-
-    <!-- Task add / edit -->
-    <string name="task_edit_title">Task</string>
-    <string name="task_title_hint">Title</string>
-    <string name="task_description_hint">Description (optional)</string>
-    <string name="task_priority">Priority</string>
-    <string name="task_urgent">Urgent</string>
-    <string name="task_important">Important</string>
-    <string name="task_quadrant_format">Quadrant: %1$s (%2$s)</string>
-    <string name="task_status">Status</string>
-    <string name="task_top_three">Top 3 this week</string>
-    <string name="task_delete">Delete task</string>
-    <string name="task_delete_confirm">Delete this task? This can\'t be undone.</string>
-    <string name="error_title_required">Please enter a title</string>
-    <string name="error_top_three_full">You already have 3 top tasks. Remove one first.</string>
-
-    <!-- Journal -->
-    <string name="journal_empty">No entries yet. Add how your day went.</string>
-    <string name="journal_add_entry">Add entry</string>
-    <string name="journal_tasks_format">Tasks: %1$d of %2$d done (%3$d%%)</string>
-    <string name="journal_tasks_none_planned">Tasks: %1$d done, none planned</string>
-    <string name="journal_levels_format">Energy %1$d/5 · Motivation %2$d/5</string>
-    <string name="journal_had_rest">Had rest</string>
-    <string name="journal_no_rest">No rest</string>
-    <string name="journal_correction_needed">Correction needed</string>
-    <string name="journal_on_track">On track</string>
-
-    <!-- Journal add / edit -->
-    <string name="journal_edit_title">Journal entry</string>
-    <string name="journal_date">Day</string>
-    <string name="journal_tasks">Tasks</string>
-    <string name="journal_tasks_done">Done</string>
-    <string name="journal_tasks_planned">Planned</string>
-    <string name="journal_energy">Energy (1–5)</string>
-    <string name="journal_motivation">Motivation (1–5)</string>
-    <string name="journal_rest_question">I had time to rest</string>
-    <string name="journal_correction_question">A correction is needed</string>
-    <string name="journal_note_hint">Note (optional)</string>
-    <string name="journal_delete">Delete entry</string>
-    <string name="journal_delete_confirm">Delete this journal entry? This can\'t be undone.</string>
-    <string name="error_enter_number">Enter a number</string>
-    <string name="error_done_more_than_planned">Can\'t be more than planned</string>
-    <string name="error_date_taken">There is already an entry for this day. Edit that one instead.</string>
-
-    <!-- My 24h -->
-    <string name="habits_empty">No activities for this day yet. Add what you did, from waking up to going to sleep.</string>
-    <string name="habits_add_activity">Add activity</string>
-    <string name="habits_choose_day">Choose the day to show</string>
-    <string name="activity_time_format">%1$s – %2$s · %3$s</string>
-    <string name="duration_hours_minutes">%1$d h %2$d min</string>
-    <string name="duration_hours">%1$d h</string>
-    <string name="duration_minutes">%1$d min</string>
-    <string name="category_sleep">Sleep</string>
-    <string name="category_study">Study</string>
-    <string name="category_work">Work</string>
-    <string name="category_meals">Meals</string>
-    <string name="category_sport">Sport</string>
-    <string name="category_hobbies">Hobbies</string>
-    <string name="category_friends_family">Friends and family</string>
-    <string name="category_rest">Rest</string>
-    <string name="category_screen_time">Screen time</string>
-    <string name="category_commute">Commute</string>
-    <string name="category_chores">Chores</string>
-    <string name="category_other">Other</string>
-
-    <!-- My 24h add / edit -->
-    <string name="activity_edit_title">Activity</string>
-    <string name="activity_title_hint">What did you do?</string>
-    <string name="activity_category">Category</string>
-    <string name="activity_start">Start</string>
-    <string name="activity_end">End</string>
-    <string name="activity_duration_format">Duration: %1$s</string>
-    <string name="activity_delete">Delete activity</string>
-    <string name="activity_delete_confirm">Delete this activity? This can\'t be undone.</string>
-    <string name="error_same_start_end">Start and end can\'t be the same time.</string>
+    <string name="error_text_required">Please write something</string>
+    <string name="count_format">%1$s: %2$d</string>
 
     <!-- Me (self-assessment) -->
-    <string name="self_personality">My personality type</string>
-    <string name="self_personality_hint">From 16Personalities, e.g. INFJ-A</string>
-    <string name="self_superpowers">My three superpowers</string>
-    <string name="self_superpower_1">Superpower 1</string>
-    <string name="self_superpower_2">Superpower 2</string>
-    <string name="self_superpower_3">Superpower 3</string>
-    <string name="self_improve">What do I want to improve?</string>
-    <string name="self_more_time">What is the one thing I want more time for?</string>
-    <string name="self_how_i_plan">How do I plan my time now?</string>
-    <string name="self_stress">How do I cope with stress?</string>
+    <string name="self_who_am_i">Who am I?</string>
+    <string name="self_manage_time">How do I manage my time?</string>
     <string name="self_saved">Saved</string>
 
     <!-- Balance wheel -->
@@ -157,6 +43,7 @@
     <string name="wheel_kind_date_format">%1$s · %2$s</string>
     <string name="wheel_change_format">%1$d → %2$d</string>
     <string name="wheel_average_format">Average %1$s</string>
+    <string name="wheel_out_of_five_format">%1$.1f / 5</string>
     <string name="wheel_kind_start">Start</string>
     <string name="wheel_kind_check_in">Check-in</string>
     <string name="wheel_kind_final">Final</string>
@@ -170,20 +57,61 @@
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">Balance wheel</string>
     <string name="wheel_scale_hint">Rate each area from 1 to 5. 5 always means a good state.</string>
+    <string name="wheel_date">Day</string>
     <string name="wheel_kind">Which rating is this?</string>
     <string name="wheel_delete">Delete rating</string>
     <string name="wheel_delete_confirm">Delete this rating? This can\'t be undone.</string>
     <string name="error_wheel_kind_taken">You already have this rating. There can be only one Start and one Final. Edit that one instead.</string>
 
-    <!-- My system (summary) -->
-    <string name="summary_share">Share my summary</string>
-    <string name="summary_share_subject">My balance summary – Equilibra</string>
-    <string name="summary_tasks_format">Tasks done: %1$d of %2$d</string>
-    <string name="summary_journal_days_format">Days in the journal: %1$d</string>
-    <string name="summary_completion_format">Average completion: %1$s</string>
-    <string name="summary_percent_format">%1$d%%</string>
-    <string name="summary_energy_format">Average energy: %1$s</string>
-    <string name="summary_motivation_format">Average motivation: %1$s</string>
-    <string name="summary_out_of_five_format">%1$.1f / 5</string>
-    <string name="summary_activities_format">Activities logged: %1$d\nDays covered: %2$d</string>
+    <!-- Habit analysis (findings) -->
+    <string name="habits_empty">Nothing found yet. Add the problems, habits and needs you notice in your daily life.</string>
+    <string name="finding_add">Add finding</string>
+    <string name="finding_edit">Edit finding</string>
+    <string name="finding_hint">What did I find?</string>
+    <string name="finding_problem">Problem</string>
+    <string name="finding_habit">Habit</string>
+    <string name="finding_need">Need</string>
+    <string name="finding_delete_confirm">Delete this finding? This can\'t be undone.</string>
+
+    <!-- Priorities -->
+    <string name="priorities_list_title">My priorities, most important first</string>
+    <string name="priorities_empty">No priorities yet. Add them and put them in your order.</string>
+    <string name="add_task">Add priority</string>
+    <string name="priority_edit">Edit priority</string>
+    <string name="priority_hint">Priority</string>
+    <string name="move_up">Move up</string>
+    <string name="move_down">Move down</string>
+    <string name="task_delete_confirm">Delete this priority? This can\'t be undone.</string>
+    <string name="error_title_required">Please enter a title</string>
+    <string name="my_method_title">My method</string>
+    <string name="my_method_empty">Describe how you decide what comes first.</string>
+    <string name="my_method_hint">How I order my priorities</string>
+
+    <!-- Share (extra feature: Share Intent) -->
+    <string name="share_priorities">Share my priorities</string>
+    <string name="share_chooser_title">Share with</string>
+    <string name="share_subject">My priorities – Equilibra</string>
+    <string name="share_none">–</string>
+
+    <!-- Balance tracking (decisions) -->
+    <string name="decisions_empty">No decisions yet. Add a decision and later mark whether it worked.</string>
+    <string name="decision_add">Add decision</string>
+    <string name="decision_result_format">%1$s · since %2$s</string>
+    <string name="result_pending">Too early to tell</string>
+    <string name="result_worked">Worked</string>
+    <string name="result_did_not_work">Didn\'t work</string>
+
+    <!-- Decision add / edit -->
+    <string name="decision_edit_title">Decision</string>
+    <string name="decision_hint">My decision, e.g. no phone after 23:00</string>
+    <string name="decision_date">Since</string>
+    <string name="decision_result">Result</string>
+    <string name="decision_note_hint">What happened? (optional)</string>
+    <string name="decision_delete">Delete decision</string>
+    <string name="decision_delete_confirm">Delete this decision? This can\'t be undone.</string>
+
+    <!-- My system -->
+    <string name="rules_title">My balance rules</string>
+    <string name="rules_empty">Write the rules of your final balance system.</string>
+    <string name="rules_hint">My balance rules</string>
 </resources>

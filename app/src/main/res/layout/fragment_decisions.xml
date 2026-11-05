@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.journal.JournalFragment">
+    tools:context=".ui.decisions.DecisionsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
-            android:text="@string/question_journal"
+            android:text="@string/question_decisions"
             android:textAppearance="?attr/textAppearanceHeadlineSmall"
             android:textColor="?attr/colorPrimary" />
 
@@ -25,12 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/journal_empty"
+            android:text="@string/decisions_empty"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_entries"
+            android:id="@+id/recycler_decisions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -41,12 +41,12 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_add_entry"
+        android:id="@+id/fab_add_decision"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="@string/journal_add_entry"
+        android:text="@string/decision_add"
         app:icon="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

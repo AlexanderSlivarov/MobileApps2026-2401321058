@@ -13,16 +13,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-/** What the user filled in on the self-assessment form. */
+/** What the user filled in on the self-assessment form: the two parts of the section question. */
 data class SelfAssessmentForm(
-    val personalityType: String,
-    val superpower1: String,
-    val superpower2: String,
-    val superpower3: String,
-    val wantToImprove: String,
-    val moreTimeFor: String,
-    val howIPlan: String,
-    val stressCoping: String,
+    val whoAmI: String,
+    val howIManageTime: String,
 )
 
 /**
@@ -52,21 +46,15 @@ class SelfAssessmentViewModel
         suspend fun loadProfile(): ProfileEntity = profileRepository.observeProfile().first()
 
         /**
-         * Saves the form. The profile row also holds "My method" from Priorities,
+         * Saves the form. The profile row also holds "My method" and the final rules,
          * so the current row is read first and only the self-assessment fields change.
          */
         suspend fun save(form: SelfAssessmentForm) {
             val current = loadProfile()
             profileRepository.saveProfile(
                 current.copy(
-                    personalityType = form.personalityType.trim(),
-                    superpower1 = form.superpower1.trim(),
-                    superpower2 = form.superpower2.trim(),
-                    superpower3 = form.superpower3.trim(),
-                    wantToImprove = form.wantToImprove.trim(),
-                    moreTimeFor = form.moreTimeFor.trim(),
-                    howIPlan = form.howIPlan.trim(),
-                    stressCoping = form.stressCoping.trim(),
+                    whoAmI = form.whoAmI.trim(),
+                    howIManageTime = form.howIManageTime.trim(),
                 ),
             )
         }

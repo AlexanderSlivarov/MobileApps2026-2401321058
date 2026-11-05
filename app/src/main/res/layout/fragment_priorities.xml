@@ -25,49 +25,6 @@
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
                 android:textColor="?attr/colorPrimary" />
 
-            <!-- Top 3 this week -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Filled"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardBackgroundColor="?attr/colorSecondaryContainer">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/top_three_title"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        app:drawableStartCompat="@drawable/ic_star"
-                        app:drawableTint="?attr/colorSecondary" />
-
-                    <TextView
-                        android:id="@+id/text_top_three_empty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/top_three_empty"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_top_three"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
             <!-- Extra feature: Share Intent -->
             <Button
                 android:id="@+id/button_share"
@@ -78,126 +35,7 @@
                 android:text="@string/share_priorities"
                 app:icon="@drawable/ic_share" />
 
-            <!-- Matrix / Kanban switch -->
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggle_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:checkedButton="@id/button_matrix"
-                app:selectionRequired="true"
-                app:singleSelection="true">
-
-                <Button
-                    android:id="@+id/button_matrix"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/view_matrix" />
-
-                <Button
-                    android:id="@+id/button_kanban"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/view_kanban" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <!-- Eisenhower matrix: 2 x 2 quadrants -->
-            <LinearLayout
-                android:id="@+id/layout_matrix"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <include
-                        android:id="@+id/quadrant_do_first"
-                        layout="@layout/view_task_group"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1" />
-
-                    <include
-                        android:id="@+id/quadrant_schedule"
-                        layout="@layout/view_task_group"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <include
-                        android:id="@+id/quadrant_delegate"
-                        layout="@layout/view_task_group"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1" />
-
-                    <include
-                        android:id="@+id/quadrant_eliminate"
-                        layout="@layout/view_task_group"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Kanban board: 3 columns, scroll sideways -->
-            <HorizontalScrollView
-                android:id="@+id/layout_kanban"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:scrollbars="none"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include
-                        android:id="@+id/column_todo"
-                        layout="@layout/view_task_group"
-                        android:layout_width="270dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp" />
-
-                    <include
-                        android:id="@+id/column_in_progress"
-                        layout="@layout/view_task_group"
-                        android:layout_width="270dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp" />
-
-                    <include
-                        android:id="@+id/column_done"
-                        layout="@layout/view_task_group"
-                        android:layout_width="270dp"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- My method -->
+            <!-- My method: how I order my priorities -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/Widget.Material3.CardView.Outlined"
                 android:layout_width="match_parent"
@@ -242,6 +80,26 @@
                         tools:text="@string/my_method_empty" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- My priorities in order -->
+            <TextView
+                style="@style/Widget.Equilibra.SectionLabel"
+                android:text="@string/priorities_list_title" />
+
+            <TextView
+                android:id="@+id/text_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priorities_empty"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_priorities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -22,7 +22,7 @@
         <!-- Day -->
         <TextView
             style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/journal_date" />
+            android:text="@string/wheel_date" />
 
         <Button
             android:id="@+id/button_date"

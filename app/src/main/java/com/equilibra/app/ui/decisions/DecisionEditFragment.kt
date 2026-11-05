@@ -1,4 +1,4 @@
-package com.equilibra.app.ui.journal
+package com.equilibra.app.ui.decisions
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -13,31 +13,31 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
-import com.equilibra.app.data.local.entity.JournalEntryEntity
-import com.equilibra.app.databinding.FragmentJournalEditBinding
+import com.equilibra.app.data.local.entity.DecisionEntity
+import com.equilibra.app.data.local.entity.DecisionResult
+import com.equilibra.app.databinding.FragmentDecisionEditBinding
 import com.equilibra.app.ui.common.toDisplayString
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-/** Add a new journal entry or edit / delete an existing one. */
+/** Add a new decision or edit / delete an existing one, including its result. */
 @AndroidEntryPoint
-class JournalEditFragment : Fragment() {
-    private var _binding: FragmentJournalEditBinding? = null
+class DecisionEditFragment : Fragment() {
+    private var _binding: FragmentDecisionEditBinding? = null
     private val binding get() = _binding!!
 
     private var dialog: Dialog? = null
 
-    private val viewModel: JournalEditViewModel by viewModels()
+    private val viewModel: DecisionEditViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentJournalEditBinding.inflate(inflater, container, false)
+        _binding = FragmentDecisionEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,19 +46,18 @@ class JournalEditFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonDelete.isVisible = !viewModel.isNewEntry
+        binding.buttonDelete.isVisible = !viewModel.isNewDecision
         showDate()
 
-        // Load the entry into the form only the first time. After a rotation Android
-        // restores the fields by itself, keeping what the user had typed.
+        // Load the decision into the form only the first time. After a rotation Android
+        // restores the fields and the chosen result chip by itself.
         if (savedInstanceState == null) {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.loadEntry()?.let { fillForm(it) }
+                viewModel.loadDecision()?.let { fillForm(it) }
             }
         }
 
-        binding.editDone.doAfterTextChanged { binding.layoutDone.error = null }
-        binding.editPlanned.doAfterTextChanged { binding.layoutPlanned.error = null }
+        binding.editDecision.doAfterTextChanged { binding.layoutDecision.error = null }
         binding.buttonDate.setOnClickListener { pickDate() }
         binding.buttonSave.setOnClickListener { save() }
         binding.buttonDelete.setOnClickListener { confirmDelete() }
@@ -72,15 +71,11 @@ class JournalEditFragment : Fragment() {
         _binding = null
     }
 
-    private fun fillForm(entry: JournalEntryEntity) {
+    private fun fillForm(decision: DecisionEntity) {
         showDate()
-        binding.editDone.setText(entry.tasksDone.toString())
-        binding.editPlanned.setText(entry.tasksPlanned.toString())
-        binding.sliderEnergy.value = entry.energy.toFloat()
-        binding.sliderMotivation.value = entry.motivation.toFloat()
-        binding.switchRest.isChecked = entry.hadRest
-        binding.switchCorrection.isChecked = entry.correctionNeeded
-        binding.editNote.setText(entry.note)
+        binding.editDecision.setText(decision.text)
+        binding.chipGroupResult.check(chipOf(decision.result))
+        binding.editNote.setText(decision.note)
     }
 
     private fun showDate() {
@@ -103,47 +98,38 @@ class JournalEditFragment : Fragment() {
             ).apply { show() }
     }
 
-    private fun save() {
-        val done = binding.editDone.text.toString().toIntOrNull()
-        val planned = binding.editPlanned.text.toString().toIntOrNull()
-        when {
-            done == null -> {
-                binding.layoutDone.error = getString(R.string.error_enter_number)
-                return
-            }
-            planned == null -> {
-                binding.layoutPlanned.error = getString(R.string.error_enter_number)
-                return
-            }
-            done > planned -> {
-                binding.layoutDone.error = getString(R.string.error_done_more_than_planned)
-                return
-            }
+    private fun chipOf(result: DecisionResult): Int =
+        when (result) {
+            DecisionResult.PENDING -> R.id.chip_pending
+            DecisionResult.WORKED -> R.id.chip_worked
+            DecisionResult.DID_NOT_WORK -> R.id.chip_did_not_work
         }
 
-        val form =
-            JournalForm(
-                tasksPlanned = planned,
-                tasksDone = done,
-                energy = binding.sliderEnergy.value.toInt(),
-                motivation = binding.sliderMotivation.value.toInt(),
-                hadRest = binding.switchRest.isChecked,
-                correctionNeeded = binding.switchCorrection.isChecked,
-                note = binding.editNote.text.toString(),
-            )
+    private fun resultOf(chipId: Int): DecisionResult =
+        when (chipId) {
+            R.id.chip_worked -> DecisionResult.WORKED
+            R.id.chip_did_not_work -> DecisionResult.DID_NOT_WORK
+            else -> DecisionResult.PENDING
+        }
+
+    private fun save() {
+        val text = binding.editDecision.text.toString()
+        if (text.isBlank()) {
+            binding.layoutDecision.error = getString(R.string.error_text_required)
+            return
+        }
+        val result = resultOf(binding.chipGroupResult.checkedChipId)
+        val note = binding.editNote.text.toString()
         viewLifecycleOwner.lifecycleScope.launch {
-            if (viewModel.save(form)) {
-                findNavController().navigateUp()
-            } else {
-                Snackbar.make(binding.root, R.string.error_date_taken, Snackbar.LENGTH_LONG).show()
-            }
+            viewModel.save(text, result, note)
+            findNavController().navigateUp()
         }
     }
 
     private fun confirmDelete() {
         dialog =
             MaterialAlertDialogBuilder(requireContext())
-                .setMessage(R.string.journal_delete_confirm)
+                .setMessage(R.string.decision_delete_confirm)
                 .setPositiveButton(R.string.action_delete) { _, _ ->
                     viewLifecycleOwner.lifecycleScope.launch {
                         viewModel.delete()
