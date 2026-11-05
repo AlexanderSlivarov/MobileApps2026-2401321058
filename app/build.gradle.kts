@@ -27,9 +27,13 @@ android {
             enableUnitTestCoverage = true
         }
         release {
+            // Signed with Android Studio's debug key, so the APK installs on any phone without
+            // a separate keystore. A store release would use its own key instead.
+            signingConfig = signingConfigs.getByName("debug")
+            // Code shrinking/optimization (R8) is off: with it on, the release build crashed on
+            // start (IllegalAccessError in the Kotlin libraries). The APK stays small anyway.
             optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
+                enable = false
             }
         }
     }
