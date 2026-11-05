@@ -147,4 +147,16 @@
     <string name="self_how_i_plan">How do I plan my time now?</string>
     <string name="self_stress">How do I cope with stress?</string>
     <string name="self_saved">Saved</string>
+
+    <!-- My system (summary) -->
+    <string name="summary_share">Share my summary</string>
+    <string name="summary_share_subject">My balance summary – Equilibra</string>
+    <string name="summary_tasks_format">Tasks done: %1$d of %2$d</string>
+    <string name="summary_journal_days_format">Days in the journal: %1$d</string>
+    <string name="summary_completion_format">Average completion: %1$s</string>
+    <string name="summary_percent_format">%1$d%%</string>
+    <string name="summary_energy_format">Average energy: %1$s</string>
+    <string name="summary_motivation_format">Average motivation: %1$s</string>
+    <string name="summary_out_of_five_format">%1$.1f / 5</string>
+    <string name="summary_activities_format">Activities logged: %1$d\nDays covered: %2$d</string>
 </resources>
