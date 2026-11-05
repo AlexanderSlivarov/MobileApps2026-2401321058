@@ -9,7 +9,22 @@
     <fragment
         android:id="@+id/selfAssessmentFragment"
         android:name="com.equilibra.app.ui.selfassessment.SelfAssessmentFragment"
-        android:label="@string/nav_self_assessment" />
+        android:label="@string/nav_self_assessment">
+        <action
+            android:id="@+id/action_selfAssessment_to_wheelEdit"
+            app:destination="@id/wheelEditFragment" />
+    </fragment>
+
+    <!-- Rate the balance wheel / edit a saved rating. assessmentId = -1 means a new rating. -->
+    <fragment
+        android:id="@+id/wheelEditFragment"
+        android:name="com.equilibra.app.ui.selfassessment.WheelEditFragment"
+        android:label="@string/wheel_edit_title">
+        <argument
+            android:name="assessmentId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/habitsFragment"

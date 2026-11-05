@@ -148,6 +148,33 @@
     <string name="self_stress">How do I cope with stress?</string>
     <string name="self_saved">Saved</string>
 
+    <!-- Balance wheel -->
+    <string name="wheel_title">My balance wheel</string>
+    <string name="wheel_empty">No rating yet. Rate your balance to draw your starting wheel.</string>
+    <string name="wheel_add">Rate my balance</string>
+    <string name="wheel_shown_format">Filled: %1$s</string>
+    <string name="wheel_compare_format">Dashed: %1$s</string>
+    <string name="wheel_kind_date_format">%1$s · %2$s</string>
+    <string name="wheel_change_format">%1$d → %2$d</string>
+    <string name="wheel_average_format">Average %1$s</string>
+    <string name="wheel_kind_start">Start</string>
+    <string name="wheel_kind_check_in">Check-in</string>
+    <string name="wheel_kind_final">Final</string>
+    <string name="sector_study_motivation">Study motivation</string>
+    <string name="sector_work_motivation">Work motivation</string>
+    <string name="sector_calm">Calm</string>
+    <string name="sector_friends">Time with friends</string>
+    <string name="sector_hobbies">Hobbies</string>
+    <string name="sector_rest">Rest</string>
+
+    <!-- Balance wheel add / edit -->
+    <string name="wheel_edit_title">Balance wheel</string>
+    <string name="wheel_scale_hint">Rate each area from 1 to 5. 5 always means a good state.</string>
+    <string name="wheel_kind">Which rating is this?</string>
+    <string name="wheel_delete">Delete rating</string>
+    <string name="wheel_delete_confirm">Delete this rating? This can\'t be undone.</string>
+    <string name="error_wheel_kind_taken">You already have this rating. There can be only one Start and one Final. Edit that one instead.</string>
+
     <!-- My system (summary) -->
     <string name="summary_share">Share my summary</string>
     <string name="summary_share_subject">My balance summary – Equilibra</string>

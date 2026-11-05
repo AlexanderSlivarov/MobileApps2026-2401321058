@@ -18,6 +18,66 @@
             android:textAppearance="?attr/textAppearanceHeadlineSmall"
             android:textColor="?attr/colorPrimary" />
 
+        <!-- Balance wheel: the newest rating, compared with the starting one -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wheel_title"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                <com.equilibra.app.ui.common.BalanceWheelView
+                    android:id="@+id/wheel_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/wheel_title" />
+
+                <TextView
+                    android:id="@+id/text_wheel_caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="Check-in · Nov 5, 2026" />
+
+                <!-- Sector colors and scores, added in code -->
+                <LinearLayout
+                    android:id="@+id/layout_legend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+
+                <Button
+                    android:id="@+id/button_add_wheel"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/wheel_add" />
+
+                <!-- Saved ratings, newest first, added in code -->
+                <LinearLayout
+                    android:id="@+id/layout_wheels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Personality type from 16Personalities -->
         <TextView
             style="@style/Widget.Equilibra.SectionLabel"

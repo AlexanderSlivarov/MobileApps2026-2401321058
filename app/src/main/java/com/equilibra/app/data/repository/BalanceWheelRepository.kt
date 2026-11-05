@@ -17,6 +17,8 @@ class BalanceWheelRepository
     ) {
         fun observeAssessments(): Flow<List<WheelAssessmentWithRatings>> = wheelDao.observeAllWithRatings()
 
+        suspend fun getAssessment(id: Long): WheelAssessmentWithRatings? = wheelDao.getWithRatings(id)
+
         suspend fun addAssessment(
             assessment: WheelAssessmentEntity,
             ratings: List<WheelRatingEntity>,

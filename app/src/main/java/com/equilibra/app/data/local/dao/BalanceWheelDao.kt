@@ -19,6 +19,10 @@ abstract class BalanceWheelDao {
     @Query("SELECT * FROM wheel_assessments ORDER BY date, id")
     abstract fun observeAllWithRatings(): Flow<List<WheelAssessmentWithRatings>>
 
+    @Transaction
+    @Query("SELECT * FROM wheel_assessments WHERE id = :id")
+    abstract suspend fun getWithRatings(id: Long): WheelAssessmentWithRatings?
+
     @Insert
     protected abstract suspend fun insertAssessment(assessment: WheelAssessmentEntity): Long
 

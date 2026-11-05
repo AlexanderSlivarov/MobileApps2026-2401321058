@@ -31,4 +31,12 @@
     <color name="md_surface_container">#F5ECE2</color>
     <color name="md_surface_container_high">#EFE6DC</color>
     <color name="md_surface_container_highest">#E9E1D7</color>
+
+    <!-- Balance wheel sectors (day: deeper tones that read well on cream) -->
+    <color name="sector_study_motivation">#3F3A8C</color>
+    <color name="sector_work_motivation">#B5651D</color>
+    <color name="sector_calm">#2E8B7A</color>
+    <color name="sector_friends">#C2457A</color>
+    <color name="sector_hobbies">#7A4FB3</color>
+    <color name="sector_rest">#3B7DC4</color>
 </resources>
