@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bulgarian texts. Android uses this file instead of values/strings.xml when the
+     phone's language is Bulgarian. Texts marked translatable="false" there (names,
+     number formats) are taken from values/strings.xml. -->
+<resources>
+    <!-- Bottom navigation / screen titles -->
+    <string name="nav_self_assessment">Аз</string>
+    <string name="nav_habits">Навици</string>
+    <string name="nav_priorities">Приоритети</string>
+    <string name="nav_decisions">Решения</string>
+    <string name="nav_my_system">Система</string>
+
+    <!-- Language button in the toolbar: it shows the language you switch TO -->
+    <string name="language_switch">EN</string>
+    <string name="language_switch_description">Превключи на английски</string>
+
+    <!-- Section questions, word for word from the STEAM assignment -->
+    <string name="question_self_assessment">Кой съм и как управлявам времето си?</string>
+    <string name="question_habits">Какви проблеми, навици и потребности откривам в ежедневието си?</string>
+    <string name="question_priorities">По какъв начин подреждам приоритетите си?</string>
+    <string name="question_decisions">Как проследявам резултатите от решенията си?</string>
+    <string name="question_my_system">Как изглежда моята окончателна система за баланс?</string>
+
+    <!-- Section names, word for word from the STEAM assignment -->
+    <string name="section_self_assessment">Лична самооценка</string>
+    <string name="section_habits">Анализ на навиците</string>
+    <string name="section_priorities">Приоритизиране</string>
+    <string name="section_decisions">Проследяване на баланса</string>
+
+    <!-- Common actions -->
+    <string name="action_save">Запази</string>
+    <string name="action_cancel">Отказ</string>
+    <string name="action_delete">Изтрий</string>
+    <string name="action_edit">Редактирай</string>
+    <string name="error_text_required">Моля, напиши нещо</string>
+
+    <!-- Me (self-assessment) -->
+    <string name="self_who_am_i">Кой съм аз?</string>
+    <string name="self_manage_time">Как управлявам времето си?</string>
+    <string name="self_saved">Запазено</string>
+
+    <!-- Balance wheel -->
+    <string name="wheel_title">Моето колело на баланса</string>
+    <string name="wheel_empty">Все още няма оценка. Оцени баланса си, за да начертаеш началното си колело.</string>
+    <string name="wheel_add">Оцени баланса си</string>
+    <string name="wheel_shown_format">Запълнено: %1$s</string>
+    <string name="wheel_compare_format">Пунктир: %1$s</string>
+    <string name="wheel_average_format">Средно %1$s</string>
+    <string name="wheel_kind_start">Начална</string>
+    <string name="wheel_kind_check_in">Междинна</string>
+    <string name="wheel_kind_final">Крайна</string>
+    <string name="sector_study_motivation">Мотивация за учене</string>
+    <string name="sector_work_motivation">Мотивация за работа</string>
+    <string name="sector_calm">Спокойствие</string>
+    <string name="sector_friends">Време с приятели</string>
+    <string name="sector_hobbies">Хобита</string>
+    <string name="sector_rest">Почивка</string>
+
+    <!-- Balance wheel add / edit -->
+    <string name="wheel_edit_title">Колело на баланса</string>
+    <string name="wheel_scale_hint">Оцени всяка област от 1 до 5. 5 винаги означава добро състояние.</string>
+    <string name="wheel_date">Ден</string>
+    <string name="wheel_kind">Каква е тази оценка?</string>
+    <string name="wheel_delete">Изтрий оценката</string>
+    <string name="wheel_delete_confirm">Да изтрия ли тази оценка? Това не може да бъде отменено.</string>
+    <string name="error_wheel_kind_taken">Вече имаш такава оценка. Може да има само една начална и една крайна. Редактирай нея.</string>
+
+    <!-- Habit analysis (findings) -->
+    <string name="habits_empty">Все още нищо не е открито. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
+    <string name="finding_add">Добави откритие</string>
+    <string name="finding_edit">Редактирай откритието</string>
+    <string name="finding_hint">Какво открих?</string>
+    <string name="finding_problem">Проблем</string>
+    <string name="finding_habit">Навик</string>
+    <string name="finding_need">Потребност</string>
+    <string name="finding_delete_confirm">Да изтрия ли това откритие? Това не може да бъде отменено.</string>
+
+    <!-- Priorities -->
+    <string name="priorities_list_title">Моите приоритети, най-важното първо</string>
+    <string name="priorities_empty">Все още няма приоритети. Добави ги и ги подреди.</string>
+    <string name="add_task">Добави приоритет</string>
+    <string name="priority_edit">Редактирай приоритета</string>
+    <string name="priority_hint">Приоритет</string>
+    <string name="move_up">Премести нагоре</string>
+    <string name="move_down">Премести надолу</string>
+    <string name="task_delete_confirm">Да изтрия ли този приоритет? Това не може да бъде отменено.</string>
+    <string name="error_title_required">Моля, въведи заглавие</string>
+    <string name="my_method_title">Моят метод</string>
+    <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
+    <string name="my_method_hint">Как подреждам приоритетите си</string>
+
+    <!-- Share (extra feature: Share Intent) -->
+    <string name="share_priorities">Сподели приоритетите ми</string>
+    <string name="share_chooser_title">Сподели чрез</string>
+    <string name="share_subject">Моите приоритети – Equilibra</string>
+
+    <!-- Balance tracking (decisions) -->
+    <string name="decisions_empty">Все още няма решения. Добави решение и по-късно отбележи дали е проработило.</string>
+    <string name="decision_add">Добави решение</string>
+    <string name="decision_result_format">%1$s · от %2$s</string>
+    <string name="result_pending">Още е рано да се каже</string>
+    <string name="result_worked">Проработи</string>
+    <string name="result_did_not_work">Не проработи</string>
+
+    <!-- Decision add / edit -->
+    <string name="decision_edit_title">Решение</string>
+    <string name="decision_hint">Моето решение, напр. без телефон след 23:00</string>
+    <string name="decision_date">От</string>
+    <string name="decision_result">Резултат</string>
+    <string name="decision_note_hint">Какво се случи? (по избор)</string>
+    <string name="decision_delete">Изтрий решението</string>
+    <string name="decision_delete_confirm">Да изтрия ли това решение? Това не може да бъде отменено.</string>
+
+    <!-- My system -->
+    <string name="rules_title">Моите правила за баланс</string>
+    <string name="rules_empty">Напиши правилата на окончателната си система за баланс.</string>
+    <string name="rules_hint">Моите правила за баланс</string>
+</resources>

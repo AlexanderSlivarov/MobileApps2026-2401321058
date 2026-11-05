@@ -12,8 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Equilibra">
+        <!-- configChanges: on a language change Android keeps this activity and only calls
+             onConfigurationChanged, where MainActivity updates the texts itself (no rebuild). -->
         <activity
             android:name=".MainActivity"
+            android:configChanges="locale|layoutDirection"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -22,6 +25,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Remembers the language chosen in the app on Android 12 and older.
+             (Android 13+ remembers it itself.) Part of AndroidX AppCompat. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
     </application>
 
 </manifest>

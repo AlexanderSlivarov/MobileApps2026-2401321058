@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Navigation Component graph: every screen of the app and how they connect.
-     The five bottom-bar sections use the same ids as res/menu/bottom_nav_menu.xml. -->
+     The five bottom-bar sections use the same ids as res/menu/bottom_nav_menu.xml.
+     The app opens on step 1 (Me), because the STEAM dashboard presents the steps in order. -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/prioritiesFragment">
+    app:startDestination="@id/selfAssessmentFragment">
 
     <fragment
         android:id="@+id/selfAssessmentFragment"

@@ -42,6 +42,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    androidResources {
+        // Lists the app's languages (from values and values-bg) for Android 13+,
+        // so the in-app language switch is accepted by the system.
+        generateLocaleConfig = true
+    }
 }
 
 // Room writes a JSON description of each database version here (needed for migrations).

@@ -25,6 +25,12 @@ class DecisionEditViewModel
         /** The day I started the decision. Kept here so it survives rotation. Today for a new one. */
         var date: LocalDate = LocalDate.now()
 
+        /**
+         * True once the stored decision was put into the form. The ViewModel outlives the view
+         * (e.g. when the language is switched), so the form isn't reloaded over unsaved typing.
+         */
+        var formLoaded = false
+
         /** The stored decision, or null for a new one. Also takes over its date. */
         suspend fun loadDecision(): DecisionEntity? {
             if (isNewDecision) return null

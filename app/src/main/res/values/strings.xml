@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Equilibra</string>
+    <string name="app_name" translatable="false">Equilibra</string>
 
     <!-- Bottom navigation / screen titles -->
     <string name="nav_self_assessment">Me</string>
@@ -7,6 +7,10 @@
     <string name="nav_priorities">Priorities</string>
     <string name="nav_decisions">Decisions</string>
     <string name="nav_my_system">My system</string>
+
+    <!-- Language button in the toolbar: it shows the language you switch TO -->
+    <string name="language_switch">БГ</string>
+    <string name="language_switch_description">Switch to Bulgarian</string>
 
     <!-- Section questions (STEAM course: each section is titled with its question) -->
     <string name="question_self_assessment">Who am I and how do I manage my time?</string>
@@ -27,7 +31,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
     <string name="error_text_required">Please write something</string>
-    <string name="count_format">%1$s: %2$d</string>
+    <string name="count_format" translatable="false">%1$s: %2$d</string>
 
     <!-- Me (self-assessment) -->
     <string name="self_who_am_i">Who am I?</string>
@@ -40,10 +44,10 @@
     <string name="wheel_add">Rate my balance</string>
     <string name="wheel_shown_format">Filled: %1$s</string>
     <string name="wheel_compare_format">Dashed: %1$s</string>
-    <string name="wheel_kind_date_format">%1$s · %2$s</string>
-    <string name="wheel_change_format">%1$d → %2$d</string>
+    <string name="wheel_kind_date_format" translatable="false">%1$s · %2$s</string>
+    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
     <string name="wheel_average_format">Average %1$s</string>
-    <string name="wheel_out_of_five_format">%1$.1f / 5</string>
+    <string name="wheel_out_of_five_format" translatable="false">%1$.1f / 5</string>
     <string name="wheel_kind_start">Start</string>
     <string name="wheel_kind_check_in">Check-in</string>
     <string name="wheel_kind_final">Final</string>
@@ -91,7 +95,7 @@
     <string name="share_priorities">Share my priorities</string>
     <string name="share_chooser_title">Share with</string>
     <string name="share_subject">My priorities – Equilibra</string>
-    <string name="share_none">–</string>
+    <string name="share_none" translatable="false">–</string>
 
     <!-- Balance tracking (decisions) -->
     <string name="decisions_empty">No decisions yet. Add a decision and later mark whether it worked.</string>

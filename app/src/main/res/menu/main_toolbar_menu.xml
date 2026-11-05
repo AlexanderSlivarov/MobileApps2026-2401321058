@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Toolbar button that switches the app between English and Bulgarian. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_switch_language"
+        android:contentDescription="@string/language_switch_description"
+        android:title="@string/language_switch"
+        app:showAsAction="always" />
+</menu>

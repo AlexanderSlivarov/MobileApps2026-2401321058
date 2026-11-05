@@ -49,11 +49,12 @@ class DecisionEditFragment : Fragment() {
         binding.buttonDelete.isVisible = !viewModel.isNewDecision
         showDate()
 
-        // Load the decision into the form only the first time. After a rotation Android
-        // restores the fields and the chosen result chip by itself.
-        if (savedInstanceState == null) {
+        // Load the decision into the form only the first time. After a rotation or a language
+        // switch Android restores the fields and the chosen result chip by itself.
+        if (savedInstanceState == null && !viewModel.formLoaded) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.loadDecision()?.let { fillForm(it) }
+                viewModel.formLoaded = true
             }
         }
 
