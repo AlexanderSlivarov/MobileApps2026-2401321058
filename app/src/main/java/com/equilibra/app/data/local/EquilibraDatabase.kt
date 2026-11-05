@@ -29,7 +29,7 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
@@ -37,6 +37,8 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         AutoMigration(from = 3, to = 4),
         // 4 -> 5: important / urgent / not started on tasks. Only new columns again.
         AutoMigration(from = 4, to = 5),
+        // 5 -> 6: the "My time lab" fields on decisions. Only new columns again.
+        AutoMigration(from = 5, to = 6),
     ],
 )
 @TypeConverters(Converters::class)

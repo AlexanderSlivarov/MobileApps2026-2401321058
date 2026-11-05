@@ -75,6 +75,9 @@ class DecisionEditFragment : Fragment() {
     private fun fillForm(decision: DecisionEntity) {
         showDate()
         binding.editDecision.setText(decision.text)
+        binding.editHypothesis.setText(decision.hypothesis)
+        binding.editSmartGoal.setText(decision.smartGoal)
+        binding.editProgressSign.setText(decision.progressSign)
         binding.chipGroupResult.check(chipOf(decision.result))
         binding.editNote.setText(decision.note)
     }
@@ -119,10 +122,17 @@ class DecisionEditFragment : Fragment() {
             binding.layoutDecision.error = getString(R.string.error_text_required)
             return
         }
-        val result = resultOf(binding.chipGroupResult.checkedChipId)
-        val note = binding.editNote.text.toString()
+        val form =
+            DecisionForm(
+                text = text,
+                hypothesis = binding.editHypothesis.text.toString(),
+                smartGoal = binding.editSmartGoal.text.toString(),
+                progressSign = binding.editProgressSign.text.toString(),
+                result = resultOf(binding.chipGroupResult.checkedChipId),
+                note = binding.editNote.text.toString(),
+            )
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.save(text, result, note)
+            viewModel.save(form)
             findNavController().navigateUp()
         }
     }

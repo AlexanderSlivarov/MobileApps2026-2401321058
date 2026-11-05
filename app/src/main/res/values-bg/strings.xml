@@ -126,6 +126,13 @@
     <string name="decision_date">От</string>
     <string name="decision_result">Резултат</string>
     <string name="decision_note_hint">Какво се случи? (по избор)</string>
+    <string name="time_lab_title">Моята лаборатория за време</string>
+    <string name="time_lab_hint">Превърни решението в малък експеримент: какво очакваш, провери го 7 дни и сравни.</string>
+    <string name="hypothesis_hint">Хипотеза: какво очаквам да се промени?</string>
+    <string name="smart_goal_hint">Моята SMART цел за 7 дни</string>
+    <string name="smart_goal_helper">Конкретна, измерима, постижима, релевантна и ограничена във времето</string>
+    <string name="progress_sign_hint">По какво ще разпозная напредък?</string>
+    <string name="smart_goal_format">Цел (7 дни): %1$s</string>
     <string name="decision_delete">Изтрий решението</string>
     <string name="decision_delete_confirm">Да изтрия ли това решение? Това не може да бъде отменено.</string>
 

@@ -128,6 +128,13 @@
     <string name="decision_date">Since</string>
     <string name="decision_result">Result</string>
     <string name="decision_note_hint">What happened? (optional)</string>
+    <string name="time_lab_title">My time lab</string>
+    <string name="time_lab_hint">Turn the decision into a small experiment: what do you expect, test it for 7 days, then compare.</string>
+    <string name="hypothesis_hint">Hypothesis: what do I expect to change?</string>
+    <string name="smart_goal_hint">My SMART goal for 7 days</string>
+    <string name="smart_goal_helper">Specific, measurable, achievable, relevant and time-bound</string>
+    <string name="progress_sign_hint">How will I recognize progress?</string>
+    <string name="smart_goal_format">Goal (7 days): %1$s</string>
     <string name="decision_delete">Delete decision</string>
     <string name="decision_delete_confirm">Delete this decision? This can\'t be undone.</string>
 

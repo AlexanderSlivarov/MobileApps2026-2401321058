@@ -51,6 +51,9 @@ class DecisionAdapter(
                 context.getString(decision.result.labelRes),
                 decision.startDate.toDisplayString(),
             )
+        // My time lab: the SMART goal is what the experiment tests.
+        binding.textGoal.text = context.getString(R.string.smart_goal_format, decision.smartGoal)
+        binding.textGoal.isVisible = decision.smartGoal.isNotBlank()
         binding.textNote.text = decision.note
         binding.textNote.isVisible = decision.note.isNotBlank()
         binding.root.setOnClickListener { onClick(decision) }

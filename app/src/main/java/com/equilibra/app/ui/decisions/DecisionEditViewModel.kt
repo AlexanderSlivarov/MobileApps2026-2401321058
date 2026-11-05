@@ -9,7 +9,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import javax.inject.Inject
 
-/** Create, edit and delete one decision (the C, U and D of CRUD). */
+/** What the user filled in on the decision form (the date is kept in the ViewModel). */
+data class DecisionForm(
+    val text: String,
+    val hypothesis: String,
+    val smartGoal: String,
+    val progressSign: String,
+    val result: DecisionResult,
+    val note: String,
+)
+
+/** Create, edit and delete one decision, a small "time lab" experiment (the C, U and D of CRUD). */
 @HiltViewModel
 class DecisionEditViewModel
     @Inject
@@ -39,18 +49,17 @@ class DecisionEditViewModel
             return decision
         }
 
-        suspend fun save(
-            text: String,
-            result: DecisionResult,
-            note: String,
-        ) {
+        suspend fun save(form: DecisionForm) {
             val decision =
                 DecisionEntity(
                     id = if (isNewDecision) 0 else decisionId,
-                    text = text.trim(),
+                    text = form.text.trim(),
                     startDate = date,
-                    result = result,
-                    note = note.trim(),
+                    result = form.result,
+                    note = form.note.trim(),
+                    hypothesis = form.hypothesis.trim(),
+                    smartGoal = form.smartGoal.trim(),
+                    progressSign = form.progressSign.trim(),
                 )
             if (isNewDecision) decisionRepository.addDecision(decision) else decisionRepository.updateDecision(decision)
         }
