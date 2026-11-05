@@ -11,12 +11,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/question_my_system"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            android:textColor="?attr/colorPrimary" />
 
         <!-- My balance rules -->
         <com.google.android.material.card.MaterialCardView
@@ -82,6 +76,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/section_self_assessment"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                <!-- Summary of the self-assessment answers -->
+                <TextView
+                    android:id="@+id/text_self"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="4dp"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:visibility="gone"
+                    tools:text="I focus best in the morning.\nI plan in the morning for the day."
+                    tools:visibility="visible" />
 
                 <com.equilibra.app.ui.common.BalanceWheelView
                     android:id="@+id/wheel_view"

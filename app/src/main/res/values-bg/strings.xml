@@ -8,18 +8,12 @@
     <string name="nav_habits">Навици</string>
     <string name="nav_priorities">Приоритети</string>
     <string name="nav_decisions">Решения</string>
-    <string name="nav_my_system">Система</string>
+    <string name="nav_my_system">Баланс</string>
 
     <!-- Language button in the toolbar: it shows the language you switch TO -->
     <string name="language_switch">EN</string>
     <string name="language_switch_description">Превключи на английски</string>
 
-    <!-- Section questions, word for word from the STEAM assignment -->
-    <string name="question_self_assessment">Кой съм и как управлявам времето си?</string>
-    <string name="question_habits">Какви проблеми, навици и потребности откривам в ежедневието си?</string>
-    <string name="question_priorities">По какъв начин подреждам приоритетите си?</string>
-    <string name="question_decisions">Как проследявам резултатите от решенията си?</string>
-    <string name="question_my_system">Как изглежда моята окончателна система за баланс?</string>
 
     <!-- Section names, word for word from the STEAM assignment -->
     <string name="section_self_assessment">Лична самооценка</string>
@@ -32,17 +26,63 @@
     <string name="action_cancel">Отказ</string>
     <string name="action_delete">Изтрий</string>
     <string name="action_edit">Редактирай</string>
+    <string name="action_add">Добави</string>
     <string name="error_text_required">Моля, напиши нещо</string>
 
     <!-- Me (self-assessment) -->
     <string name="self_who_am_i">Кой съм аз?</string>
     <string name="self_manage_time">Как управлявам времето си?</string>
-    <string name="self_saved">Запазено</string>
+
+    <!-- Self-assessment questions: 3 about who I am, 3 about how I manage my time -->
+    <string name="self_summary_empty">Отговори на въпросите отгоре.</string>
+    <string name="self_q_focus">Кога ми е най-лесно да се съсредоточа?</string>
+    <string name="self_q_focus_0">Сутрин</string>
+    <string name="self_q_focus_1">Следобед</string>
+    <string name="self_q_focus_2">Вечер</string>
+    <string name="self_s_focus_0">Съсредоточавам се най-лесно сутрин.</string>
+    <string name="self_s_focus_1">Съсредоточавам се най-лесно следобед.</string>
+    <string name="self_s_focus_2">Съсредоточавам се най-лесно вечер.</string>
+    <string name="self_q_rest">Как почивам най-добре?</string>
+    <string name="self_q_rest_0">С движение</string>
+    <string name="self_q_rest_1">С приятели</string>
+    <string name="self_q_rest_2">Насаме</string>
+    <string name="self_s_rest_0">Почивам най-добре с движение.</string>
+    <string name="self_s_rest_1">Почивам най-добре с приятели.</string>
+    <string name="self_s_rest_2">Почивам най-добре насаме.</string>
+    <string name="self_q_own_time">Колко време за себе си имам през седмицата?</string>
+    <string name="self_q_own_time_0">Достатъчно</string>
+    <string name="self_q_own_time_1">Малко</string>
+    <string name="self_q_own_time_2">Почти никакво</string>
+    <string name="self_s_own_time_0">Имам достатъчно време за себе си.</string>
+    <string name="self_s_own_time_1">Имам малко време за себе си.</string>
+    <string name="self_s_own_time_2">Почти нямам време за себе си.</string>
+    <string name="self_q_plan">Как планирам деня си?</string>
+    <string name="self_q_plan_0">Предварително</string>
+    <string name="self_q_plan_1">Сутринта за деня</string>
+    <string name="self_q_plan_2">Не планирам</string>
+    <string name="self_s_plan_0">Планирам предварително.</string>
+    <string name="self_s_plan_1">Планирам сутринта за деня.</string>
+    <string name="self_s_plan_2">Не планирам деня си.</string>
+    <string name="self_q_big_task">Какво правя с голяма задача?</string>
+    <string name="self_q_big_task_0">Започвам веднага</string>
+    <string name="self_q_big_task_1">Разделям я на части</string>
+    <string name="self_q_big_task_2">Отлагам до последно</string>
+    <string name="self_s_big_task_0">Голяма задача започвам веднага.</string>
+    <string name="self_s_big_task_1">Голямата задача я разделям на части.</string>
+    <string name="self_s_big_task_2">Голямата задача я отлагам до последно.</string>
+    <string name="self_q_distraction">Какво ме разсейва най-много?</string>
+    <string name="self_q_distraction_0">Телефонът</string>
+    <string name="self_q_distraction_1">Хората около мен</string>
+    <string name="self_q_distraction_2">Умората</string>
+    <string name="self_s_distraction_0">Най-много ме разсейва телефонът.</string>
+    <string name="self_s_distraction_1">Най-много ме разсейват хората около мен.</string>
+    <string name="self_s_distraction_2">Най-много ме разсейва умората.</string>
+
 
     <!-- Balance wheel -->
-    <string name="wheel_title">Къде съм сега?</string>
-    <string name="wheel_empty">Все още няма оценка. Оцени баланса си, за да начертаеш началното си колело.</string>
-    <string name="wheel_add">Оцени баланса си</string>
+    <string name="wheel_title">Моето състояние</string>
+    <string name="wheel_empty">Все още няма оценка. Оцени състоянието си, за да начертаеш началното си колело.</string>
+    <string name="wheel_add">Оцени състоянието си</string>
     <string name="wheel_shown_format">Запълнено: %1$s</string>
     <string name="wheel_compare_format">Пунктир: %1$s</string>
     <string name="wheel_kind_start">Начална</string>
@@ -58,7 +98,7 @@
     <string name="sector_lower_is_better_format">%1$s (по-ниско е по-добре)</string>
 
     <!-- Balance wheel add / edit -->
-    <string name="wheel_edit_title">Колело на баланса</string>
+    <string name="wheel_edit_title">Моето състояние</string>
     <string name="wheel_scale_hint">Оцени всеки показател от 1 (ниско) до 5 (високо). При стрес и натовареност високата оценка не е непременно положителна.</string>
     <string name="wheel_date">Ден</string>
     <string name="wheel_kind">Каква е тази оценка?</string>
@@ -68,7 +108,6 @@
 
     <!-- Habit analysis (findings) -->
     <string name="habits_empty">Все още нищо не е открито. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
-    <string name="finding_add">Добави откритие</string>
     <string name="finding_hint">Какво открих?</string>
     <string name="finding_problem">Проблем</string>
     <string name="finding_habit">Навик</string>
@@ -82,7 +121,6 @@
     <string name="five_whys_hint">Питай „Защо?“ отново и отново – от симптома към по-дълбоката причина. Отговорите са предположения, докато не ги сравниш с реални наблюдения.</string>
     <string name="why_hint">Защо?</string>
     <string name="root_cause_format">Най-дълбока причина: %1$s</string>
-    <string name="five_whys_analyzed">Проблеми, анализирани с „Пет пъти защо?“</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">Моите приоритети, най-важното първо</string>
@@ -97,10 +135,10 @@
     <string name="priority_important">Важно (принос към цел, задължение или потребност)</string>
     <string name="priority_urgent">Спешно (реален близък срок)</string>
     <string name="priority_not_started">Съзнателно не започвам това</string>
-    <string name="group_i">I · Действам сега</string>
-    <string name="group_ii">II · Планирам</string>
-    <string name="group_iii">III · Ограничавам или делегирам</string>
-    <string name="group_iv">IV · Намалявам</string>
+    <string name="group_i">Направи сега · важно и спешно</string>
+    <string name="group_ii">Планирай · важно, не спешно</string>
+    <string name="group_iii">Делегирай или съкрати · спешно, не важно</string>
+    <string name="group_iv">Откажи се · нито важно, нито спешно</string>
     <string name="not_started_title">Съзнателно не започнах</string>
     <string name="not_started_empty">Нещата, които реши да не започваш, за да запазиш важното и почивката си.</string>
     <string name="my_method_title">Моят метод</string>
@@ -114,7 +152,6 @@
 
     <!-- Balance tracking (decisions) -->
     <string name="decisions_empty">Все още няма решения. Добави решение и по-късно отбележи дали е проработило.</string>
-    <string name="decision_add">Добави решение</string>
     <string name="decision_result_format">%1$s · от %2$s</string>
     <string name="result_pending">Още е рано да се каже</string>
     <string name="result_worked">Проработи</string>
@@ -140,4 +177,38 @@
     <string name="rules_title">Моите правила за баланс</string>
     <string name="rules_empty">Напиши правилата на окончателната си система за баланс.</string>
     <string name="rules_hint">Моите правила за баланс</string>
+
+    <!-- Counts on the Balance page -->
+    <plurals name="count_problems">
+        <item quantity="one">%d проблем</item>
+        <item quantity="other">%d проблема</item>
+    </plurals>
+    <plurals name="count_habits">
+        <item quantity="one">%d навик</item>
+        <item quantity="other">%d навика</item>
+    </plurals>
+    <plurals name="count_needs">
+        <item quantity="one">%d потребност</item>
+        <item quantity="other">%d потребности</item>
+    </plurals>
+    <plurals name="count_traced">
+        <item quantity="one">%d проблем, проследен с „Пет пъти защо?“</item>
+        <item quantity="other">%d проблема, проследени с „Пет пъти защо?“</item>
+    </plurals>
+    <plurals name="count_not_started">
+        <item quantity="one">%d нещо, което съзнателно не започнах</item>
+        <item quantity="other">%d неща, които съзнателно не започнах</item>
+    </plurals>
+    <plurals name="count_worked">
+        <item quantity="one">%d решение проработи</item>
+        <item quantity="other">%d решения проработиха</item>
+    </plurals>
+    <plurals name="count_did_not_work">
+        <item quantity="one">%d решение не проработи</item>
+        <item quantity="other">%d решения не проработиха</item>
+    </plurals>
+    <plurals name="count_pending">
+        <item quantity="one">%d решение – още е рано да се каже</item>
+        <item quantity="other">%d решения – още е рано да се каже</item>
+    </plurals>
 </resources>

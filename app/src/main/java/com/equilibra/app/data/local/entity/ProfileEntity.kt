@@ -5,17 +5,20 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * The free-text answers of the app's single user: the self-assessment, "My method"
- * for prioritization and the final balance rules. Always one row with id = 1.
+ * The app's single user: the self-assessment answers, "My method" for prioritization
+ * and the final balance rules. Always one row with id = 1.
  */
 @Entity(tableName = "profile")
 data class ProfileEntity(
     @PrimaryKey val id: Int = SINGLE_ROW_ID,
-    // defaultValue is needed so the migration from version 1 can add the column to the existing row.
-    @ColumnInfo(defaultValue = "''") val whoAmI: String = "",
-    val howIManageTime: String = "",
     val prioritizationMethod: String = "",
     val finalRules: String = "",
+    /**
+     * The self-assessment answers: one character per question, in order. "0", "1" or "2"
+     * is the chosen option, "-" a question not answered yet, e.g. "02-1". Empty at first.
+     * defaultValue lets the migration add the column to the existing row.
+     */
+    @ColumnInfo(defaultValue = "''") val selfAnswers: String = "",
 ) {
     companion object {
         const val SINGLE_ROW_ID = 1

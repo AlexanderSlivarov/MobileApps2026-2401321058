@@ -6,18 +6,12 @@
     <string name="nav_habits">Habits</string>
     <string name="nav_priorities">Priorities</string>
     <string name="nav_decisions">Decisions</string>
-    <string name="nav_my_system">My system</string>
+    <string name="nav_my_system">Balance</string>
 
     <!-- Language button in the toolbar: it shows the language you switch TO -->
     <string name="language_switch">БГ</string>
     <string name="language_switch_description">Switch to Bulgarian</string>
 
-    <!-- Section questions (STEAM course: each section is titled with its question) -->
-    <string name="question_self_assessment">Who am I and how do I manage my time?</string>
-    <string name="question_habits">What problems, habits and needs do I find in my daily life?</string>
-    <string name="question_priorities">How do I order my priorities?</string>
-    <string name="question_decisions">How do I track the results of my decisions?</string>
-    <string name="question_my_system">What does my final balance system look like?</string>
 
     <!-- Section names (STEAM course mandatory content), used on My system -->
     <string name="section_self_assessment">Self-assessment</string>
@@ -30,18 +24,63 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
+    <string name="action_add">Add</string>
     <string name="error_text_required">Please write something</string>
-    <string name="count_format" translatable="false">%1$s: %2$d</string>
 
     <!-- Me (self-assessment) -->
     <string name="self_who_am_i">Who am I?</string>
     <string name="self_manage_time">How do I manage my time?</string>
-    <string name="self_saved">Saved</string>
+
+    <!-- Self-assessment questions: 3 about who I am, 3 about how I manage my time -->
+    <string name="self_summary_empty">Answer the questions above.</string>
+    <string name="self_q_focus">When is it easiest for me to focus?</string>
+    <string name="self_q_focus_0">In the morning</string>
+    <string name="self_q_focus_1">In the afternoon</string>
+    <string name="self_q_focus_2">In the evening</string>
+    <string name="self_s_focus_0">I focus best in the morning.</string>
+    <string name="self_s_focus_1">I focus best in the afternoon.</string>
+    <string name="self_s_focus_2">I focus best in the evening.</string>
+    <string name="self_q_rest">How do I rest best?</string>
+    <string name="self_q_rest_0">By moving</string>
+    <string name="self_q_rest_1">With friends</string>
+    <string name="self_q_rest_2">On my own</string>
+    <string name="self_s_rest_0">I rest best by moving.</string>
+    <string name="self_s_rest_1">I rest best with friends.</string>
+    <string name="self_s_rest_2">I rest best on my own.</string>
+    <string name="self_q_own_time">How much time for myself do I have in a week?</string>
+    <string name="self_q_own_time_0">Enough</string>
+    <string name="self_q_own_time_1">A little</string>
+    <string name="self_q_own_time_2">Almost none</string>
+    <string name="self_s_own_time_0">I have enough time for myself.</string>
+    <string name="self_s_own_time_1">I have a little time for myself.</string>
+    <string name="self_s_own_time_2">I have almost no time for myself.</string>
+    <string name="self_q_plan">How do I plan my day?</string>
+    <string name="self_q_plan_0">In advance</string>
+    <string name="self_q_plan_1">In the morning for the day</string>
+    <string name="self_q_plan_2">No planning</string>
+    <string name="self_s_plan_0">I plan in advance.</string>
+    <string name="self_s_plan_1">I plan in the morning for the day.</string>
+    <string name="self_s_plan_2">I do not plan my day.</string>
+    <string name="self_q_big_task">What do I do with a big task?</string>
+    <string name="self_q_big_task_0">I start right away</string>
+    <string name="self_q_big_task_1">I split it into parts</string>
+    <string name="self_q_big_task_2">I put it off until the last moment</string>
+    <string name="self_s_big_task_0">I start a big task right away.</string>
+    <string name="self_s_big_task_1">I split a big task into parts.</string>
+    <string name="self_s_big_task_2">I put a big task off until the last moment.</string>
+    <string name="self_q_distraction">What distracts me the most?</string>
+    <string name="self_q_distraction_0">My phone</string>
+    <string name="self_q_distraction_1">People around me</string>
+    <string name="self_q_distraction_2">Tiredness</string>
+    <string name="self_s_distraction_0">My phone distracts me the most.</string>
+    <string name="self_s_distraction_1">People around me distract me the most.</string>
+    <string name="self_s_distraction_2">Tiredness distracts me the most.</string>
+
 
     <!-- Balance wheel -->
-    <string name="wheel_title">Where am I now?</string>
-    <string name="wheel_empty">No rating yet. Rate your balance to draw your starting wheel.</string>
-    <string name="wheel_add">Rate my balance</string>
+    <string name="wheel_title">My state</string>
+    <string name="wheel_empty">No rating yet. Rate your state to draw your starting wheel.</string>
+    <string name="wheel_add">Rate my state</string>
     <string name="wheel_shown_format">Filled: %1$s</string>
     <string name="wheel_compare_format">Dashed: %1$s</string>
     <string name="wheel_kind_date_format" translatable="false">%1$s · %2$s</string>
@@ -59,7 +98,7 @@
     <string name="sector_lower_is_better_format">%1$s (lower is better)</string>
 
     <!-- Balance wheel add / edit -->
-    <string name="wheel_edit_title">Balance wheel</string>
+    <string name="wheel_edit_title">My state</string>
     <string name="wheel_scale_hint">Rate each indicator from 1 (low) to 5 (high). For stress and workload, a high score is not necessarily positive.</string>
     <string name="wheel_date">Day</string>
     <string name="wheel_kind">Which rating is this?</string>
@@ -69,7 +108,6 @@
 
     <!-- Habit analysis (findings) -->
     <string name="habits_empty">Nothing found yet. Add the problems, habits and needs you notice in your daily life.</string>
-    <string name="finding_add">Add finding</string>
     <string name="finding_hint">What did I find?</string>
     <string name="finding_problem">Problem</string>
     <string name="finding_habit">Habit</string>
@@ -83,7 +121,6 @@
     <string name="five_whys_hint">Ask “Why?” again and again, from the symptom to a deeper cause. The answers are guesses until you check them with real observations.</string>
     <string name="why_hint">Why?</string>
     <string name="root_cause_format">Deepest cause: %1$s</string>
-    <string name="five_whys_analyzed">Problems traced with 5 Whys</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">My priorities, most important first</string>
@@ -98,10 +135,10 @@
     <string name="priority_important">Important (contributes to a goal, duty or need)</string>
     <string name="priority_urgent">Urgent (real deadline soon)</string>
     <string name="priority_not_started">I consciously don\'t start this</string>
-    <string name="group_i">I · Do now</string>
-    <string name="group_ii">II · Plan</string>
-    <string name="group_iii">III · Limit or delegate</string>
-    <string name="group_iv">IV · Reduce</string>
+    <string name="group_i">Do now · important and urgent</string>
+    <string name="group_ii">Plan it · important, not urgent</string>
+    <string name="group_iii">Delegate or shorten · urgent, not important</string>
+    <string name="group_iv">Drop it · neither</string>
     <string name="not_started_title">I consciously didn\'t start</string>
     <string name="not_started_empty">Things you decided not to start, to protect what matters and your rest.</string>
     <string name="my_method_title">My method</string>
@@ -116,7 +153,6 @@
 
     <!-- Balance tracking (decisions) -->
     <string name="decisions_empty">No decisions yet. Add a decision and later mark whether it worked.</string>
-    <string name="decision_add">Add decision</string>
     <string name="decision_result_format">%1$s · since %2$s</string>
     <string name="result_pending">Too early to tell</string>
     <string name="result_worked">Worked</string>
@@ -142,4 +178,38 @@
     <string name="rules_title">My balance rules</string>
     <string name="rules_empty">Write the rules of your final balance system.</string>
     <string name="rules_hint">My balance rules</string>
+
+    <!-- Counts on the Balance page -->
+    <plurals name="count_problems">
+        <item quantity="one">%d problem</item>
+        <item quantity="other">%d problems</item>
+    </plurals>
+    <plurals name="count_habits">
+        <item quantity="one">%d habit</item>
+        <item quantity="other">%d habits</item>
+    </plurals>
+    <plurals name="count_needs">
+        <item quantity="one">%d need</item>
+        <item quantity="other">%d needs</item>
+    </plurals>
+    <plurals name="count_traced">
+        <item quantity="one">%d problem traced with 5 Whys</item>
+        <item quantity="other">%d problems traced with 5 Whys</item>
+    </plurals>
+    <plurals name="count_not_started">
+        <item quantity="one">%d thing I consciously didn\'t start</item>
+        <item quantity="other">%d things I consciously didn\'t start</item>
+    </plurals>
+    <plurals name="count_worked">
+        <item quantity="one">%d decision worked</item>
+        <item quantity="other">%d decisions worked</item>
+    </plurals>
+    <plurals name="count_did_not_work">
+        <item quantity="one">%d decision didn\'t work</item>
+        <item quantity="other">%d decisions didn\'t work</item>
+    </plurals>
+    <plurals name="count_pending">
+        <item quantity="one">%d decision – too early to tell</item>
+        <item quantity="other">%d decisions – too early to tell</item>
+    </plurals>
 </resources>

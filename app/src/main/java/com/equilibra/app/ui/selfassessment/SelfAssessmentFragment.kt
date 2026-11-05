@@ -14,26 +14,33 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
-import com.equilibra.app.data.local.entity.ProfileEntity
 import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
 import com.equilibra.app.data.local.entity.WheelSector
 import com.equilibra.app.databinding.FragmentSelfAssessmentBinding
+import com.equilibra.app.databinding.ItemSelfQuestionBinding
 import com.equilibra.app.databinding.ItemWheelAssessmentBinding
 import com.equilibra.app.databinding.ItemWheelLegendBinding
 import com.equilibra.app.domain.BalanceWheel
+import com.equilibra.app.domain.SelfAssessment
 import com.equilibra.app.ui.common.colorRes
+import com.equilibra.app.ui.common.SELF_QUESTIONS
 import com.equilibra.app.ui.common.labelRes
 import com.equilibra.app.ui.common.sectorLabel
+import com.equilibra.app.ui.common.selfSummary
 import com.equilibra.app.ui.common.toDisplayString
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/** Section 1: "Who am I and how do I manage my time?" The balance wheel and the self-assessment form. */
+/** Section 1: "Who am I and how do I manage my time?" Six questions with a summary, and the balance wheel. */
 @AndroidEntryPoint
 class SelfAssessmentFragment : Fragment() {
     private var _binding: FragmentSelfAssessmentBinding? = null
     private val binding get() = _binding!!
+
+    /** For each question: its chip group and the ids of its 3 option chips (created in code). */
+    private val questionViews = mutableListOf<Pair<ChipGroup, List<Int>>>()
 
     private val viewModel: SelfAssessmentViewModel by viewModels()
 
@@ -51,28 +58,53 @@ class SelfAssessmentFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Load the saved answers only the first time. After a rotation, another tab or the
-        // wheel screen, Android restores the fields by itself, keeping what was typed.
-        if (savedInstanceState == null && !viewModel.formLoaded) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                fillForm(viewModel.loadProfile())
-                viewModel.formLoaded = true
-            }
-        }
-
-        binding.buttonSave.setOnClickListener { save() }
+        addQuestions()
         binding.buttonAddWheel.setOnClickListener { openWheelEditor(WheelEditViewModel.NEW_ASSESSMENT_ID) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.wheels.collect { showWheels(it) }
+                launch { viewModel.wheels.collect { showWheels(it) } }
+                launch { viewModel.selfAnswers.collect { showAnswers(it) } }
             }
         }
     }
 
+    /** One row per question; a tap on an option saves the answer right away. */
+    private fun addQuestions() {
+        SELF_QUESTIONS.forEachIndexed { questionIndex, texts ->
+            val row = ItemSelfQuestionBinding.inflate(layoutInflater, binding.layoutQuestions, true)
+            row.textQuestion.setText(texts.question)
+            val chipIds =
+                texts.options.map { optionText ->
+                    val chip = layoutInflater.inflate(R.layout.item_self_option, row.chipGroupOptions, false) as Chip
+                    chip.id = View.generateViewId()
+                    chip.setText(optionText)
+                    // The saved answer is shown from the database, so Android doesn't need to restore it.
+                    chip.isSaveEnabled = false
+                    row.chipGroupOptions.addView(chip)
+                    chip.id
+                }
+            row.chipGroupOptions.setOnCheckedStateChangeListener { _, checkedIds ->
+                val option = chipIds.indexOf(checkedIds.firstOrNull())
+                if (option >= 0) viewModel.answer(questionIndex, option)
+            }
+            questionViews.add(row.chipGroupOptions to chipIds)
+        }
+    }
+
+    /** Marks the saved answers and builds the two-part summary from them. */
+    private fun showAnswers(answers: String) {
+        questionViews.forEachIndexed { questionIndex, (group, chipIds) ->
+            SelfAssessment.answerAt(answers, questionIndex)?.let { option -> group.check(chipIds[option]) }
+        }
+        val empty = getString(R.string.self_summary_empty)
+        binding.textWhoAmI.text = requireContext().selfSummary(answers, SelfAssessment.WHO_AM_I).ifEmpty { empty }
+        binding.textManageTime.text = requireContext().selfSummary(answers, SelfAssessment.HOW_I_MANAGE_TIME).ifEmpty { empty }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        questionViews.clear()
         _binding = null
     }
 
@@ -127,22 +159,5 @@ class SelfAssessmentFragment : Fragment() {
             R.id.action_selfAssessment_to_wheelEdit,
             bundleOf(WheelEditViewModel.ARG_ASSESSMENT_ID to assessmentId),
         )
-    }
-
-    private fun fillForm(profile: ProfileEntity) {
-        binding.editWhoAmI.setText(profile.whoAmI)
-        binding.editManageTime.setText(profile.howIManageTime)
-    }
-
-    private fun save() {
-        val form =
-            SelfAssessmentForm(
-                whoAmI = binding.editWhoAmI.text.toString(),
-                howIManageTime = binding.editManageTime.text.toString(),
-            )
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.save(form)
-            Snackbar.make(binding.root, R.string.self_saved, Snackbar.LENGTH_SHORT).show()
-        }
     }
 }

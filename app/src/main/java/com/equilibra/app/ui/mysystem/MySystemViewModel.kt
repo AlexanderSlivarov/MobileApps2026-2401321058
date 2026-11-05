@@ -35,6 +35,8 @@ data class MySystemUiState(
     val notStartedCount: Int = 0,
     val decisionCounts: Map<DecisionResult, Int> = emptyMap(),
     val finalRules: String = "",
+    /** The self-assessment answers, shown as the starting point. */
+    val selfAnswers: String = "",
 )
 
 /** Puts the four sections together into my final balance system. */
@@ -67,6 +69,7 @@ class MySystemViewModel
                     notStartedCount = tasks.count { it.isNotStarted },
                     decisionCounts = BalanceOverview.countDecisions(decisions),
                     finalRules = profile.finalRules,
+                    selfAnswers = profile.selfAnswers,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MySystemUiState())
 

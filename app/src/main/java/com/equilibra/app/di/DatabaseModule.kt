@@ -31,7 +31,7 @@ object DatabaseModule {
     ): EquilibraDatabase =
         Room
             .databaseBuilder(context, EquilibraDatabase::class.java, EquilibraDatabase.NAME)
-            // 1 -> 2 and 3 -> 4 up to 5 -> 6 are AutoMigrations (declared on EquilibraDatabase);
+            // 1 -> 2 and 3 -> 4 up to 7 -> 8 are AutoMigrations (declared on EquilibraDatabase);
             // 2 -> 3 is written by hand.
             .addMigrations(MIGRATION_2_3)
             .build()
