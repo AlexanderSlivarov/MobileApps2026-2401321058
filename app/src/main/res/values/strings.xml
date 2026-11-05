@@ -134,4 +134,17 @@
     <string name="activity_delete">Delete activity</string>
     <string name="activity_delete_confirm">Delete this activity? This can\'t be undone.</string>
     <string name="error_same_start_end">Start and end can\'t be the same time.</string>
+
+    <!-- Me (self-assessment) -->
+    <string name="self_personality">My personality type</string>
+    <string name="self_personality_hint">From 16Personalities, e.g. INFJ-A</string>
+    <string name="self_superpowers">My three superpowers</string>
+    <string name="self_superpower_1">Superpower 1</string>
+    <string name="self_superpower_2">Superpower 2</string>
+    <string name="self_superpower_3">Superpower 3</string>
+    <string name="self_improve">What do I want to improve?</string>
+    <string name="self_more_time">What is the one thing I want more time for?</string>
+    <string name="self_how_i_plan">How do I plan my time now?</string>
+    <string name="self_stress">How do I cope with stress?</string>
+    <string name="self_saved">Saved</string>
 </resources>
