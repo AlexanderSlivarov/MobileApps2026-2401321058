@@ -86,7 +86,7 @@ class MySystemFragment : Fragment() {
         binding.textFindings.text =
             FindingType.entries.joinToString("\n") { type ->
                 getString(R.string.count_format, getString(type.labelRes), state.findingCounts[type] ?: 0)
-            }
+            } + "\n" + getString(R.string.count_format, getString(R.string.five_whys_analyzed), state.analyzedProblems)
 
         // 3. Prioritization: my priorities in order.
         binding.textPriorities.text =

@@ -69,12 +69,20 @@
     <!-- Habit analysis (findings) -->
     <string name="habits_empty">Все още нищо не е открито. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
     <string name="finding_add">Добави откритие</string>
-    <string name="finding_edit">Редактирай откритието</string>
     <string name="finding_hint">Какво открих?</string>
     <string name="finding_problem">Проблем</string>
     <string name="finding_habit">Навик</string>
     <string name="finding_need">Потребност</string>
     <string name="finding_delete_confirm">Да изтрия ли това откритие? Това не може да бъде отменено.</string>
+
+    <!-- Finding add / edit, with the 5 Whys (Lecture 2) -->
+    <string name="finding_edit_title">Откритие</string>
+    <string name="finding_delete">Изтрий откритието</string>
+    <string name="five_whys_title">„Пет пъти защо?“</string>
+    <string name="five_whys_hint">Питай „Защо?“ отново и отново – от симптома към по-дълбоката причина. Отговорите са предположения, докато не ги сравниш с реални наблюдения.</string>
+    <string name="why_hint">Защо?</string>
+    <string name="root_cause_format">Най-дълбока причина: %1$s</string>
+    <string name="five_whys_analyzed">Проблеми, анализирани с „Пет пъти защо?“</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">Моите приоритети, най-важното първо</string>

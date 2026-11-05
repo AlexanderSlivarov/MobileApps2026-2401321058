@@ -30,7 +30,22 @@
     <fragment
         android:id="@+id/habitsFragment"
         android:name="com.equilibra.app.ui.habits.HabitsFragment"
-        android:label="@string/nav_habits" />
+        android:label="@string/nav_habits">
+        <action
+            android:id="@+id/action_habits_to_findingEdit"
+            app:destination="@id/findingEditFragment" />
+    </fragment>
+
+    <!-- Add / edit a finding (with the 5 Whys for a problem). findingId = -1 means a new finding. -->
+    <fragment
+        android:id="@+id/findingEditFragment"
+        android:name="com.equilibra.app.ui.habits.FindingEditFragment"
+        android:label="@string/finding_edit_title">
+        <argument
+            android:name="findingId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/prioritiesFragment"

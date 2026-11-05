@@ -28,6 +28,18 @@
             android:layout_marginTop="4dp"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             tools:text="I check my phone in the first minutes after waking up." />
+
+        <!-- Only for a problem with 5 Whys answers -->
+        <TextView
+            android:id="@+id/text_root_cause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:visibility="gone"
+            tools:text="Root cause: I don't split big tasks into parts"
+            tools:visibility="visible" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

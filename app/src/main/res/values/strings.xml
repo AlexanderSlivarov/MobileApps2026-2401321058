@@ -45,7 +45,7 @@
     <string name="wheel_shown_format">Filled: %1$s</string>
     <string name="wheel_compare_format">Dashed: %1$s</string>
     <string name="wheel_kind_date_format" translatable="false">%1$s · %2$s</string>
-    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
+    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
     <string name="wheel_kind_start">Start</string>
     <string name="wheel_kind_check_in">Check-in</string>
     <string name="wheel_kind_final">Final</string>
@@ -70,12 +70,20 @@
     <!-- Habit analysis (findings) -->
     <string name="habits_empty">Nothing found yet. Add the problems, habits and needs you notice in your daily life.</string>
     <string name="finding_add">Add finding</string>
-    <string name="finding_edit">Edit finding</string>
     <string name="finding_hint">What did I find?</string>
     <string name="finding_problem">Problem</string>
     <string name="finding_habit">Habit</string>
     <string name="finding_need">Need</string>
     <string name="finding_delete_confirm">Delete this finding? This can\'t be undone.</string>
+
+    <!-- Finding add / edit, with the 5 Whys (Lecture 2) -->
+    <string name="finding_edit_title">Finding</string>
+    <string name="finding_delete">Delete finding</string>
+    <string name="five_whys_title">5 Whys</string>
+    <string name="five_whys_hint">Ask “Why?” again and again, from the symptom to a deeper cause. The answers are guesses until you check them with real observations.</string>
+    <string name="why_hint">Why?</string>
+    <string name="root_cause_format">Deepest cause: %1$s</string>
+    <string name="five_whys_analyzed">Problems traced with 5 Whys</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">My priorities, most important first</string>

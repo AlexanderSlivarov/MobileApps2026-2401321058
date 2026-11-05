@@ -13,6 +13,7 @@ import com.equilibra.app.data.repository.ProfileRepository
 import com.equilibra.app.data.repository.TaskRepository
 import com.equilibra.app.domain.BalanceOverview
 import com.equilibra.app.domain.BalanceWheel
+import com.equilibra.app.domain.FiveWhys
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +28,8 @@ data class MySystemUiState(
     val wheelNow: WheelAssessmentWithRatings? = null,
     val wheelStart: WheelAssessmentWithRatings? = null,
     val findingCounts: Map<FindingType, Int> = emptyMap(),
+    /** Problems traced with the 5 Whys (at least one "Why?" answered). */
+    val analyzedProblems: Int = 0,
     val priorities: List<TaskEntity> = emptyList(),
     val decisionCounts: Map<DecisionResult, Int> = emptyMap(),
     val finalRules: String = "",
@@ -57,6 +60,7 @@ class MySystemViewModel
                     wheelNow = now,
                     wheelStart = start,
                     findingCounts = BalanceOverview.countFindings(findings),
+                    analyzedProblems = FiveWhys.countAnalyzed(findings),
                     priorities = tasks,
                     decisionCounts = BalanceOverview.countDecisions(decisions),
                     finalRules = profile.finalRules,

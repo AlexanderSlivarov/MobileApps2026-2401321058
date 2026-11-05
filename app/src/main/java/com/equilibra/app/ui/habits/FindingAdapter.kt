@@ -3,6 +3,7 @@ package com.equilibra.app.ui.habits
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.FindingEntity
 import com.equilibra.app.data.local.entity.FindingType
 import com.equilibra.app.databinding.ItemFindingBinding
+import com.equilibra.app.domain.FiveWhys
 
 /** The UI text for each finding type. */
 @get:StringRes
@@ -39,9 +41,14 @@ class FindingAdapter(
         position: Int,
     ) {
         val finding = getItem(position)
-        holder.binding.textType.setText(finding.type.labelRes)
-        holder.binding.textFinding.text = finding.text
-        holder.binding.root.setOnClickListener { onClick(finding) }
+        val binding = holder.binding
+        binding.textType.setText(finding.type.labelRes)
+        binding.textFinding.text = finding.text
+        // For a problem analysed with the 5 Whys, show the deepest answer reached.
+        val rootCause = FiveWhys.rootCause(finding.whys)
+        binding.textRootCause.isVisible = rootCause != null
+        binding.textRootCause.text = rootCause?.let { binding.root.context.getString(R.string.root_cause_format, it) }
+        binding.root.setOnClickListener { onClick(finding) }
     }
 
     private companion object {

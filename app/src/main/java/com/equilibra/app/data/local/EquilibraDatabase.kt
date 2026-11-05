@@ -29,9 +29,13 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2, spec = Migration1To2::class)],
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
+        // 3 -> 4: the five "Why?" columns on findings. Only new columns, so Room needs no spec.
+        AutoMigration(from = 3, to = 4),
+    ],
 )
 @TypeConverters(Converters::class)
 abstract class EquilibraDatabase : RoomDatabase() {
