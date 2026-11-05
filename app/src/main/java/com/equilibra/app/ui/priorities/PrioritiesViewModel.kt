@@ -15,10 +15,22 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/** Everything the Priorities screen shows: my priorities in order and "My method". */
+/**
+ * Everything the Priorities screen shows: my priorities in order, the ones I consciously
+ * didn't start (Anti-Kanban), and "My method".
+ */
 data class PrioritiesUiState(
     val tasks: List<TaskEntity> = emptyList(),
+    val notStarted: List<TaskEntity> = emptyList(),
     val method: String = "",
+)
+
+/** What the user filled in on the priority dialog. */
+data class PriorityForm(
+    val title: String,
+    val isImportant: Boolean,
+    val isUrgent: Boolean,
+    val isNotStarted: Boolean,
 )
 
 /**
@@ -35,20 +47,25 @@ class PrioritiesViewModel
         /** Rebuilt automatically whenever the priorities or the profile change in the database. */
         val uiState: StateFlow<PrioritiesUiState> =
             combine(taskRepository.observeTasks(), profileRepository.observeProfile()) { tasks, profile ->
-                PrioritiesUiState(tasks = tasks, method = profile.prioritizationMethod)
+                // partition splits one list in two: (not started, the rest), both still in my order.
+                val (notStarted, active) = tasks.partition { it.isNotStarted }
+                PrioritiesUiState(tasks = active, notStarted = notStarted, method = profile.prioritizationMethod)
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PrioritiesUiState())
 
-        /** Adds a new priority when [existing] is null, otherwise renames it. */
+        /** Adds a new priority when [existing] is null, otherwise saves the changes to it. */
         fun save(
             existing: TaskEntity?,
-            title: String,
+            form: PriorityForm,
         ) {
             viewModelScope.launch {
-                if (existing == null) {
-                    taskRepository.addTask(title.trim())
-                } else {
-                    taskRepository.updateTask(existing.copy(title = title.trim()))
-                }
+                val task =
+                    (existing ?: TaskEntity(title = "", position = 0)).copy(
+                        title = form.title.trim(),
+                        isImportant = form.isImportant,
+                        isUrgent = form.isUrgent,
+                        isNotStarted = form.isNotStarted,
+                    )
+                if (existing == null) taskRepository.addTask(task) else taskRepository.updateTask(task)
             }
         }
 

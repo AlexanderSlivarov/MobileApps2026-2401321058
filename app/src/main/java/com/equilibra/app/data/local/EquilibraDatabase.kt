@@ -29,12 +29,14 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
         // 3 -> 4: the five "Why?" columns on findings. Only new columns, so Room needs no spec.
         AutoMigration(from = 3, to = 4),
+        // 4 -> 5: important / urgent / not started on tasks. Only new columns again.
+        AutoMigration(from = 4, to = 5),
     ],
 )
 @TypeConverters(Converters::class)

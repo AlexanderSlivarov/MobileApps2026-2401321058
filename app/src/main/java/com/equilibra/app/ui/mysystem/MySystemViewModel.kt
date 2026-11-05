@@ -31,6 +31,8 @@ data class MySystemUiState(
     /** Problems traced with the 5 Whys (at least one "Why?" answered). */
     val analyzedProblems: Int = 0,
     val priorities: List<TaskEntity> = emptyList(),
+    /** How many priorities I consciously didn't start (Anti-Kanban). */
+    val notStartedCount: Int = 0,
     val decisionCounts: Map<DecisionResult, Int> = emptyMap(),
     val finalRules: String = "",
 )
@@ -61,7 +63,8 @@ class MySystemViewModel
                     wheelStart = start,
                     findingCounts = BalanceOverview.countFindings(findings),
                     analyzedProblems = FiveWhys.countAnalyzed(findings),
-                    priorities = tasks,
+                    priorities = tasks.filter { !it.isNotStarted },
+                    notStartedCount = tasks.count { it.isNotStarted },
                     decisionCounts = BalanceOverview.countDecisions(decisions),
                     finalRules = profile.finalRules,
                 )

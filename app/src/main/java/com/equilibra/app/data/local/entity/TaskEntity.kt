@@ -7,11 +7,17 @@ import androidx.room.PrimaryKey
 /**
  * One of my priorities in the "Priorities" section. [position] is its place in my order:
  * the lowest position is the most important (shown as number 1).
+ * [isImportant] and [isUrgent] place it in the Eisenhower matrix (Lectures 2-4); the group
+ * itself is not stored, it is worked out from these two. [isNotStarted] = I consciously
+ * decided not to start it ("Anti-Kanban", Lectures 3-4), so it is listed separately.
+ * defaultValue lets the migrations add the columns to rows that already exist.
  */
 @Entity(tableName = "tasks")
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
-    // defaultValue is needed so the migration from version 1 can add the column to existing rows.
     @ColumnInfo(defaultValue = "0") val position: Int,
+    @ColumnInfo(defaultValue = "0") val isImportant: Boolean = false,
+    @ColumnInfo(defaultValue = "0") val isUrgent: Boolean = false,
+    @ColumnInfo(defaultValue = "0") val isNotStarted: Boolean = false,
 )

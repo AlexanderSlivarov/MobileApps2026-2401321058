@@ -20,10 +20,10 @@ class TaskRepository
 
         suspend fun getTask(id: Long): TaskEntity? = taskDao.getById(id)
 
-        /** A new priority goes to the end of my order. */
-        suspend fun addTask(title: String): Long {
+        /** A new priority goes to the end of my order; its position is set here. */
+        suspend fun addTask(task: TaskEntity): Long {
             val position = (taskDao.maxPosition() ?: -1) + 1
-            return taskDao.insert(TaskEntity(title = title, position = position))
+            return taskDao.insert(task.copy(position = position))
         }
 
         suspend fun updateTask(task: TaskEntity) = taskDao.update(task)

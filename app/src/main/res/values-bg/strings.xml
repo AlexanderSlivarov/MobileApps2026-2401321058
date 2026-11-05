@@ -94,6 +94,15 @@
     <string name="move_down">Премести надолу</string>
     <string name="task_delete_confirm">Да изтрия ли този приоритет? Това не може да бъде отменено.</string>
     <string name="error_title_required">Моля, въведи заглавие</string>
+    <string name="priority_important">Важно (принос към цел, задължение или потребност)</string>
+    <string name="priority_urgent">Спешно (реален близък срок)</string>
+    <string name="priority_not_started">Съзнателно не започвам това</string>
+    <string name="group_i">I · Действам сега</string>
+    <string name="group_ii">II · Планирам</string>
+    <string name="group_iii">III · Ограничавам или делегирам</string>
+    <string name="group_iv">IV · Намалявам</string>
+    <string name="not_started_title">Съзнателно не започнах</string>
+    <string name="not_started_empty">Нещата, които реши да не започваш, за да запазиш важното и почивката си.</string>
     <string name="my_method_title">Моят метод</string>
     <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
     <string name="my_method_hint">Как подреждам приоритетите си</string>

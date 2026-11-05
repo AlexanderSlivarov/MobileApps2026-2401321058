@@ -45,7 +45,7 @@
     <string name="wheel_shown_format">Filled: %1$s</string>
     <string name="wheel_compare_format">Dashed: %1$s</string>
     <string name="wheel_kind_date_format" translatable="false">%1$s · %2$s</string>
-    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
+    <string name="wheel_change_format" translatable="false">%1$d → %2$d</string>
     <string name="wheel_kind_start">Start</string>
     <string name="wheel_kind_check_in">Check-in</string>
     <string name="wheel_kind_final">Final</string>
@@ -95,6 +95,15 @@
     <string name="move_down">Move down</string>
     <string name="task_delete_confirm">Delete this priority? This can\'t be undone.</string>
     <string name="error_title_required">Please enter a title</string>
+    <string name="priority_important">Important (contributes to a goal, duty or need)</string>
+    <string name="priority_urgent">Urgent (real deadline soon)</string>
+    <string name="priority_not_started">I consciously don\'t start this</string>
+    <string name="group_i">I · Do now</string>
+    <string name="group_ii">II · Plan</string>
+    <string name="group_iii">III · Limit or delegate</string>
+    <string name="group_iv">IV · Reduce</string>
+    <string name="not_started_title">I consciously didn\'t start</string>
+    <string name="not_started_empty">Things you decided not to start, to protect what matters and your rest.</string>
     <string name="my_method_title">My method</string>
     <string name="my_method_empty">Describe how you decide what comes first.</string>
     <string name="my_method_hint">How I order my priorities</string>

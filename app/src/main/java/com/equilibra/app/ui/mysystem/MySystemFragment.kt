@@ -17,10 +17,12 @@ import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
 import com.equilibra.app.databinding.DialogTextInputBinding
 import com.equilibra.app.databinding.FragmentMySystemBinding
 import com.equilibra.app.domain.BalanceWheel
+import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.ui.common.labelRes
 import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.ui.decisions.labelRes
 import com.equilibra.app.ui.habits.labelRes
+import com.equilibra.app.ui.priorities.labelRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -88,13 +90,18 @@ class MySystemFragment : Fragment() {
                 getString(R.string.count_format, getString(type.labelRes), state.findingCounts[type] ?: 0)
             } + "\n" + getString(R.string.count_format, getString(R.string.five_whys_analyzed), state.analyzedProblems)
 
-        // 3. Prioritization: my priorities in order.
-        binding.textPriorities.text =
+        // 3. Prioritization: my priorities in order with their Eisenhower group, and what I didn't start.
+        val ordered =
             if (state.priorities.isEmpty()) {
                 getString(R.string.share_none)
             } else {
-                state.priorities.mapIndexed { index, task -> "${index + 1}. ${task.title}" }.joinToString("\n")
+                state.priorities
+                    .mapIndexed { index, task ->
+                        "${index + 1}. ${task.title} (${getString(Eisenhower.groupOf(task).labelRes)})"
+                    }.joinToString("\n")
             }
+        binding.textPriorities.text =
+            ordered + "\n" + getString(R.string.count_format, getString(R.string.not_started_title), state.notStartedCount)
 
         // 4. Balance tracking: how my decisions turned out.
         binding.textDecisions.text =

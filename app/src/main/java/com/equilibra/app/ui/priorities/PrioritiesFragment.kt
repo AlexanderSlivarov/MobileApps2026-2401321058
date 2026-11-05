@@ -14,8 +14,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.TaskEntity
+import com.equilibra.app.databinding.DialogPriorityBinding
 import com.equilibra.app.databinding.DialogTextInputBinding
 import com.equilibra.app.databinding.FragmentPrioritiesBinding
+import com.equilibra.app.domain.Eisenhower
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -47,8 +49,11 @@ class PrioritiesFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = PriorityAdapter(onClick = ::showTaskDialog, onMove = viewModel::move)
+        val adapter = PriorityAdapter(showOrder = true, onClick = ::showTaskDialog, onMove = viewModel::move)
         binding.recyclerPriorities.adapter = adapter
+        // "I consciously didn't start": same cards, without numbers and up/down buttons.
+        val notStartedAdapter = PriorityAdapter(showOrder = false, onClick = ::showTaskDialog, onMove = viewModel::move)
+        binding.recyclerNotStarted.adapter = notStartedAdapter
 
         binding.fabAddTask.setOnClickListener { showTaskDialog(null) }
         binding.buttonEditMethod.setOnClickListener { showMethodDialog() }
@@ -62,6 +67,8 @@ class PrioritiesFragment : Fragment() {
                     // so after the list changes all visible cards are drawn again.
                     adapter.submitList(state.tasks) { adapter.notifyItemRangeChanged(0, adapter.itemCount) }
                     binding.textEmpty.isVisible = state.tasks.isEmpty()
+                    notStartedAdapter.submitList(state.notStarted)
+                    binding.textNotStartedEmpty.isVisible = state.notStarted.isEmpty()
                     binding.textMethod.text = state.method.ifBlank { getString(R.string.my_method_empty) }
                 }
             }
@@ -76,17 +83,18 @@ class PrioritiesFragment : Fragment() {
         _binding = null
     }
 
-    /** Add a priority ([task] = null) or rename / delete an existing one, in a plain dialog. */
+    /** Add a priority ([task] = null) or edit / delete an existing one, in a plain dialog. */
     private fun showTaskDialog(task: TaskEntity?) {
-        val input = DialogTextInputBinding.inflate(layoutInflater)
-        input.layoutInput.hint = getString(R.string.priority_hint)
-        input.editInput.minLines = 1
-        input.editInput.setText(task?.title)
+        val form = DialogPriorityBinding.inflate(layoutInflater)
+        form.editTitle.setText(task?.title)
+        form.checkImportant.isChecked = task?.isImportant ?: false
+        form.checkUrgent.isChecked = task?.isUrgent ?: false
+        form.checkNotStarted.isChecked = task?.isNotStarted ?: false
 
         val builder =
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(if (task == null) R.string.add_task else R.string.priority_edit)
-                .setView(input.root)
+                .setView(form.root)
                 .setPositiveButton(R.string.action_save, null)
                 .setNegativeButton(R.string.action_cancel, null)
         if (task != null) builder.setNeutralButton(R.string.action_delete) { _, _ -> confirmDelete(task) }
@@ -94,11 +102,19 @@ class PrioritiesFragment : Fragment() {
 
         // Set the Save click here, not in setPositiveButton, so the dialog stays open on an empty title.
         shown.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val title = input.editInput.text.toString()
+            val title = form.editTitle.text.toString()
             if (title.isBlank()) {
-                input.layoutInput.error = getString(R.string.error_title_required)
+                form.layoutTitle.error = getString(R.string.error_title_required)
             } else {
-                viewModel.save(task, title)
+                viewModel.save(
+                    task,
+                    PriorityForm(
+                        title = title,
+                        isImportant = form.checkImportant.isChecked,
+                        isUrgent = form.checkUrgent.isChecked,
+                        isNotStarted = form.checkNotStarted.isChecked,
+                    ),
+                )
                 shown.dismiss()
             }
         }
@@ -129,13 +145,21 @@ class PrioritiesFragment : Fragment() {
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)))
     }
 
-    /** My priorities in order and My method, as plain text. */
+    /** My priorities in order with their group, what I didn't start, and My method, as plain text. */
     private fun buildShareText(state: PrioritiesUiState): String =
         buildString {
             appendLine(getString(R.string.share_subject))
             appendLine()
             if (state.tasks.isEmpty()) appendLine(getString(R.string.share_none))
-            state.tasks.forEachIndexed { index, task -> appendLine("${index + 1}. ${task.title}") }
+            state.tasks.forEachIndexed { index, task ->
+                appendLine("${index + 1}. ${task.title} (${getString(Eisenhower.groupOf(task).labelRes)})")
+            }
+
+            if (state.notStarted.isNotEmpty()) {
+                appendLine()
+                appendLine(getString(R.string.not_started_title))
+                state.notStarted.forEach { appendLine("• ${it.title}") }
+            }
 
             if (state.method.isNotBlank()) {
                 appendLine()
