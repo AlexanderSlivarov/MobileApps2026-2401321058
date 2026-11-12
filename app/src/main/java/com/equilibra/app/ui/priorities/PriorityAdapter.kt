@@ -71,9 +71,17 @@ class PriorityAdapter(
         val context = binding.root.context
         val groupColor = ContextCompat.getColor(context, Eisenhower.groupOf(task).colorRes)
         binding.textTitle.text = task.title
-        // The group, and the planned date after it when there is one, e.g. "Plan it · important · Nov 13, 2026".
+        // In my ordered list the group is the section's title, so the card shows only the planned date.
+        // In "Postponed" it shows the group, and the date after it, e.g. "Undefined · Dec 31, 2026".
         val group = context.getString(Eisenhower.groupOf(task).labelRes)
-        binding.textGroup.text = task.date?.let { context.getString(R.string.two_parts_format, group, it.toDisplayString()) } ?: group
+        val date = task.date?.toDisplayString()
+        binding.textGroup.text =
+            when {
+                showOrder -> date
+                date != null -> context.getString(R.string.two_parts_format, group, date)
+                else -> group
+            }
+        binding.textGroup.isVisible = !showOrder || date != null
         binding.textGroup.setTextColor(groupColor)
         // The number sits in a circle of the group's color; the page color reads well on it.
         binding.textNumber.backgroundTintList = ColorStateList.valueOf(groupColor)
@@ -83,8 +91,6 @@ class PriorityAdapter(
         binding.buttonUp.isVisible = showOrder
         binding.buttonDown.isVisible = showOrder
         binding.textNumber.text = (numberOffset + position + 1).toString()
-        // In my ordered list the group is the section's title, so the card shows it only in "Postponed".
-        binding.textGroup.isVisible = !showOrder
         // The first can't go up and the last can't go down.
         binding.buttonUp.isEnabled = position > 0
         binding.buttonDown.isEnabled = position < itemCount - 1
