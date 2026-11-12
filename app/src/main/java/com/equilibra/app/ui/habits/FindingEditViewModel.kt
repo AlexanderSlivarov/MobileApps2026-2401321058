@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.equilibra.app.data.local.entity.FindingEntity
 import com.equilibra.app.data.local.entity.FindingType
+import com.equilibra.app.data.local.entity.HabitPlan
+import com.equilibra.app.data.local.entity.NeedArea
 import com.equilibra.app.data.repository.HabitsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,11 +32,16 @@ class FindingEditViewModel
         /** The stored finding, or null for a new one. */
         suspend fun loadFinding(): FindingEntity? = if (isNewFinding) null else habitsRepository.getFinding(findingId)
 
-        /** Saves the form. Only a problem keeps its "Why?" answers. */
+        /**
+         * Saves the form. Only a problem keeps its "Why?" answers, only a habit keep / change /
+         * stop, and only a need its area of life.
+         */
         suspend fun save(
             text: String,
             type: FindingType,
             whys: List<String>,
+            plan: HabitPlan?,
+            area: NeedArea?,
         ) {
             val answers = if (type == FindingType.PROBLEM) whys.map { it.trim() } else List(whys.size) { "" }
             val finding =
@@ -47,6 +54,8 @@ class FindingEditViewModel
                     why3 = answers[2],
                     why4 = answers[3],
                     why5 = answers[4],
+                    habitPlan = plan.takeIf { type == FindingType.HABIT },
+                    needArea = area.takeIf { type == FindingType.NEED },
                 )
             if (isNewFinding) habitsRepository.addFinding(finding) else habitsRepository.updateFinding(finding)
         }

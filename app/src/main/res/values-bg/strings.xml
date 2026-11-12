@@ -5,7 +5,7 @@
 <resources>
     <!-- Bottom navigation / screen titles -->
     <string name="nav_self_assessment">Аз</string>
-    <string name="nav_habits">Навици</string>
+    <string name="nav_habits">Наблюдения</string>
     <string name="nav_priorities">Приоритети</string>
     <string name="nav_decisions">Решения</string>
     <string name="nav_my_system">Баланс</string>
@@ -163,20 +163,33 @@
     <string name="error_wheel_kind_taken">Вече имаш такава оценка. Може да има само една начална и една крайна. Редактирай нея.</string>
 
     <!-- Habit analysis (findings) -->
-    <string name="habits_empty">Все още нищо не е открито. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
-    <string name="finding_hint">Какво открих?</string>
+    <string name="habits_empty">Все още няма наблюдения. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
+    <string name="finding_hint_problem">Какъв проблем откривам?</string>
+    <string name="finding_hint_habit">Какъв навик имам?</string>
+    <string name="finding_hint_need">От какво имам нужда?</string>
     <string name="finding_problem">Проблем</string>
     <string name="finding_habit">Навик</string>
     <string name="finding_need">Потребност</string>
-    <string name="finding_delete_confirm">Да изтрия ли това откритие? Това не може да бъде отменено.</string>
+    <string name="finding_delete_confirm">Да изтрия ли това наблюдение? Това не може да бъде отменено.</string>
+
+    <!-- Habit: keep / change / stop; need: which part of life it is for -->
+    <string name="habit_plan_title">Какво правя с него?</string>
+    <string name="habit_keep">Запазвам</string>
+    <string name="habit_change">Променям</string>
+    <string name="habit_stop">Спирам</string>
+    <string name="need_area_title">За какво е?</string>
+    <string name="area_study">Учене</string>
+    <string name="area_rest">Почивка</string>
+    <string name="area_health">Здраве</string>
+    <string name="area_people">Хора</string>
 
     <!-- Finding add / edit, with the 5 Whys (Lecture 2) -->
-    <string name="finding_edit_title">Откритие</string>
-    <string name="finding_delete">Изтрий откритието</string>
+    <string name="finding_edit_title">Наблюдение</string>
+    <string name="finding_delete">Изтрий наблюдението</string>
     <string name="five_whys_title">„Пет пъти защо?“</string>
-    <string name="five_whys_hint">Питай „Защо?“ отново и отново – от симптома към по-дълбоката причина. Отговорите са предположения, докато не ги сравниш с реални наблюдения.</string>
+    <string name="five_whys_hint">Питай „Защо?“ няколко пъти, докато стигнеш до причината.</string>
     <string name="why_hint">Защо?</string>
-    <string name="root_cause_format">Най-дълбока причина: %1$s</string>
+    <string name="root_cause_title">Най-дълбока причина</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">Моите приоритети, най-важното първо</string>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One finding: its type (problem / habit / need) and the text. -->
+<!-- One finding: a dot and label in the type's color (problem / habit / need), the text,
+     then by type: a keep / change / stop tag for a habit, an icon and a word for the area of a
+     need, and for a problem the deepest cause in a tinted box. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
@@ -11,35 +14,109 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/text_type"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorPrimary"
-            tools:text="Habit" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view_dot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/bg_number_circle"
+                tools:backgroundTint="@color/type_habit" />
+
+            <TextView
+                android:id="@+id/text_type"
+                style="@style/Widget.Equilibra.Eyebrow"
+                android:layout_width="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                tools:text="Habit"
+                tools:textColor="@color/type_habit" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_finding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
             tools:text="I check my phone in the first minutes after waking up." />
 
-        <!-- Only for a problem with 5 Whys answers -->
+        <!-- Only for a habit: keep / change / stop as a colored tag -->
         <TextView
-            android:id="@+id/text_root_cause"
+            android:id="@+id/text_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded_box"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:visibility="gone"
+            tools:text="Stop it"
+            tools:visibility="visible" />
+
+        <!-- Only for a need: the part of life it is for, as an icon and a word -->
+        <LinearLayout
+            android:id="@+id/layout_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/image_area"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:importantForAccessibility="no"
+                app:tint="@color/type_need"
+                tools:src="@drawable/ic_area_health" />
+
+            <TextView
+                android:id="@+id/text_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="@color/type_need"
+                tools:text="Health" />
+        </LinearLayout>
+
+        <!-- Only for a problem with 5 Whys answers -->
+        <LinearLayout
+            android:id="@+id/layout_root_cause"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded_box"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:orientation="vertical"
+            android:padding="14dp"
             android:visibility="gone"
-            tools:text="Root cause: I don't split big tasks into parts"
-            tools:visibility="visible" />
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/Widget.Equilibra.Eyebrow"
+                android:text="@string/root_cause_title"
+                android:textColor="?attr/colorOnPrimaryContainer" />
+
+            <TextView
+                android:id="@+id/text_root_cause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                tools:text="I don't split big tasks into parts" />
+        </LinearLayout>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

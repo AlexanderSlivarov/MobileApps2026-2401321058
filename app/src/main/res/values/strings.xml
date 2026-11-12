@@ -3,7 +3,7 @@
 
     <!-- Bottom navigation / screen titles -->
     <string name="nav_self_assessment">Me</string>
-    <string name="nav_habits">Habits</string>
+    <string name="nav_habits">Observations</string>
     <string name="nav_priorities">Priorities</string>
     <string name="nav_decisions">Decisions</string>
     <string name="nav_my_system">Balance</string>
@@ -163,20 +163,36 @@
     <string name="error_wheel_kind_taken">You already have this rating. There can be only one Start and one Final. Edit that one instead.</string>
 
     <!-- Habit analysis (findings) -->
-    <string name="habits_empty">Nothing found yet. Add the problems, habits and needs you notice in your daily life.</string>
-    <string name="finding_hint">What did I find?</string>
+    <string name="habits_empty">No observations yet. Add the problems, habits and needs you notice in your daily life.</string>
+    <string name="finding_hint_problem">What problem do I find?</string>
+    <string name="finding_hint_habit">What habit do I have?</string>
+    <string name="finding_hint_need">What do I need?</string>
     <string name="finding_problem">Problem</string>
     <string name="finding_habit">Habit</string>
     <string name="finding_need">Need</string>
-    <string name="finding_delete_confirm">Delete this finding? This can\'t be undone.</string>
+    <string name="finding_delete_confirm">Delete this observation? This can\'t be undone.</string>
+
+    <!-- Habit: keep / change / stop; need: which part of life it is for -->
+    <string name="habit_plan_title">What do I do with it?</string>
+    <string name="habit_keep">Keep it</string>
+    <string name="habit_change">Change it</string>
+    <string name="habit_stop">Stop it</string>
+    <string name="need_area_title">What is it for?</string>
+    <string name="area_study">Study</string>
+    <string name="area_rest">Rest</string>
+    <string name="area_health">Health</string>
+    <string name="area_people">People</string>
+    <string name="tag_keep_format" translatable="false">✓ %1$s</string>
+    <string name="tag_change_format" translatable="false">↻ %1$s</string>
+    <string name="tag_stop_format" translatable="false">✕ %1$s</string>
 
     <!-- Finding add / edit, with the 5 Whys (Lecture 2) -->
-    <string name="finding_edit_title">Finding</string>
-    <string name="finding_delete">Delete finding</string>
+    <string name="finding_edit_title">Observation</string>
+    <string name="finding_delete">Delete observation</string>
     <string name="five_whys_title">5 Whys</string>
-    <string name="five_whys_hint">Ask “Why?” again and again, from the symptom to a deeper cause. The answers are guesses until you check them with real observations.</string>
+    <string name="five_whys_hint">Ask “Why?” a few times until you reach the cause.</string>
     <string name="why_hint">Why?</string>
-    <string name="root_cause_format">Deepest cause: %1$s</string>
+    <string name="root_cause_title">Deepest cause</string>
 
     <!-- Priorities -->
     <string name="priorities_list_title">My priorities, most important first</string>
@@ -206,6 +222,11 @@
     <string name="share_chooser_title">Share with</string>
     <string name="share_subject">My priorities – Equilibra</string>
     <string name="share_none" translatable="false">–</string>
+    <string name="number_1" translatable="false">1</string>
+    <string name="number_2" translatable="false">2</string>
+    <string name="number_3" translatable="false">3</string>
+    <string name="number_4" translatable="false">4</string>
+    <string name="number_5" translatable="false">5</string>
 
     <!-- Balance tracking (decisions) -->
     <string name="decisions_empty">No decisions yet. Add a decision and later mark whether it worked.</string>
