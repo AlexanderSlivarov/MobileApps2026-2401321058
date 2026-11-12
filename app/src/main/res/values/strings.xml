@@ -213,6 +213,18 @@
     <string name="group_iii">Do it quickly</string>
     <string name="group_iv">Undecided</string>
     <string name="not_started_title">Postponed</string>
+    <!-- My week: the days of the week, Monday first -->
+    <string name="day_1">Mon</string>
+    <string name="day_2">Tue</string>
+    <string name="day_3">Wed</string>
+    <string name="day_4">Thu</string>
+    <string name="day_5">Fri</string>
+    <string name="day_6">Sat</string>
+    <string name="day_7">Sun</string>
+    <string name="week_title">My week</string>
+    <string name="week_range_format" translatable="false">%1$s – %2$s</string>
+    <string name="week_free">Free</string>
+    <string name="priority_days">Days</string>
     <string name="my_method_title">My method</string>
     <string name="my_method_empty">Describe how you decide what comes first.</string>
     <string name="my_method_hint">How I order my priorities</string>
@@ -252,8 +264,11 @@
     <string name="decision_delete_confirm">Delete this decision? This can\'t be undone.</string>
 
     <!-- My system -->
-    <string name="rules_title">My balance rules</string>
-    <string name="rules_hint">What rules do I follow to keep the balance between study and free time?</string>
+
+    <!-- Balance as a PDF file -->
+    <string name="export_pdf">Save as PDF</string>
+    <string name="pdf_file_name" translatable="false">Equilibra %1$s.pdf</string>
+    <string name="pdf_saved">PDF saved</string>
 
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">

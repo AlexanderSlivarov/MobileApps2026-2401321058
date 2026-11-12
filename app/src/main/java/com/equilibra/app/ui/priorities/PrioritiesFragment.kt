@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
 import com.equilibra.app.domain.EisenhowerGroup
+import com.equilibra.app.domain.WeekPlan
+import com.google.android.material.chip.Chip
 
 /** Section 3: "How do I order my priorities?" */
 @AndroidEntryPoint
@@ -161,6 +163,8 @@ class PrioritiesFragment : Fragment() {
         form.checkImportant.isChecked = task?.isImportant ?: false
         form.checkUrgent.isChecked = task?.isUrgent ?: false
         form.checkNotStarted.isChecked = task?.isNotStarted ?: false
+        val dayChips = dayChips(form)
+        dayChips.forEachIndexed { index, chip -> chip.isChecked = WeekPlan.isPlanned(task?.days.orEmpty(), index) }
 
         val builder =
             MaterialAlertDialogBuilder(requireContext())
@@ -184,6 +188,7 @@ class PrioritiesFragment : Fragment() {
                         isImportant = form.checkImportant.isChecked,
                         isUrgent = form.checkUrgent.isChecked,
                         isNotStarted = form.checkNotStarted.isChecked,
+                        days = WeekPlan.daysOf(dayChips.map { it.isChecked }),
                     ),
                 )
                 shown.dismiss()
@@ -191,6 +196,10 @@ class PrioritiesFragment : Fragment() {
         }
         dialog = shown
     }
+
+    /** The 7 day chips of the priority dialog, Monday first. */
+    private fun dayChips(form: DialogPriorityBinding): List<Chip> =
+        listOf(form.chipDay1, form.chipDay2, form.chipDay3, form.chipDay4, form.chipDay5, form.chipDay6, form.chipDay7)
 
     private fun confirmDelete(task: TaskEntity) {
         dialog =

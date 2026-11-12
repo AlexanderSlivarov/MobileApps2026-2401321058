@@ -20,4 +20,9 @@ data class TaskEntity(
     @ColumnInfo(defaultValue = "0") val isImportant: Boolean = false,
     @ColumnInfo(defaultValue = "0") val isUrgent: Boolean = false,
     @ColumnInfo(defaultValue = "0") val isNotStarted: Boolean = false,
+    /**
+     * The days of the week I plan to work on it, Monday first: one character per day,
+     * "1" = planned, e.g. "1010000" = Monday and Wednesday. Empty = no days chosen.
+     */
+    @ColumnInfo(defaultValue = "''") val days: String = "",
 )

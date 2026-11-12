@@ -19,9 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /** Everything "My system" shows: one part from each section, plus my final balance rules. */
@@ -35,7 +33,6 @@ data class MySystemUiState(
     /** How many priorities I consciously didn't start (Anti-Kanban). */
     val notStartedCount: Int = 0,
     val decisionCounts: Map<DecisionResult, Int> = emptyMap(),
-    val finalRules: String = "",
     /** "My method": how I order my priorities, written on Priorities. */
     val method: String = "",
     /** The self-assessment answers, shown as the starting point. */
@@ -71,16 +68,8 @@ class MySystemViewModel
                     priorities = Eisenhower.inGroupOrder(tasks.filter { !it.isNotStarted }),
                     notStartedCount = tasks.count { it.isNotStarted },
                     decisionCounts = BalanceOverview.countDecisions(decisions),
-                    finalRules = profile.finalRules,
                     method = profile.prioritizationMethod,
                     selfAnswers = profile.selfAnswers,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MySystemUiState())
-
-        fun saveFinalRules(text: String) {
-            viewModelScope.launch {
-                val profile = profileRepository.observeProfile().first()
-                profileRepository.saveProfile(profile.copy(finalRules = text.trim()))
-            }
-        }
     }

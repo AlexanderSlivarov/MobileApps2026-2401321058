@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One day in the My week strip: its short name, its date in a circle (filled for today,
+     tinted when chosen), and a small colored dot for each priority planned that day. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingVertical="4dp">
+
+    <TextView
+        android:id="@+id/text_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceLabelSmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="Mon" />
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_number_circle"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        tools:text="12" />
+
+    <!-- One dot per planned priority (at most 4), added in code -->
+    <LinearLayout
+        android:id="@+id/layout_dots"
+        android:layout_width="wrap_content"
+        android:layout_height="6dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" />
+</LinearLayout>

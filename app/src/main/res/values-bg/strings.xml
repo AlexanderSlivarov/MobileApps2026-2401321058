@@ -209,6 +209,17 @@
     <string name="group_iii">Направи бързо</string>
     <string name="group_iv">Неопределено</string>
     <string name="not_started_title">Отложено</string>
+    <!-- My week: the days of the week, Monday first -->
+    <string name="day_1">Пн</string>
+    <string name="day_2">Вт</string>
+    <string name="day_3">Ср</string>
+    <string name="day_4">Чт</string>
+    <string name="day_5">Пт</string>
+    <string name="day_6">Сб</string>
+    <string name="day_7">Нд</string>
+    <string name="week_title">Моята седмица</string>
+    <string name="week_free">Свободно</string>
+    <string name="priority_days">Дни</string>
     <string name="my_method_title">Моят метод</string>
     <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
     <string name="my_method_hint">Как подреждам приоритетите си</string>
@@ -242,8 +253,10 @@
     <string name="decision_delete_confirm">Да изтрия ли това решение? Това не може да бъде отменено.</string>
 
     <!-- My system -->
-    <string name="rules_title">Моите правила за баланс</string>
-    <string name="rules_hint">Какви правила следвам, за да пазя баланса между учене и свободно време?</string>
+
+    <!-- Balance as a PDF file -->
+    <string name="export_pdf">Запази като PDF</string>
+    <string name="pdf_saved">PDF-ът е запазен</string>
 
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">

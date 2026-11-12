@@ -32,6 +32,8 @@ data class PriorityForm(
     val isImportant: Boolean,
     val isUrgent: Boolean,
     val isNotStarted: Boolean,
+    /** The planned days, e.g. "1010000" (see WeekPlan). */
+    val days: String,
 )
 
 /**
@@ -65,6 +67,7 @@ class PrioritiesViewModel
                         isImportant = form.isImportant,
                         isUrgent = form.isUrgent,
                         isNotStarted = form.isNotStarted,
+                        days = form.days,
                     )
                 if (existing == null) taskRepository.addTask(task) else taskRepository.updateTask(task)
             }

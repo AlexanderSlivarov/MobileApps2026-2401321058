@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.PluralsRes
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.DecisionResult
 import com.equilibra.app.data.local.entity.FindingType
 import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
-import com.equilibra.app.databinding.DialogTextInputBinding
 import com.equilibra.app.databinding.FragmentMySystemBinding
 import com.equilibra.app.databinding.ItemBalancePriorityBinding
 import com.equilibra.app.databinding.ViewStatTileBinding
@@ -30,9 +28,16 @@ import com.equilibra.app.ui.common.selfSummary
 import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.ui.priorities.colorRes
 import com.equilibra.app.ui.priorities.labelRes
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.equilibra.app.domain.WeekPlan
+import com.equilibra.app.ui.priorities.showWeek
+import java.time.LocalDate
+import com.google.android.material.color.MaterialColors
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import java.io.OutputStream
 
 /** Section 5: "What does my final balance system look like?" */
 @AndroidEntryPoint
@@ -40,9 +45,13 @@ class MySystemFragment : Fragment() {
     private var _binding: FragmentMySystemBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog: AlertDialog? = null
-
     private val viewModel: MySystemViewModel by viewModels()
+
+    /** Opens Android's "save" screen for a PDF file; the chosen place comes back to savePdf. */
+    private val saveLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { savePdf(it) }
+
+    /** The day chosen in My week (0 = Monday); today at first. */
+    private var chosenDay = WeekPlan.todayIndex(LocalDate.now())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +67,7 @@ class MySystemFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonEditRules.setOnClickListener { showRulesDialog() }
+        binding.buttonSavePdf.setOnClickListener { saveLauncher.launch(getString(R.string.pdf_file_name, LocalDate.now())) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -69,17 +78,11 @@ class MySystemFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // An open dialog holds the activity, so close it together with the view.
-        dialog?.dismiss()
-        dialog = null
         _binding = null
     }
 
     private fun show(state: MySystemUiState) {
         // My balance rules: the answer to the final question, at the top.
-        // Empty rules: only the title and "Edit" show.
-        binding.textRules.text = state.finalRules
-        binding.textRules.isVisible = state.finalRules.isNotBlank()
 
         // 1. Self-assessment: the summary of the answers, then the wheel, start (dashed) and now (filled).
         val whoAmI = requireContext().selfSummary(state.selfAnswers, SelfAssessment.WHO_AM_I)
@@ -124,6 +127,10 @@ class MySystemFragment : Fragment() {
         }
         binding.textNotStarted.text = count(R.plurals.count_not_started, state.notStartedCount)
 
+        // My week: the priorities on the days I planned them, with this week's dates.
+        binding.week.root.isVisible = WeekPlan.hasPlan(state.priorities)
+        showWeek(state)
+
         // 4. Balance tracking: how many decisions worked, as a bar and as numbers.
         val worked = state.decisionCounts[DecisionResult.WORKED] ?: 0
         val total = state.decisionCounts.values.sum()
@@ -142,6 +149,31 @@ class MySystemFragment : Fragment() {
             R.color.result_did_not_work,
         )
         showTile(binding.tilePending, state.decisionCounts[DecisionResult.PENDING] ?: 0, R.plurals.label_pending, R.color.result_pending)
+    }
+
+    /** Draws the page (everything above the "Save as PDF" button) as a PDF into [output]. */
+    private fun writePdf(output: OutputStream) {
+        val content = binding.layoutContent
+        val background = MaterialColors.getColor(content, android.R.attr.colorBackground)
+        BalancePdf.write(content, binding.buttonSavePdf.top, background, output)
+    }
+
+    /**
+     * "Save as PDF": Android's own "save" screen lets me pick the folder and the name (e.g.
+     * Downloads), then the PDF is written there. No storage permission is needed for this.
+     */
+    private fun savePdf(uri: Uri?) {
+        if (uri == null) return // the save screen was closed without saving
+        requireContext().contentResolver.openOutputStream(uri)?.use { writePdf(it) }
+        Toast.makeText(requireContext(), R.string.pdf_saved, Toast.LENGTH_SHORT).show()
+    }
+
+    /** My week; tapping a day shows its priorities below the strip. */
+    private fun showWeek(state: MySystemUiState) {
+        binding.week.showWeek(state.priorities, layoutInflater, chosenDay) { day ->
+            chosenDay = day
+            showWeek(viewModel.uiState.value)
+        }
     }
 
     /** A number tile: the number in [color] and the word under it in the right form ("1 problem" / "3 problems"). */
@@ -172,20 +204,4 @@ class MySystemFragment : Fragment() {
             getString(wheel.assessment.kind.labelRes),
             wheel.assessment.date.toDisplayString(),
         )
-
-    private fun showRulesDialog() {
-        val input = DialogTextInputBinding.inflate(layoutInflater)
-        // The dialog title already says "My balance rules", so the field only explains what to write.
-        input.layoutInput.helperText = getString(R.string.rules_hint)
-        input.editInput.setText(viewModel.uiState.value.finalRules)
-
-        dialog =
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.rules_title)
-                .setView(input.root)
-                .setPositiveButton(R.string.action_save) { _, _ ->
-                    viewModel.saveFinalRules(input.editInput.text.toString())
-                }.setNegativeButton(R.string.action_cancel, null)
-                .show()
-    }
 }

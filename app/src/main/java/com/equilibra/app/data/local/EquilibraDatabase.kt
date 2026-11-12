@@ -29,7 +29,7 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 13,
+    version = 15,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
@@ -52,6 +52,10 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         AutoMigration(from = 11, to = 12, spec = Migration11To12::class),
         // 12 -> 13: the 7 tracked days of a decision replace its three experiment fields.
         AutoMigration(from = 12, to = 13, spec = Migration12To13::class),
+        // 13 -> 14: "My balance rules" are gone.
+        AutoMigration(from = 13, to = 14, spec = Migration13To14::class),
+        // 14 -> 15: the planned days of a priority (My week). Only a new column.
+        AutoMigration(from = 14, to = 15),
     ],
 )
 @TypeConverters(Converters::class)

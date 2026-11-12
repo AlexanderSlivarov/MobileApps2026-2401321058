@@ -6,67 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.mysystem.MySystemFragment">
 
+    <!-- Everything on the page; this is what the PDF draws -->
     <LinearLayout
+        android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- My balance rules: the final answer, so it stands out at the top -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Filled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="?attr/colorPrimaryContainer">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Widget.Equilibra.Eyebrow"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/rules_title"
-                        android:textColor="?attr/colorOnPrimaryContainer" />
-
-                    <Button
-                        android:id="@+id/button_edit_rules"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_edit"
-                        android:textColor="?attr/colorOnPrimaryContainer" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/text_rules"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:lineSpacingExtra="6dp"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textColor="?attr/colorOnPrimaryContainer"
-                    tools:text="No phone after 23:00." />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- 1. Self-assessment: the summary of the answers and the wheel -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -277,6 +229,14 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- My week: the priorities on the days I planned them (shown when any day is planned) -->
+        <include
+            android:id="@+id/week"
+            layout="@layout/view_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
         <!-- 4. Balance tracking: a progress bar and three number tiles -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
@@ -353,5 +313,15 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Saves this page as a PDF where I choose. The PDF has everything above this button. -->
+        <Button
+            android:id="@+id/button_save_pdf"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/export_pdf"
+            app:icon="@drawable/ic_pdf" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

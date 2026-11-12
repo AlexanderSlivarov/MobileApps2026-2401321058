@@ -5,14 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * The app's single user: the self-assessment answers and my own words, "My method" for prioritization
- * and the final balance rules. Always one row with id = 1.
+ * The app's single user: the self-assessment answers and my own words, "My method" for prioritization. Always one row with id = 1.
  */
 @Entity(tableName = "profile")
 data class ProfileEntity(
     @PrimaryKey val id: Int = SINGLE_ROW_ID,
     val prioritizationMethod: String = "",
-    val finalRules: String = "",
     /**
      * The self-assessment answers: one character per question, in order. "0", "1" or "2"
      * is the chosen option, "-" a question not answered yet, e.g. "02-1". Empty at first.
