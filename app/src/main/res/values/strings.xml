@@ -270,16 +270,33 @@
     <string name="pdf_file_name" translatable="false">Equilibra %1$s.pdf</string>
     <string name="pdf_saved">PDF saved</string>
 
+
+    <string name="kept_short_format" translatable="false">%1$d/7</string>
+
+    <!-- Statistics (Balance and the end of the report) -->
+    <string name="stats_title">Statistics</string>
+    <string name="s_focus">I focus best</string>
+    <string name="s_distraction">What distracts me most</string>
+    <string name="s_kept_weekday">I keep my decisions most on</string>
+    <string name="s_traced">Problems traced to their cause</string>
+    <string name="s_habits_change">Habits I want to change or stop</string>
+    <string name="s_need_area">Most common area of my needs</string>
+    <string name="s_do_now">Priorities to do now</string>
+    <string name="s_busiest_day">Day with the most priorities</string>
+    <string name="s_free_days">Days with nothing planned</string>
+    <string name="s_best_decision">Best kept decision</string>
+    <string name="s_best_indicator">My best indicator on the wheel</string>
+    <string name="s_weakest_indicator">Indicator that needs attention</string>
+    <string name="s_improved">Indicators better than at the start</string>
+    <string name="s_days_of_7_format">%1$d of 7 days</string>
+    <string name="s_count_format" translatable="false">%1$s (%2$d)</string>
+    <string name="c_no_free_days">None</string>
+    <string name="c_of_format">%1$d of %2$d</string>
+
     <!-- The report (Save as PDF) -->
     <string name="report_title">My balance</string>
     <string name="report_made_format">Made on %1$s</string>
     <string name="report_none">Nothing yet.</string>
-    <string name="report_summary">In short</string>
-    <string name="report_kept_format">days kept in all: %1$d of %2$d</string>
-    <plurals name="report_priorities">
-        <item quantity="one">%d priority</item>
-        <item quantity="other">%d priorities</item>
-    </plurals>
 
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">

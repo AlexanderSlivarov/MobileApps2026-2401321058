@@ -13,10 +13,8 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@drawable/bg_number_circle"
-        android:backgroundTint="?attr/colorSecondaryContainer"
         android:gravity="center"
         android:textAppearance="?attr/textAppearanceTitleSmall"
-        android:textColor="?attr/colorOnSecondaryContainer"
         tools:text="1" />
 
     <LinearLayout

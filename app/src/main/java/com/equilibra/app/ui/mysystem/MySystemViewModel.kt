@@ -22,8 +22,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import com.equilibra.app.data.local.entity.DecisionEntity
+import com.equilibra.app.data.local.entity.FindingEntity
 
-/** Everything "My system" shows: one part from each section, plus my final balance rules. */
+/** Everything the Balance page shows: one part from each section. */
 data class MySystemUiState(
     val wheelNow: WheelAssessmentWithRatings? = null,
     val wheelStart: WheelAssessmentWithRatings? = null,
@@ -38,6 +40,13 @@ data class MySystemUiState(
     val method: String = "",
     /** The self-assessment answers, shown as the starting point. */
     val selfAnswers: String = "",
+    /** My own words for "Who am I?" and "How do I manage my time?". */
+    val whoAmINote: String = "",
+    val manageTimeNote: String = "",
+    /** All decisions, each shown with its 7 days. */
+    val decisions: List<DecisionEntity> = emptyList(),
+    /** All observations, for the Statistics. */
+    val findings: List<FindingEntity> = emptyList(),
 )
 
 /** Puts the four sections together into my final balance system. */
@@ -71,6 +80,10 @@ class MySystemViewModel
                     decisionCounts = BalanceOverview.countDecisions(decisions),
                     method = profile.prioritizationMethod,
                     selfAnswers = profile.selfAnswers,
+                    whoAmINote = profile.whoAmINote,
+                    manageTimeNote = profile.manageTimeNote,
+                    decisions = decisions,
+                    findings = findings,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MySystemUiState())
 

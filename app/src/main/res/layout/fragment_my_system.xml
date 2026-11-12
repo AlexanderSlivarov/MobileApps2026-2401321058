@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 1. Self-assessment: the summary of the answers and the wheel -->
+        <!-- 1. Self-assessment: my answers as rows, my own words, and the wheel -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
@@ -43,34 +43,31 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/self_who_am_i"
-                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textColor="?attr/colorPrimary" />
 
-                    <TextView
-                        android:id="@+id/text_who_am_i"
+                    <!-- One row per answer (view_answer_tile), then my own words; added in code -->
+                    <LinearLayout
+                        android:id="@+id/layout_who_rows"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:lineSpacingExtra="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        tools:text="I focus best in the morning." />
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/self_manage_time"
-                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textColor="?attr/colorPrimary" />
 
-                    <TextView
-                        android:id="@+id/text_manage_time"
+                    <LinearLayout
+                        android:id="@+id/layout_time_rows"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:lineSpacingExtra="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        tools:text="I plan in the morning for the day." />
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
                 </LinearLayout>
 
                 <com.equilibra.app.ui.common.BalanceWheelView
@@ -311,6 +308,42 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </LinearLayout>
+
+                <!-- Each decision with its 7 days; added in code (item_balance_decision) -->
+                <LinearLayout
+                    android:id="@+id/layout_decisions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Statistics: numbers and facts worked out from my data -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_statistics"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/Widget.Equilibra.Eyebrow"
+                    android:text="@string/stats_title" />
+
+                <!-- Rows of two tiles (item_stat_tile), added in code -->
+                <LinearLayout
+                    android:id="@+id/layout_statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

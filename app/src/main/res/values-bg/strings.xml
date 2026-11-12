@@ -258,16 +258,30 @@
     <string name="export_pdf">Запази като PDF</string>
     <string name="pdf_saved">PDF-ът е запазен</string>
 
+
+    <!-- Statistics (Balance and the end of the report) -->
+    <string name="stats_title">Статистика</string>
+    <string name="s_focus">Най-лесно се съсредоточавам</string>
+    <string name="s_distraction">Най-много ме разсейва</string>
+    <string name="s_kept_weekday">Най-често спазвам решенията в</string>
+    <string name="s_traced">Проблеми, проследени до причината</string>
+    <string name="s_habits_change">Навици, които искам да променя или спра</string>
+    <string name="s_need_area">Най-честа област на потребностите ми</string>
+    <string name="s_do_now">Приоритети за правене сега</string>
+    <string name="s_busiest_day">Ден с най-много приоритети</string>
+    <string name="s_free_days">Дни без планирани приоритети</string>
+    <string name="s_best_decision">Най-добре спазено решение</string>
+    <string name="s_best_indicator">Най-добър показател в колелото</string>
+    <string name="s_weakest_indicator">Показател, който иска внимание</string>
+    <string name="s_improved">Показатели, подобрени от началото</string>
+    <string name="s_days_of_7_format">%1$d от 7 дни</string>
+    <string name="c_no_free_days">Няма</string>
+    <string name="c_of_format">%1$d от %2$d</string>
+
     <!-- The report (Save as PDF) -->
     <string name="report_title">Моят баланс</string>
     <string name="report_made_format">Създаден на %1$s</string>
     <string name="report_none">Още няма записи.</string>
-    <string name="report_summary">Накратко</string>
-    <string name="report_kept_format">спазени дни общо: %1$d от %2$d</string>
-    <plurals name="report_priorities">
-        <item quantity="one">%d приоритет</item>
-        <item quantity="other">%d приоритета</item>
-    </plurals>
 
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">

@@ -24,7 +24,6 @@ import com.equilibra.app.domain.BalanceWheel
 import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.SelfAssessment
 import com.equilibra.app.ui.common.labelRes
-import com.equilibra.app.ui.common.selfSummary
 import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.ui.priorities.colorRes
 import com.equilibra.app.ui.priorities.labelRes
@@ -36,6 +35,17 @@ import java.time.LocalDate
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import android.content.res.ColorStateList
+import android.widget.LinearLayout
+import com.equilibra.app.data.local.entity.DecisionEntity
+import com.equilibra.app.databinding.ItemBalanceDecisionBinding
+import com.equilibra.app.databinding.ItemKeptDotBinding
+import com.equilibra.app.databinding.ViewAnswerTileBinding
+import com.equilibra.app.databinding.ViewSelfNoteBinding
+import com.equilibra.app.domain.DecisionDays
+import com.equilibra.app.ui.common.SELF_QUESTIONS
+import com.google.android.material.color.MaterialColors
+import com.equilibra.app.databinding.ItemStatTileBinding
 
 /** Section 5: "What does my final balance system look like?" */
 @AndroidEntryPoint
@@ -44,6 +54,7 @@ class MySystemFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MySystemViewModel by viewModels()
+
 
     /** Opens Android's "save" screen for a PDF file; the chosen place comes back to savePdf. */
     private val saveLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { savePdf(it) }
@@ -80,14 +91,12 @@ class MySystemFragment : Fragment() {
     }
 
     private fun show(state: MySystemUiState) {
-        // My balance rules: the answer to the final question, at the top.
-
-        // 1. Self-assessment: the summary of the answers, then the wheel, start (dashed) and now (filled).
-        val whoAmI = requireContext().selfSummary(state.selfAnswers, SelfAssessment.WHO_AM_I)
-        val manageTime = requireContext().selfSummary(state.selfAnswers, SelfAssessment.HOW_I_MANAGE_TIME)
-        binding.layoutSelfSummary.isVisible = whoAmI.isNotEmpty() || manageTime.isNotEmpty()
-        binding.textWhoAmI.text = whoAmI.ifEmpty { getString(R.string.share_none) }
-        binding.textManageTime.text = manageTime.ifEmpty { getString(R.string.share_none) }
+        // 1. Self-assessment: my answers as rows (like on Me) and my own words, then the wheel,
+        // start (dashed) and now (filled).
+        showAnswers(binding.layoutWhoRows, state.selfAnswers, SelfAssessment.WHO_AM_I, state.whoAmINote)
+        showAnswers(binding.layoutTimeRows, state.selfAnswers, SelfAssessment.HOW_I_MANAGE_TIME, state.manageTimeNote)
+        binding.layoutSelfSummary.isVisible = SelfAssessment.answeredCount(state.selfAnswers) > 0 ||
+            state.whoAmINote.isNotBlank() || state.manageTimeNote.isNotBlank()
 
         binding.wheelView.setScores(
             state.wheelNow?.let(BalanceWheel::scoresOf),
@@ -119,6 +128,9 @@ class MySystemFragment : Fragment() {
             val row = ItemBalancePriorityBinding.inflate(layoutInflater, binding.layoutPriorities, true)
             val group = Eisenhower.groupOf(task)
             row.textNumber.text = (index + 1).toString()
+            // The number in a circle of the group's color, like on the Priorities page.
+            row.textNumber.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), group.colorRes))
+            row.textNumber.setTextColor(MaterialColors.getColor(row.root, com.google.android.material.R.attr.colorSurface))
             row.textTitle.text = task.title
             row.textGroup.setText(group.labelRes)
             row.textGroup.setTextColor(ContextCompat.getColor(requireContext(), group.colorRes))
@@ -147,6 +159,11 @@ class MySystemFragment : Fragment() {
             R.color.result_did_not_work,
         )
         showTile(binding.tilePending, state.decisionCounts[DecisionResult.PENDING] ?: 0, R.plurals.label_pending, R.color.result_pending)
+        showDecisions(state.decisions)
+
+        // Statistics: numbers and facts worked out from my data.
+        showStatistics(state)
+
     }
 
     /**
@@ -161,6 +178,73 @@ class MySystemFragment : Fragment() {
             val blocks = BalanceReport.build(requireContext(), viewModel.loadReportData())
             requireContext().contentResolver.openOutputStream(uri)?.use { ReportPdf(requireContext()).write(blocks, it) }
             Toast.makeText(requireContext(), R.string.pdf_saved, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /** The answers of one half as rows (short label + chosen option), then my own words as a quote. */
+    private fun showAnswers(
+        container: LinearLayout,
+        answers: String,
+        questions: IntRange,
+        note: String,
+    ) {
+        container.removeAllViews()
+        questions.forEach { index ->
+            val texts = SELF_QUESTIONS[index]
+            val row = ViewAnswerTileBinding.inflate(layoutInflater, container, true)
+            row.textLabel.setText(texts.label)
+            row.textValue.text =
+                SelfAssessment.answerAt(answers, index)?.let { getString(texts.options[it]) } ?: getString(R.string.share_none)
+        }
+        if (note.isNotBlank()) {
+            val quote = ViewSelfNoteBinding.inflate(layoutInflater, container, true)
+            quote.root.text = getString(R.string.self_note_format, note)
+        }
+    }
+
+    /** Each decision: its text, its 7 days as dots (green = kept) and "4/7". */
+    private fun showDecisions(decisions: List<DecisionEntity>) {
+        binding.layoutDecisions.removeAllViews()
+        val kept = ContextCompat.getColor(requireContext(), R.color.result_worked)
+        val notKept = MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSurfaceContainerHighest)
+        decisions.forEach { decision ->
+            val row = ItemBalanceDecisionBinding.inflate(layoutInflater, binding.layoutDecisions, true)
+            row.textTitle.text = decision.text
+            for (day in 0 until DecisionDays.DAYS) {
+                val dot = ItemKeptDotBinding.inflate(layoutInflater, row.layoutDots, true).root
+                dot.backgroundTintList = ColorStateList.valueOf(if (DecisionDays.isDone(decision.daysDone, day)) kept else notKept)
+            }
+            row.textKept.text = getString(R.string.kept_short_format, DecisionDays.doneCount(decision.daysDone))
+        }
+    }
+
+    /** The Statistics as tiles, two in a row; the card is hidden while there is nothing to show. */
+    private fun showStatistics(state: MySystemUiState) {
+        val items =
+            requireContext().statisticsItems(
+                state.selfAnswers,
+                state.priorities,
+                state.findings,
+                state.decisions,
+                state.wheelNow,
+                state.wheelStart,
+            )
+        binding.cardStatistics.isVisible = items.isNotEmpty()
+        binding.layoutStatistics.removeAllViews()
+        items.chunked(2).forEach { pair ->
+            val row = LinearLayout(requireContext())
+            row.orientation = LinearLayout.HORIZONTAL
+            row.isBaselineAligned = false
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.topMargin = resources.getDimensionPixelSize(R.dimen.stat_gap)
+            binding.layoutStatistics.addView(row, params)
+            pair.forEachIndexed { index, item ->
+                val tile = ItemStatTileBinding.inflate(layoutInflater, row, true)
+                tile.imageIcon.setImageResource(item.icon)
+                tile.textValue.text = item.value
+                tile.textLabel.text = item.label
+                if (index == 1) (tile.root.layoutParams as LinearLayout.LayoutParams).marginStart = resources.getDimensionPixelSize(R.dimen.stat_gap)
+            }
         }
     }
 

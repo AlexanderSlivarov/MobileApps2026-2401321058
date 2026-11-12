@@ -198,36 +198,12 @@ object BalanceReport {
             }
         }
 
-        // 6. In short: the numbers of the whole system.
-        blocks += ReportBlock.Heading(context.getString(R.string.report_summary))
-        val count = { type: FindingType -> data.findings.count { it.type == type } }
-        blocks +=
-            ReportBlock.Row(
-                context.getString(R.string.section_habits),
-                listOf(
-                    count(FindingType.PROBLEM).let { "$it " + context.resources.getQuantityString(R.plurals.label_problems, it) },
-                    count(FindingType.HABIT).let { "$it " + context.resources.getQuantityString(R.plurals.label_habits, it) },
-                    count(FindingType.NEED).let { "$it " + context.resources.getQuantityString(R.plurals.label_needs, it) },
-                ).joinToString(" · "),
-            )
-        blocks +=
-            ReportBlock.Row(
-                context.getString(R.string.section_priorities),
-                context.resources.getQuantityString(R.plurals.report_priorities, active.size, active.size) + " · " +
-                    context.resources.getQuantityString(R.plurals.count_not_started, postponed.size, postponed.size),
-            )
-        val worked = data.decisions.count { it.result == com.equilibra.app.data.local.entity.DecisionResult.WORKED }
-        val total = data.decisions.size
-        blocks +=
-            ReportBlock.Row(
-                context.getString(R.string.section_decisions),
-                if (total == 0) {
-                    context.getString(R.string.decisions_none)
-                } else {
-                    context.resources.getQuantityString(R.plurals.decisions_progress, total, worked, total) + " · " +
-                        context.getString(R.string.report_kept_format, DecisionDays.keptInAll(data.decisions.map { it.daysDone }), total * DecisionDays.DAYS)
-                },
-            )
+        // 6. Statistics: numbers and facts from all of it, the same as on the Balance page.
+        val statistics = context.statisticsItems(data.profile.selfAnswers, active, data.findings, data.decisions, now, start)
+        if (statistics.isNotEmpty()) {
+            blocks += ReportBlock.Heading(context.getString(R.string.stats_title))
+            statistics.forEach { blocks += ReportBlock.Row(it.label, it.value) }
+        }
         return blocks
     }
 

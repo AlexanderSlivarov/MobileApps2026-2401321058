@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- My own words as a quote in a tinted box (the same look as on Me). -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/bg_rounded_box"
+    android:backgroundTint="?attr/colorPrimaryContainer"
+    android:lineSpacingExtra="4dp"
+    android:padding="14dp"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
+    android:textColor="?attr/colorOnPrimaryContainer"
+    android:textStyle="italic" />
