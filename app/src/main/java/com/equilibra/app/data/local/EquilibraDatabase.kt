@@ -5,16 +5,17 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.equilibra.app.data.local.dao.BalanceWheelDao
+import com.equilibra.app.data.local.dao.DayItemDao
 import com.equilibra.app.data.local.dao.DecisionDao
 import com.equilibra.app.data.local.dao.FindingDao
 import com.equilibra.app.data.local.dao.ProfileDao
 import com.equilibra.app.data.local.dao.TaskDao
+import com.equilibra.app.data.local.entity.DayItemEntity
 import com.equilibra.app.data.local.entity.DecisionEntity
 import com.equilibra.app.data.local.entity.FindingEntity
 import com.equilibra.app.data.local.entity.ProfileEntity
 import com.equilibra.app.data.local.entity.TaskEntity
-import com.equilibra.app.data.local.entity.WheelAssessmentEntity
-import com.equilibra.app.data.local.entity.WheelRatingEntity
+import com.equilibra.app.data.local.entity.WheelScoreEntity
 
 /**
  * The Room database (file: equilibra.db). Room generates the implementation at compile
@@ -25,11 +26,11 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         TaskEntity::class,
         FindingEntity::class,
         DecisionEntity::class,
-        WheelAssessmentEntity::class,
-        WheelRatingEntity::class,
+        WheelScoreEntity::class,
         ProfileEntity::class,
+        DayItemEntity::class,
     ],
-    version = 15,
+    version = 17,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
@@ -56,6 +57,9 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         AutoMigration(from = 13, to = 14, spec = Migration13To14::class),
         // 14 -> 15: the planned days of a priority (My week). Only a new column.
         AutoMigration(from = 14, to = 15),
+        // 15 -> 16: MIGRATION_15_16 (by hand, in DatabaseModule): one wheel rating, no "My method", My week lines.
+        // 16 -> 17: a priority has a date instead of days of the week.
+        AutoMigration(from = 16, to = 17, spec = Migration16To17::class),
     ],
 )
 @TypeConverters(Converters::class)
@@ -69,6 +73,8 @@ abstract class EquilibraDatabase : RoomDatabase() {
     abstract fun balanceWheelDao(): BalanceWheelDao
 
     abstract fun profileDao(): ProfileDao
+
+    abstract fun dayItemDao(): DayItemDao
 
     companion object {
         const val NAME = "equilibra.db"

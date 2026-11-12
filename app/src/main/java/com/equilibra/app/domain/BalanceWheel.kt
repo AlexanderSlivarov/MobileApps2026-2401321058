@@ -1,7 +1,6 @@
 package com.equilibra.app.domain
 
-import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
-import com.equilibra.app.data.local.entity.WheelKind
+import com.equilibra.app.data.local.entity.WheelScoreEntity
 import com.equilibra.app.data.local.entity.WheelSector
 
 /** Balance wheel rules, kept free of Android classes so they can be unit-tested. */
@@ -9,43 +8,24 @@ object BalanceWheel {
     const val MIN_SCORE = 1
     const val MAX_SCORE = 5
 
-    /** The score a sector gets on a new rating: the middle of the scale. */
+    /** The score a sector gets before I rate it: the middle of the scale. */
     const val DEFAULT_SCORE = 3
 
-    /** The scores of one rating by sector. A sector without a stored score gets the default. */
-    fun scoresOf(assessment: WheelAssessmentWithRatings): Map<WheelSector, Int> {
-        val stored = assessment.ratings.associate { it.sector to it.score }
-        return WheelSector.entries.associateWith { stored[it] ?: DEFAULT_SCORE }
+    /**
+     * The stored scores by sector, or null when nothing is stored yet (no rating).
+     * A sector without a stored score gets the default.
+     */
+    fun scoresOf(stored: List<WheelScoreEntity>): Map<WheelSector, Int>? {
+        if (stored.isEmpty()) return null
+        val bySector = stored.associate { it.sector to it.score }
+        return WheelSector.entries.associateWith { bySector[it] ?: DEFAULT_SCORE }
     }
 
     /**
-     * Lecture 1: "for stress and workload a high score is not necessarily positive".
+     * For stress and workload a high score is not a good state.
      * For these two, a lower score is the better state. For all others, higher is better.
      */
     val HIGH_IS_NOT_GOOD: Set<WheelSector> = setOf(WheelSector.STRESS, WheelSector.WORKLOAD)
 
     fun isHighGood(sector: WheelSector): Boolean = sector !in HIGH_IS_NOT_GOOD
-
-    /**
-     * Which two ratings the wheel shows: the newest one, and the starting one to compare
-     * with ("before"). The comparison is null when the newest rating is the start itself.
-     * [assessments] must be sorted oldest first, as the repository returns them.
-     */
-    fun currentAndStart(assessments: List<WheelAssessmentWithRatings>): Pair<WheelAssessmentWithRatings?, WheelAssessmentWithRatings?> {
-        val current = assessments.lastOrNull()
-        val start = assessments.firstOrNull { it.assessment.kind == WheelKind.START }
-        return current to start?.takeIf { it != current }
-    }
-
-    /**
-     * START and FINAL can each exist only once, because they are the "before" and "after"
-     * of the comparison. CHECK_IN can be used any number of times.
-     */
-    fun isKindTaken(
-        assessments: List<WheelAssessmentWithRatings>,
-        kind: WheelKind,
-        editedId: Long,
-    ): Boolean =
-        kind != WheelKind.CHECK_IN &&
-            assessments.any { it.assessment.kind == kind && it.assessment.id != editedId }
 }

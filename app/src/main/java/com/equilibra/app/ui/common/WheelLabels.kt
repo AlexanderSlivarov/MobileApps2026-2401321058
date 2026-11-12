@@ -3,7 +3,6 @@ package com.equilibra.app.ui.common
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import com.equilibra.app.R
-import com.equilibra.app.data.local.entity.WheelKind
 import com.equilibra.app.data.local.entity.WheelSector
 
 // UI texts and colors for the balance wheel. Kept here so the entities stay free of Android resources.
@@ -33,13 +32,4 @@ val WheelSector.colorRes: Int
             WheelSector.FREE_TIME -> R.color.sector_free_time
             WheelSector.STUDY_EFFICIENCY -> R.color.sector_study_efficiency
             WheelSector.REST_QUALITY -> R.color.sector_rest_quality
-        }
-
-@get:StringRes
-val WheelKind.labelRes: Int
-    get() =
-        when (this) {
-            WheelKind.START -> R.string.wheel_kind_start
-            WheelKind.CHECK_IN -> R.string.wheel_kind_check_in
-            WheelKind.FINAL -> R.string.wheel_kind_final
         }

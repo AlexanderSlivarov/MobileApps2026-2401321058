@@ -11,6 +11,52 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Filter by type: all, problems, habits or needs -->
+        <HorizontalScrollView
+            android:id="@+id/scroll_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_all" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_problem"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finding_problem" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_habit"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finding_habit" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_need"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finding_need" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
 
         <include
             android:id="@+id/empty"

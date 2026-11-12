@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,52 +18,6 @@
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
-        <!-- Day -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/wheel_date" />
-
-        <Button
-            android:id="@+id/button_date"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Nov 5, 2026" />
-
-        <!-- Start (before), check-in, or final (after) -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/wheel_kind" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_kind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_start"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wheel_kind_start" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_check_in"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wheel_kind_check_in" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_final"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wheel_kind_final" />
-        </com.google.android.material.chip.ChipGroup>
-
         <!-- One slider per sector, added in code (WheelEditFragment.addSliders) -->
         <LinearLayout
             android:id="@+id/layout_sliders"
@@ -79,15 +32,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/action_save" />
-
-        <Button
-            android:id="@+id/button_delete"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/wheel_delete"
-            android:textColor="?attr/colorError"
-            android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
+import com.equilibra.app.data.local.entity.FindingType
 import com.equilibra.app.databinding.FragmentHabitsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -46,11 +47,18 @@ class HabitsFragment : Fragment() {
         binding.recyclerFindings.adapter = adapter
         binding.fabAddFinding.setOnClickListener { openEditor(FindingEditViewModel.NEW_FINDING_ID) }
 
+        // The filter: check the chip of the type kept in the ViewModel, then follow the taps.
+        binding.chipGroupFilter.check(chipOfType(viewModel.filter.value))
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            viewModel.filter.value = typeOfChip(checkedIds.firstOrNull())
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.findings.collect { findings ->
-                    adapter.submitList(findings)
-                    binding.empty.root.isVisible = findings.isEmpty()
+                viewModel.uiState.collect { state ->
+                    adapter.submitList(state.findings)
+                    binding.empty.root.isVisible = !state.hasAny
+                    binding.scrollFilter.isVisible = state.hasAny
                 }
             }
         }
@@ -60,6 +68,22 @@ class HabitsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun chipOfType(type: FindingType?): Int =
+        when (type) {
+            null -> R.id.chip_all
+            FindingType.PROBLEM -> R.id.chip_problem
+            FindingType.HABIT -> R.id.chip_habit
+            FindingType.NEED -> R.id.chip_need
+        }
+
+    private fun typeOfChip(chipId: Int?): FindingType? =
+        when (chipId) {
+            R.id.chip_problem -> FindingType.PROBLEM
+            R.id.chip_habit -> FindingType.HABIT
+            R.id.chip_need -> FindingType.NEED
+            else -> null
+        }
 
     private fun openEditor(findingId: Long) {
         findNavController().navigate(

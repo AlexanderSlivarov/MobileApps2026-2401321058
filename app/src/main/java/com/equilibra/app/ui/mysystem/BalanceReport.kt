@@ -4,14 +4,13 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.core.content.ContextCompat
 import com.equilibra.app.R
+import com.equilibra.app.data.local.entity.DayItemEntity
 import com.equilibra.app.data.local.entity.DecisionEntity
 import com.equilibra.app.data.local.entity.FindingEntity
 import com.equilibra.app.data.local.entity.FindingType
 import com.equilibra.app.data.local.entity.ProfileEntity
 import com.equilibra.app.data.local.entity.TaskEntity
-import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
 import com.equilibra.app.data.local.entity.WheelSector
-import com.equilibra.app.domain.BalanceWheel
 import com.equilibra.app.domain.DecisionDays
 import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.EisenhowerGroup
@@ -33,10 +32,12 @@ import java.time.format.DateTimeFormatter
 /** Everything stored in the app, read once for the report. */
 data class ReportData(
     val profile: ProfileEntity,
-    val wheels: List<WheelAssessmentWithRatings>,
+    /** My rating on the wheel (null = not rated yet). */
+    val wheel: Map<WheelSector, Int>?,
     val findings: List<FindingEntity>,
     val tasks: List<TaskEntity>,
     val decisions: List<DecisionEntity>,
+    val dayItems: List<DayItemEntity>,
 )
 
 /** One piece of the report. ReportPdf decides how each one looks. */
@@ -100,17 +101,11 @@ object BalanceReport {
             if (note.isNotBlank()) blocks += ReportBlock.Line(context.getString(R.string.self_note_format, note), italic = true)
         }
         blocks += ReportBlock.Subheading(context.getString(R.string.wheel_title))
-        val (now, start) = BalanceWheel.currentAndStart(data.wheels)
-        if (now == null) {
+        if (data.wheel == null) {
             blocks += none
         } else {
-            blocks += ReportBlock.Line(describe(context, now) + (start?.let { "  ←  " + describe(context, it) } ?: ""), italic = true)
-            val nowScores = BalanceWheel.scoresOf(now)
-            val startScores = start?.let(BalanceWheel::scoresOf)
             WheelSector.entries.forEach { sector ->
-                val score = nowScores.getValue(sector)
-                val value = startScores?.let { context.getString(R.string.wheel_change_format, it.getValue(sector), score) } ?: score.toString()
-                blocks += ReportBlock.Row(context.getString(sector.labelRes), value)
+                blocks += ReportBlock.Row(context.getString(sector.labelRes), data.wheel.getValue(sector).toString())
             }
         }
 
@@ -140,12 +135,8 @@ object BalanceReport {
             }
         }
 
-        // 3. Priorities: my method, then my priorities by group in my order, then the postponed ones.
+        // 3. Priorities: my priorities by group in my order, then the postponed ones.
         blocks += ReportBlock.Heading(context.getString(R.string.section_priorities))
-        if (data.profile.prioritizationMethod.isNotBlank()) {
-            blocks += ReportBlock.Subheading(context.getString(R.string.my_method_title))
-            blocks += ReportBlock.Line(data.profile.prioritizationMethod, italic = true)
-        }
         val active = Eisenhower.inGroupOrder(data.tasks.filter { !it.isNotStarted })
         if (active.isEmpty()) blocks += none
         var number = 0
@@ -155,8 +146,7 @@ object BalanceReport {
             blocks += ReportBlock.Subheading(context.getString(group.labelRes), color(group.colorRes))
             inGroup.forEach { task ->
                 number++
-                val days = plannedDays(context, task)
-                blocks += ReportBlock.Line("$number. ${task.title}" + if (days.isEmpty()) "" else "  ·  $days")
+                blocks += ReportBlock.Line("$number. ${task.title}" + (task.date?.let { "  ·  " + it.toDisplayString() } ?: ""))
             }
         }
         val postponed = data.tasks.filter { it.isNotStarted }
@@ -165,18 +155,16 @@ object BalanceReport {
             postponed.forEach { blocks += ReportBlock.Line("• " + it.title) }
         }
 
-        // 4. My week: this week's dates and what is planned on each day.
-        if (WeekPlan.hasPlan(active)) {
-            blocks += ReportBlock.Heading(context.getString(R.string.week_title))
-            val dayAndMonth = DateTimeFormatter.ofPattern("EEEE, d MMMM")
-            WeekPlan.datesOfWeek(LocalDate.now()).forEachIndexed { index, date ->
-                val planned = WeekPlan.tasksFor(active, index).joinToString(", ") { it.title }
-                blocks +=
-                    ReportBlock.Row(
-                        date.format(dayAndMonth).replaceFirstChar { it.uppercase() },
-                        planned.ifEmpty { context.getString(R.string.week_free) },
-                    )
-            }
+        // 4. My week: this week's days, each with its lines (program, tasks, events) and priorities.
+        blocks += ReportBlock.Heading(context.getString(R.string.week_title))
+        val dayAndMonth = DateTimeFormatter.ofPattern("EEEE, d MMMM")
+        WeekPlan.datesOfWeek(LocalDate.now()).forEach { date ->
+            blocks += ReportBlock.Subheading(date.format(dayAndMonth).replaceFirstChar { it.uppercase() })
+            val lines = WeekPlan.linesFor(data.dayItems, date)
+            val planned = WeekPlan.tasksFor(active, date)
+            lines.forEach { blocks += ReportBlock.Row(it.time, it.text) }
+            if (planned.isNotEmpty()) blocks += ReportBlock.Line(planned.joinToString(", ") { it.title }, indent = 1)
+            if (lines.isEmpty() && planned.isEmpty()) blocks += ReportBlock.Line(context.getString(R.string.week_free), italic = true)
         }
 
         // 5. Decisions: result, the 7 days and what changed.
@@ -198,33 +186,13 @@ object BalanceReport {
         }
 
         // 6. Statistics: numbers and facts from all of it, the same as on the Balance page.
-        val statistics = context.statisticsItems(data.profile.selfAnswers, active, data.findings, data.decisions, now, start)
+        val statistics = context.statisticsItems(data.profile.selfAnswers, active, data.findings, data.decisions, data.wheel)
         if (statistics.isNotEmpty()) {
             blocks += ReportBlock.Heading(context.getString(R.string.stats_title))
             statistics.forEach { blocks += ReportBlock.Row(it.label, it.value) }
         }
         return blocks
     }
-
-    /** The planned days of a priority, e.g. "Mon, Wed". */
-    private fun plannedDays(
-        context: Context,
-        task: TaskEntity,
-    ): String =
-        (0 until WeekPlan.DAYS)
-            .filter { WeekPlan.isPlanned(task.days, it) }
-            .joinToString(", ") { context.getString(DAY_NAMES[it]) }
-
-    /** E.g. "Start · Nov 1, 2026". */
-    private fun describe(
-        context: Context,
-        wheel: WheelAssessmentWithRatings,
-    ): String =
-        context.getString(
-            R.string.wheel_kind_date_format,
-            context.getString(wheel.assessment.kind.labelRes),
-            wheel.assessment.date.toDisplayString(),
-        )
 
     /** The same resources, but with the light theme's colors (for white paper). */
     fun dayContext(context: Context): Context {
@@ -233,6 +201,4 @@ object BalanceReport {
         return context.createConfigurationContext(config)
     }
 
-    private val DAY_NAMES =
-        listOf(R.string.day_1, R.string.day_2, R.string.day_3, R.string.day_4, R.string.day_5, R.string.day_6, R.string.day_7)
 }

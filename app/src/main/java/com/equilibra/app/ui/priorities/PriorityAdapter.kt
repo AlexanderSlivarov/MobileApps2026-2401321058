@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.equilibra.app.R
+import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.data.local.entity.TaskEntity
 import com.equilibra.app.databinding.ItemPriorityBinding
 import com.equilibra.app.domain.Eisenhower
@@ -70,7 +71,9 @@ class PriorityAdapter(
         val context = binding.root.context
         val groupColor = ContextCompat.getColor(context, Eisenhower.groupOf(task).colorRes)
         binding.textTitle.text = task.title
-        binding.textGroup.setText(Eisenhower.groupOf(task).labelRes)
+        // The group, and the planned date after it when there is one, e.g. "Plan it · important · Nov 13, 2026".
+        val group = context.getString(Eisenhower.groupOf(task).labelRes)
+        binding.textGroup.text = task.date?.let { context.getString(R.string.two_parts_format, group, it.toDisplayString()) } ?: group
         binding.textGroup.setTextColor(groupColor)
         // The number sits in a circle of the group's color; the page color reads well on it.
         binding.textNumber.backgroundTintList = ColorStateList.valueOf(groupColor)

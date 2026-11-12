@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
-        <!-- Balance wheel: the newest rating, compared with the starting one -->
+        <!-- Balance wheel: my one rating -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
@@ -34,14 +34,15 @@
                     android:layout_marginTop="8dp"
                     android:contentDescription="@string/wheel_title" />
 
+                <!-- Shown only while I haven't rated yet -->
                 <TextView
-                    android:id="@+id/text_wheel_caption"
+                    android:id="@+id/text_wheel_empty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:text="@string/wheel_empty"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    tools:text="Check-in · Nov 5, 2026" />
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
                 <!-- Sector colors and scores, added in code -->
                 <LinearLayout
@@ -58,13 +59,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/wheel_add" />
-
-                <!-- Saved ratings, newest first, added in code -->
-                <LinearLayout
-                    android:id="@+id/layout_wheels"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

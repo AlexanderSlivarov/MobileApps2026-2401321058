@@ -1,107 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Add / edit a priority: title, important / urgent, postpone, and the days I plan it for. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Add / edit a priority: title, important / urgent, postpone, and the date I plan it for. -->
+<!-- Scrolls, so the date stays reachable when the phone is turned sideways. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingHorizontal="24dp"
-    android:paddingTop="8dp">
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_title"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/priority_hint">
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="8dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_title"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_title"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/priority_hint">
 
-    <!-- Eisenhower matrix: two separate questions -->
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/check_important"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/priority_important" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/check_urgent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/priority_urgent" />
+        <!-- Eisenhower matrix: two separate questions -->
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/check_important"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/priority_important" />
 
-    <!-- Anti-Kanban -->
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/check_not_started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/priority_not_started" />
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/check_urgent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/priority_urgent" />
 
-    <!-- My week: the days I plan to work on it (any number, also none) -->
-    <TextView
-        style="@style/Widget.Equilibra.Eyebrow"
-        android:layout_marginTop="12dp"
-        android:text="@string/priority_days" />
+        <!-- Anti-Kanban -->
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/check_not_started"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/priority_not_started" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chip_group_days"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:chipSpacingVertical="0dp">
+        <!-- My week: the date I plan it for. Tap to choose it from the calendar, × to remove it. -->
+        <TextView
+            style="@style/Widget.Equilibra.Eyebrow"
+            android:layout_marginTop="12dp"
+            android:text="@string/priority_date" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_1"
-            style="@style/Widget.Material3.Chip.Filter"
+            android:id="@+id/chip_date"
+            style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/day_1" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_2"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_2" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_3"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_3" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_4"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_4" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_5"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_5" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_6"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_6" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_day_7"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day_7" />
-    </com.google.android.material.chip.ChipGroup>
-</LinearLayout>
+            app:chipIcon="@drawable/ic_calendar"
+            app:closeIconVisible="false" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

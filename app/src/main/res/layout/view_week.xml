@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- My week: a strip of the 7 days of this week (day, date, a colored dot per planned priority),
-     and under it the priorities of the chosen day. Tap a day to choose it; today is chosen first. -->
+<!-- My week: arrows to choose the week, a strip of its 7 days (day, date, a colored dot per
+     planned priority and one for one-time events), and under it the chosen day: my program,
+     tasks and events (tap one to edit it), the planned priorities, and "Add". -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
@@ -13,25 +15,42 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <TextView
+            style="@style/Widget.Equilibra.Eyebrow"
+            android:text="@string/week_title" />
+
+        <!-- Previous week, the dates of the shown week, next week -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                style="@style/Widget.Equilibra.Eyebrow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="@string/week_title" />
+            <Button
+                android:id="@+id/button_previous_week"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/week_previous"
+                app:icon="@drawable/ic_chevron_left" />
 
             <TextView
                 android:id="@+id/text_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary"
+                tools:text="2 – 8 November" />
+
+            <Button
+                android:id="@+id/button_next_week"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelLarge"
-                android:textColor="?attr/colorPrimary"
-                tools:text="9 – 15 November" />
+                android:contentDescription="@string/week_next"
+                app:icon="@drawable/ic_chevron_right" />
         </LinearLayout>
 
         <!-- The 7 days, added in code (item_week_day) -->
@@ -39,10 +58,10 @@
             android:id="@+id/layout_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal" />
 
-        <!-- The chosen day and its priorities -->
+        <!-- The chosen day -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,15 +69,26 @@
             android:background="@drawable/bg_rounded_box"
             android:backgroundTint="?attr/colorSurfaceContainerHigh"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:paddingHorizontal="14dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="4dp">
 
             <TextView
                 android:id="@+id/text_chosen_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceTitleSmall"
-                tools:text="Thursday, 12 November" />
+                tools:text="Monday, 2 November" />
 
+            <!-- My program, tasks and events of the day, sorted by time; added in code (item_day_line) -->
+            <LinearLayout
+                android:id="@+id/layout_lines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical" />
+
+            <!-- The priorities planned on this weekday, as pills -->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/group_tasks"
                 android:layout_width="match_parent"
@@ -74,6 +104,14 @@
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_add_line"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_add"
+                app:icon="@drawable/ic_add" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

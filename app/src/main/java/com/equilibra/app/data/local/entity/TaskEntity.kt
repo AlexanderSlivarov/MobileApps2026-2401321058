@@ -3,6 +3,7 @@ package com.equilibra.app.data.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 /**
  * One of my priorities in the "Priorities" section. [position] is its place in my order:
@@ -20,9 +21,6 @@ data class TaskEntity(
     @ColumnInfo(defaultValue = "0") val isImportant: Boolean = false,
     @ColumnInfo(defaultValue = "0") val isUrgent: Boolean = false,
     @ColumnInfo(defaultValue = "0") val isNotStarted: Boolean = false,
-    /**
-     * The days of the week I plan to work on it, Monday first: one character per day,
-     * "1" = planned, e.g. "1010000" = Monday and Wednesday. Empty = no days chosen.
-     */
-    @ColumnInfo(defaultValue = "''") val days: String = "",
+    /** The date I plan it for; it shows on that day in My week. Null = no date chosen. */
+    val date: LocalDate? = null,
 )

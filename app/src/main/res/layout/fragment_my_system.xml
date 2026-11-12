@@ -78,14 +78,14 @@
                     android:contentDescription="@string/wheel_title" />
 
                 <TextView
-                    android:id="@+id/text_wheel"
+                    android:id="@+id/text_wheel_empty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorOnSurfaceVariant"
-                    tools:text="Dashed: Start · Nov 1, 2026\nFilled: Final · Nov 8, 2026" />
+                    android:text="@string/wheel_empty" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -171,33 +171,6 @@
                     style="@style/Widget.Equilibra.Eyebrow"
                     android:text="@string/section_priorities" />
 
-                <!-- My method, in a tinted box; hidden when not written -->
-                <LinearLayout
-                    android:id="@+id/layout_method"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_rounded_box"
-                    android:backgroundTint="?attr/colorSurfaceContainerHigh"
-                    android:orientation="vertical"
-                    android:padding="14dp"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <TextView
-                        style="@style/Widget.Equilibra.Eyebrow"
-                        android:text="@string/my_method_title" />
-
-                    <TextView
-                        android:id="@+id/text_method"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        tools:text="I start with what has a deadline." />
-                </LinearLayout>
-
                 <TextView
                     android:id="@+id/text_priorities_empty"
                     android:layout_width="match_parent"
@@ -222,7 +195,17 @@
                     android:layout_marginTop="8dp"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorOnSurfaceVariant"
-                    tools:text="1 thing I consciously didn't start" />
+                    tools:text="1 postponed thing" />
+
+                <!-- The postponed things, one per line; hidden while there are none -->
+                <TextView
+                    android:id="@+id/text_postponed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="4dp"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    tools:text="• Snowflake certificate" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

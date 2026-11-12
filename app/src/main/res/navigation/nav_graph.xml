@@ -30,16 +30,11 @@
             app:argType="integer" />
     </fragment>
 
-    <!-- Rate the balance wheel / edit a saved rating. assessmentId = -1 means a new rating. -->
+    <!-- Rate my state on the balance wheel (my one rating). -->
     <fragment
         android:id="@+id/wheelEditFragment"
         android:name="com.equilibra.app.ui.selfassessment.WheelEditFragment"
-        android:label="@string/wheel_edit_title">
-        <argument
-            android:name="assessmentId"
-            android:defaultValue="-1L"
-            app:argType="long" />
-    </fragment>
+        android:label="@string/wheel_edit_title" />
 
     <fragment
         android:id="@+id/habitsFragment"

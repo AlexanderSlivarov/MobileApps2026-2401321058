@@ -3,9 +3,11 @@ package com.equilibra.app.di
 import android.content.Context
 import androidx.room.Room
 import com.equilibra.app.data.local.EquilibraDatabase
+import com.equilibra.app.data.local.MIGRATION_15_16
 import com.equilibra.app.data.local.MIGRATION_2_3
 import com.equilibra.app.data.local.MIGRATION_9_10
 import com.equilibra.app.data.local.dao.BalanceWheelDao
+import com.equilibra.app.data.local.dao.DayItemDao
 import com.equilibra.app.data.local.dao.DecisionDao
 import com.equilibra.app.data.local.dao.FindingDao
 import com.equilibra.app.data.local.dao.ProfileDao
@@ -32,9 +34,9 @@ object DatabaseModule {
     ): EquilibraDatabase =
         Room
             .databaseBuilder(context, EquilibraDatabase::class.java, EquilibraDatabase.NAME)
-            // 1 -> 2 and 3 -> 4 up to 7 -> 8 are AutoMigrations (declared on EquilibraDatabase);
-            // 2 -> 3 is written by hand.
-            .addMigrations(MIGRATION_2_3, MIGRATION_9_10)
+            // Most version steps are AutoMigrations (declared on EquilibraDatabase);
+            // 2 -> 3, 9 -> 10 and 15 -> 16 are written by hand.
+            .addMigrations(MIGRATION_2_3, MIGRATION_9_10, MIGRATION_15_16)
             .build()
 
     @Provides
@@ -51,4 +53,7 @@ object DatabaseModule {
 
     @Provides
     fun provideProfileDao(db: EquilibraDatabase): ProfileDao = db.profileDao()
+
+    @Provides
+    fun provideDayItemDao(db: EquilibraDatabase): DayItemDao = db.dayItemDao()
 }

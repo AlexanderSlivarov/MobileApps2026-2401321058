@@ -16,20 +16,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.DecisionResult
 import com.equilibra.app.data.local.entity.FindingType
-import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
 import com.equilibra.app.databinding.FragmentMySystemBinding
 import com.equilibra.app.databinding.ItemBalancePriorityBinding
 import com.equilibra.app.databinding.ViewStatTileBinding
-import com.equilibra.app.domain.BalanceWheel
 import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.SelfAssessment
-import com.equilibra.app.ui.common.labelRes
-import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.ui.priorities.colorRes
 import com.equilibra.app.ui.priorities.labelRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.equilibra.app.domain.WeekPlan
 import com.equilibra.app.ui.priorities.showWeek
 import java.time.LocalDate
 import android.net.Uri
@@ -37,7 +32,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import android.content.res.ColorStateList
 import android.widget.LinearLayout
+import com.equilibra.app.data.local.entity.DayItemEntity
 import com.equilibra.app.data.local.entity.DecisionEntity
+import androidx.appcompat.app.AlertDialog
+import com.equilibra.app.databinding.DialogDayLineBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.equilibra.app.databinding.ItemBalanceDecisionBinding
 import com.equilibra.app.databinding.ItemKeptDotBinding
 import com.equilibra.app.databinding.ViewAnswerTileBinding
@@ -59,8 +58,8 @@ class MySystemFragment : Fragment() {
     /** Opens Android's "save" screen for a PDF file; the chosen place comes back to savePdf. */
     private val saveLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { savePdf(it) }
 
-    /** The day chosen in My week (0 = Monday); today at first. */
-    private var chosenDay = WeekPlan.todayIndex(LocalDate.now())
+    /** The open dialog (add / edit a line of My week), closed together with the view. */
+    private var dialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +76,10 @@ class MySystemFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonSavePdf.setOnClickListener { saveLauncher.launch(getString(R.string.pdf_file_name, LocalDate.now())) }
+        // My week: the arrows move one week back or forward (the same weekday stays chosen).
+        binding.week.buttonPreviousWeek.setOnClickListener { chooseDate(viewModel.chosenDate.minusWeeks(1)) }
+        binding.week.buttonNextWeek.setOnClickListener { chooseDate(viewModel.chosenDate.plusWeeks(1)) }
+        binding.week.buttonAddLine.setOnClickListener { showLineDialog(null) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -87,30 +90,21 @@ class MySystemFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // An open dialog holds the activity, so close it together with the view.
+        dialog?.dismiss()
+        dialog = null
         _binding = null
     }
 
     private fun show(state: MySystemUiState) {
-        // 1. Self-assessment: my answers as rows (like on Me) and my own words, then the wheel,
-        // start (dashed) and now (filled).
+        // 1. Self-assessment: my answers as rows (like on Me) and my own words, then the wheel.
         showAnswers(binding.layoutWhoRows, state.selfAnswers, SelfAssessment.WHO_AM_I, state.whoAmINote)
         showAnswers(binding.layoutTimeRows, state.selfAnswers, SelfAssessment.HOW_I_MANAGE_TIME, state.manageTimeNote)
         binding.layoutSelfSummary.isVisible = SelfAssessment.answeredCount(state.selfAnswers) > 0 ||
             state.whoAmINote.isNotBlank() || state.manageTimeNote.isNotBlank()
 
-        binding.wheelView.setScores(
-            state.wheelNow?.let(BalanceWheel::scoresOf),
-            state.wheelStart?.let(BalanceWheel::scoresOf),
-        )
-        binding.textWheel.text =
-            if (state.wheelNow == null) {
-                getString(R.string.wheel_empty)
-            } else {
-                listOfNotNull(
-                    state.wheelStart?.let { getString(R.string.wheel_compare_format, describe(it)) },
-                    getString(R.string.wheel_shown_format, describe(state.wheelNow)),
-                ).joinToString("\n")
-            }
+        binding.wheelView.setScores(state.wheel)
+        binding.textWheelEmpty.isVisible = state.wheel == null
 
         // 2. Habit analysis: a big number per type, in the type's color.
         showTile(binding.tileProblems, state.findingCounts[FindingType.PROBLEM] ?: 0, R.plurals.label_problems, R.color.type_problem)
@@ -118,10 +112,7 @@ class MySystemFragment : Fragment() {
         showTile(binding.tileNeeds, state.findingCounts[FindingType.NEED] ?: 0, R.plurals.label_needs, R.color.type_need)
         binding.textTraced.text = count(R.plurals.count_traced, state.analyzedProblems)
 
-        // 3. Prioritization: My method (if written), then one row per priority, in my order,
-        // with its group in the group's color.
-        binding.layoutMethod.isVisible = state.method.isNotBlank()
-        binding.textMethod.text = state.method
+        // 3. Prioritization: one row per priority, in my order, with its group in the group's color.
         binding.textPrioritiesEmpty.isVisible = state.priorities.isEmpty()
         binding.layoutPriorities.removeAllViews()
         state.priorities.forEachIndexed { index, task ->
@@ -135,10 +126,12 @@ class MySystemFragment : Fragment() {
             row.textGroup.setText(group.labelRes)
             row.textGroup.setTextColor(ContextCompat.getColor(requireContext(), group.colorRes))
         }
-        binding.textNotStarted.text = count(R.plurals.count_not_started, state.notStartedCount)
+        // How many things I postponed, then their names.
+        binding.textNotStarted.text = count(R.plurals.count_not_started, state.postponed.size)
+        binding.textPostponed.isVisible = state.postponed.isNotEmpty()
+        binding.textPostponed.text = state.postponed.joinToString(separator = "\n") { "• " + it.title }
 
-        // My week: the priorities on the days I planned them, with this week's dates.
-        binding.week.root.isVisible = WeekPlan.hasPlan(state.priorities)
+        // My week: the chosen week, its days and the chosen day's program, tasks and events.
         showWeek(state)
 
         // 4. Balance tracking: how many decisions worked, as a bar and as numbers.
@@ -226,8 +219,7 @@ class MySystemFragment : Fragment() {
                 state.priorities,
                 state.findings,
                 state.decisions,
-                state.wheelNow,
-                state.wheelStart,
+                state.wheel,
             )
         binding.cardStatistics.isVisible = items.isNotEmpty()
         binding.layoutStatistics.removeAllViews()
@@ -248,12 +240,52 @@ class MySystemFragment : Fragment() {
         }
     }
 
-    /** My week; tapping a day shows its priorities below the strip. */
+    /** My week; tapping a day shows its lines and priorities below the strip, tapping a line edits it. */
     private fun showWeek(state: MySystemUiState) {
-        binding.week.showWeek(state.priorities, layoutInflater, chosenDay) { day ->
-            chosenDay = day
-            showWeek(viewModel.uiState.value)
+        binding.week.showWeek(
+            state.priorities,
+            state.dayItems,
+            layoutInflater,
+            viewModel.chosenDate,
+            onChooseDay = ::chooseDate,
+            onLineClick = ::showLineDialog,
+        )
+    }
+
+    private fun chooseDate(date: LocalDate) {
+        viewModel.chosenDate = date
+        showWeek(viewModel.uiState.value)
+    }
+
+    /**
+     * Add a line to the chosen day ([item] = null) or edit / delete [item]: the time, what it
+     * is, and "Every week" (part of my program) or only this date (a task or event).
+     */
+    private fun showLineDialog(item: DayItemEntity?) {
+        val form = DialogDayLineBinding.inflate(layoutInflater)
+        form.editTime.setText(item?.time)
+        form.editText.setText(item?.text)
+        form.checkEveryWeek.isChecked = item?.everyWeek ?: false
+
+        val builder =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(if (item == null) R.string.line_add_title else R.string.line_edit_title)
+                .setView(form.root)
+                .setPositiveButton(R.string.action_save, null)
+                .setNegativeButton(R.string.action_cancel, null)
+        if (item != null) builder.setNeutralButton(R.string.action_delete) { _, _ -> viewModel.deleteLine(item) }
+        val shown = builder.show()
+        // Set here, not in setPositiveButton, so the dialog stays open while the text is empty.
+        shown.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val text = form.editText.text.toString()
+            if (text.isBlank()) {
+                form.layoutText.error = getString(R.string.error_text_required)
+            } else {
+                viewModel.saveLine(item, form.editTime.text.toString(), text, form.checkEveryWeek.isChecked)
+                shown.dismiss()
+            }
         }
+        dialog = shown
     }
 
     /** A number tile: the number in [color] and the word under it in the right form ("1 problem" / "3 problems"). */
@@ -276,12 +308,4 @@ class MySystemFragment : Fragment() {
         @PluralsRes plural: Int,
         number: Int,
     ): String = resources.getQuantityString(plural, number, number)
-
-    /** E.g. "Start · Nov 1, 2026". */
-    private fun describe(wheel: WheelAssessmentWithRatings): String =
-        getString(
-            R.string.wheel_kind_date_format,
-            getString(wheel.assessment.kind.labelRes),
-            wheel.assessment.date.toDisplayString(),
-        )
 }

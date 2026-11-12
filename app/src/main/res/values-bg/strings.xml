@@ -139,11 +139,6 @@
     <string name="wheel_title">Моето състояние</string>
     <string name="wheel_empty">Все още няма оценка.</string>
     <string name="wheel_add">Оцени състоянието си</string>
-    <string name="wheel_shown_format">Запълнено: %1$s</string>
-    <string name="wheel_compare_format">Пунктир: %1$s</string>
-    <string name="wheel_kind_start">Начална</string>
-    <string name="wheel_kind_check_in">Междинна</string>
-    <string name="wheel_kind_final">Крайна</string>
     <string name="sector_stress">Стрес</string>
     <string name="sector_workload">Натовареност</string>
     <string name="sector_motivation">Мотивация</string>
@@ -155,11 +150,6 @@
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">Моето състояние</string>
     <string name="wheel_scale_hint">Оцени всеки показател от 1 (ниско) до 5 (високо). При стрес и натовареност високата оценка не е непременно положителна.</string>
-    <string name="wheel_date">Ден</string>
-    <string name="wheel_kind">Каква е тази оценка?</string>
-    <string name="wheel_delete">Изтрий оценката</string>
-    <string name="wheel_delete_confirm">Да изтрия ли тази оценка? Това не може да бъде отменено.</string>
-    <string name="error_wheel_kind_taken">Вече имаш такава оценка. Може да има само една начална и една крайна. Редактирай нея.</string>
 
     <!-- Habit analysis (findings) -->
     <string name="habits_empty">Още нямаш наблюдения</string>
@@ -169,6 +159,7 @@
     <string name="finding_problem">Проблем</string>
     <string name="finding_habit">Навик</string>
     <string name="finding_need">Потребност</string>
+    <string name="filter_all">Всички</string>
     <string name="finding_delete_confirm">Да изтрия ли това наблюдение? Това не може да бъде отменено.</string>
 
     <!-- Habit: keep / change / stop; need: which part of life it is for -->
@@ -218,10 +209,15 @@
     <string name="day_7">Нд</string>
     <string name="week_title">Моята седмица</string>
     <string name="week_free">Свободно</string>
-    <string name="priority_days">Дни</string>
-    <string name="my_method_title">Моят метод</string>
-    <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
-    <string name="my_method_hint">Как подреждам приоритетите си</string>
+    <string name="week_previous">Предишна седмица</string>
+    <string name="week_next">Следваща седмица</string>
+    <string name="line_add_title">Добави към този ден</string>
+    <string name="line_edit_title">Редактирай</string>
+    <string name="line_time_hint">Час, напр. 09:00 – 18:00</string>
+    <string name="line_text_hint">Какво е?</string>
+    <string name="line_every_week">Всяка седмица в този ден</string>
+    <string name="priority_date">Дата</string>
+    <string name="priority_no_date">Избери дата</string>
 
     <!-- Share (extra feature: Share Intent) -->
     <string name="share_priorities">Сподели приоритетите ми</string>
@@ -267,14 +263,10 @@
     <string name="s_habits_change">Навици, които искам да променя или спра</string>
     <string name="s_need_area">Най-честа област на потребностите ми</string>
     <string name="s_do_now">Приоритети за правене сега</string>
-    <string name="s_busiest_day">Ден с най-много приоритети</string>
-    <string name="s_free_days">Дни без планирани приоритети</string>
     <string name="s_best_decision">Най-добре спазено решение</string>
     <string name="s_best_indicator">Най-добър показател в колелото</string>
     <string name="s_weakest_indicator">Показател, който иска внимание</string>
-    <string name="s_improved">Показатели, подобрени от началото</string>
     <string name="s_days_of_7_format">%1$d от 7 дни</string>
-    <string name="c_no_free_days">Няма</string>
     <string name="c_of_format">%1$d от %2$d</string>
 
     <!-- The report (Save as PDF) -->

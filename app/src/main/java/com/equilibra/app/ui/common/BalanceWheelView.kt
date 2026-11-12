@@ -2,7 +2,6 @@ package com.equilibra.app.ui.common
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -19,8 +18,7 @@ import com.google.android.material.R as MaterialR
 
 /**
  * Draws the balance wheel as a radar chart: one spoke per sector, rings for the scores 1-5,
- * the current scores as a filled shape and, optionally, an earlier rating as a dashed outline
- * to compare "before" and "after". Drawn with plain Canvas calls, no chart library.
+ * and my scores as a filled shape. Drawn with plain Canvas calls, no chart library.
  */
 class BalanceWheelView
     @JvmOverloads
@@ -29,11 +27,9 @@ class BalanceWheelView
         attrs: AttributeSet? = null,
     ) : View(context, attrs) {
         private var current: Map<WheelSector, Int>? = null
-        private var compare: Map<WheelSector, Int>? = null
 
         private val density = resources.displayMetrics.density
         private val primary = MaterialColors.getColor(this, MaterialR.attr.colorPrimary)
-        private val secondary = MaterialColors.getColor(this, MaterialR.attr.colorSecondary)
         private val sectorColors = WheelSector.entries.map { ContextCompat.getColor(context, it.colorRes) }
 
         // Paints are created once here, not in onDraw, because onDraw runs on every frame.
@@ -60,24 +56,12 @@ class BalanceWheelView
                 strokeJoin = Paint.Join.ROUND
                 color = primary
             }
-        private val comparePaint =
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.STROKE
-                strokeWidth = 2.5f * density
-                strokeJoin = Paint.Join.ROUND
-                pathEffect = DashPathEffect(floatArrayOf(8 * density, 6 * density), 0f)
-                color = secondary
-            }
         private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
         private val path = Path()
 
-        /** [current] is the filled shape (null = empty wheel), [compare] the dashed one (null = none). */
-        fun setScores(
-            current: Map<WheelSector, Int>?,
-            compare: Map<WheelSector, Int>? = null,
-        ) {
+        /** [current] is the filled shape (null = empty wheel). */
+        fun setScores(current: Map<WheelSector, Int>?) {
             this.current = current
-            this.compare = compare
             invalidate() // Ask Android to call onDraw again.
         }
 
@@ -106,13 +90,7 @@ class BalanceWheelView
                 )
             }
 
-            // The earlier rating ("before") as a dashed outline.
-            compare?.let { scores ->
-                buildShape(centerX, centerY, radius) { scores[it] ?: BalanceWheel.DEFAULT_SCORE }
-                canvas.drawPath(path, comparePaint)
-            }
-
-            // The current rating as a filled shape with a dot on each spoke.
+            // My rating as a filled shape with a dot on each spoke.
             current?.let { scores ->
                 buildShape(centerX, centerY, radius) { scores[it] ?: BalanceWheel.DEFAULT_SCORE }
                 canvas.drawPath(path, fillPaint)

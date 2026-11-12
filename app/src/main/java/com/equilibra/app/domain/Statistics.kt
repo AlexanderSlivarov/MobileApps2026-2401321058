@@ -40,17 +40,6 @@ object Statistics {
     fun doNow(tasks: List<TaskEntity>): Pair<Int, Int>? =
         if (tasks.isEmpty()) null else tasks.count { Eisenhower.groupOf(it) == EisenhowerGroup.I } to tasks.size
 
-    /** The day of the week with the most planned priorities (0 = Monday) and how many. */
-    fun busiestDay(tasks: List<TaskEntity>): Pair<Int, Int>? =
-        (0 until WeekPlan.DAYS)
-            .map { day -> day to WeekPlan.tasksFor(tasks, day).size }
-            .filter { it.second > 0 }
-            .maxByOrNull { it.second }
-
-    /** The days with nothing planned (0 = Monday), when at least one other day has a plan. */
-    fun freeDays(tasks: List<TaskEntity>): List<Int>? =
-        if (!WeekPlan.hasPlan(tasks)) null else (0 until WeekPlan.DAYS).filter { WeekPlan.tasksFor(tasks, it).isEmpty() }
-
     /** The decision kept on the most days (at least one). */
     fun bestKeptDecision(decisions: List<DecisionEntity>): DecisionEntity? =
         decisions
@@ -73,19 +62,13 @@ object Statistics {
             ?.key
 
     /**
-     * My best and my weakest indicator in a rating of the wheel. "Good" means a high score
+     * My best and my weakest indicator on the wheel. "Good" means a high score
      * for most indicators, a low one for stress and workload.
      */
     fun bestAndWeakest(scores: Map<WheelSector, Int>): Pair<WheelSector, WheelSector> {
         val goodness = { sector: WheelSector -> goodness(sector, scores.getValue(sector)) }
         return WheelSector.entries.maxBy(goodness) to WheelSector.entries.minBy(goodness)
     }
-
-    /** On how many of the 7 indicators [now] is better than [start]. */
-    fun improvedSinceStart(
-        start: Map<WheelSector, Int>,
-        now: Map<WheelSector, Int>,
-    ): Int = WheelSector.entries.count { goodness(it, now.getValue(it)) > goodness(it, start.getValue(it)) }
 
     /** A score turned so that higher is always better (stress and workload are turned around). */
     private fun goodness(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/** Self-assessment answers, my own words and "My method" (one profile row). */
+/** Self-assessment answers and my own words (one profile row). */
 @Singleton
 class ProfileRepository
     @Inject

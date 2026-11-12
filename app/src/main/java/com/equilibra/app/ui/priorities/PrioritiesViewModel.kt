@@ -3,27 +3,25 @@ package com.equilibra.app.ui.priorities
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.equilibra.app.data.local.entity.TaskEntity
-import com.equilibra.app.data.repository.ProfileRepository
 import com.equilibra.app.data.repository.TaskRepository
 import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.PriorityOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 /**
  * Everything the Priorities screen shows: my priorities in order, the ones I consciously
- * didn't start (Anti-Kanban), and "My method".
+ * postponed.
  */
 data class PrioritiesUiState(
     val tasks: List<TaskEntity> = emptyList(),
     val notStarted: List<TaskEntity> = emptyList(),
-    val method: String = "",
 )
 
 /** What the user filled in on the priority dialog. */
@@ -32,8 +30,8 @@ data class PriorityForm(
     val isImportant: Boolean,
     val isUrgent: Boolean,
     val isNotStarted: Boolean,
-    /** The planned days, e.g. "1010000" (see WeekPlan). */
-    val days: String,
+    /** The date I plan it for, or null. */
+    val date: LocalDate?,
 )
 
 /**
@@ -45,14 +43,13 @@ class PrioritiesViewModel
     @Inject
     constructor(
         private val taskRepository: TaskRepository,
-        private val profileRepository: ProfileRepository,
     ) : ViewModel() {
-        /** Rebuilt automatically whenever the priorities or the profile change in the database. */
+        /** Rebuilt automatically whenever the priorities change in the database. */
         val uiState: StateFlow<PrioritiesUiState> =
-            combine(taskRepository.observeTasks(), profileRepository.observeProfile()) { tasks, profile ->
-                // partition splits one list in two: (not started, the rest), both still in my order.
+            taskRepository.observeTasks().map { tasks ->
+                // partition splits one list in two: (postponed, the rest), both still in my order.
                 val (notStarted, active) = tasks.partition { it.isNotStarted }
-                PrioritiesUiState(tasks = Eisenhower.inGroupOrder(active), notStarted = notStarted, method = profile.prioritizationMethod)
+                PrioritiesUiState(tasks = Eisenhower.inGroupOrder(active), notStarted = notStarted)
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PrioritiesUiState())
 
         /** Adds a new priority when [existing] is null, otherwise saves the changes to it. */
@@ -67,7 +64,7 @@ class PrioritiesViewModel
                         isImportant = form.isImportant,
                         isUrgent = form.isUrgent,
                         isNotStarted = form.isNotStarted,
-                        days = form.days,
+                        date = form.date,
                     )
                 if (existing == null) taskRepository.addTask(task) else taskRepository.updateTask(task)
             }
@@ -95,13 +92,6 @@ class PrioritiesViewModel
             viewModelScope.launch {
                 val changed = PriorityOrder.renumber(ordered)
                 if (changed.isNotEmpty()) taskRepository.updateTasks(changed)
-            }
-        }
-
-        fun saveMethod(text: String) {
-            viewModelScope.launch {
-                val profile = profileRepository.observeProfile().first()
-                profileRepository.saveProfile(profile.copy(prioritizationMethod = text.trim()))
             }
         }
     }

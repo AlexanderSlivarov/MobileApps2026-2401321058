@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.TaskEntity
 import com.equilibra.app.databinding.DialogPriorityBinding
-import com.equilibra.app.databinding.DialogTextInputBinding
 import com.equilibra.app.databinding.FragmentPrioritiesBinding
 import com.equilibra.app.domain.Eisenhower
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,8 +25,9 @@ import kotlinx.coroutines.launch
 import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
 import com.equilibra.app.domain.EisenhowerGroup
-import com.equilibra.app.domain.WeekPlan
-import com.google.android.material.chip.Chip
+import com.equilibra.app.ui.common.toDisplayString
+import java.time.LocalDate
+import android.app.DatePickerDialog
 
 /** Section 3: "How do I order my priorities?" */
 @AndroidEntryPoint
@@ -38,6 +38,7 @@ class PrioritiesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var dialog: AlertDialog? = null
+    private var datePicker: DatePickerDialog? = null
 
     private val viewModel: PrioritiesViewModel by viewModels()
 
@@ -83,7 +84,6 @@ class PrioritiesFragment : Fragment() {
         binding.recyclerNotStarted.adapter = notStartedAdapter
 
         binding.fabAddTask.setOnClickListener { showTaskDialog(null) }
-        binding.buttonEditMethod.setOnClickListener { showMethodDialog() }
         binding.buttonShare.setOnClickListener { sharePriorities() }
 
         // Collect the data only while the screen is visible (STARTED or later).
@@ -105,7 +105,6 @@ class PrioritiesFragment : Fragment() {
                     notStartedAdapter.submitList(state.notStarted)
                     // "Postponed" shows only when something is postponed.
                     binding.textNotStartedTitle.isVisible = state.notStarted.isNotEmpty()
-                    binding.textMethod.text = state.method.ifBlank { getString(R.string.my_method_empty) }
                 }
             }
         }
@@ -153,6 +152,8 @@ class PrioritiesFragment : Fragment() {
         // An open dialog holds the activity, so close it together with the view.
         dialog?.dismiss()
         dialog = null
+        datePicker?.dismiss()
+        datePicker = null
         _binding = null
     }
 
@@ -163,8 +164,32 @@ class PrioritiesFragment : Fragment() {
         form.checkImportant.isChecked = task?.isImportant ?: false
         form.checkUrgent.isChecked = task?.isUrgent ?: false
         form.checkNotStarted.isChecked = task?.isNotStarted ?: false
-        val dayChips = dayChips(form)
-        dayChips.forEachIndexed { index, chip -> chip.isChecked = WeekPlan.isPlanned(task?.days.orEmpty(), index) }
+        // The chosen date lives in this variable while the dialog is open.
+        var date = task?.date
+        fun showDate() {
+            form.chipDate.text = date?.toDisplayString() ?: getString(R.string.priority_no_date)
+            form.chipDate.isCloseIconVisible = date != null
+        }
+        showDate()
+        form.chipDate.setOnClickListener {
+            val shownDate = date ?: LocalDate.now()
+            // DatePickerDialog counts months from 0, LocalDate from 1.
+            datePicker =
+                DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, day ->
+                        date = LocalDate.of(year, month + 1, day)
+                        showDate()
+                    },
+                    shownDate.year,
+                    shownDate.monthValue - 1,
+                    shownDate.dayOfMonth,
+                ).apply { show() }
+        }
+        form.chipDate.setOnCloseIconClickListener {
+            date = null
+            showDate()
+        }
 
         val builder =
             MaterialAlertDialogBuilder(requireContext())
@@ -188,7 +213,7 @@ class PrioritiesFragment : Fragment() {
                         isImportant = form.checkImportant.isChecked,
                         isUrgent = form.checkUrgent.isChecked,
                         isNotStarted = form.checkNotStarted.isChecked,
-                        days = WeekPlan.daysOf(dayChips.map { it.isChecked }),
+                        date = date,
                     ),
                 )
                 shown.dismiss()
@@ -196,10 +221,6 @@ class PrioritiesFragment : Fragment() {
         }
         dialog = shown
     }
-
-    /** The 7 day chips of the priority dialog, Monday first. */
-    private fun dayChips(form: DialogPriorityBinding): List<Chip> =
-        listOf(form.chipDay1, form.chipDay2, form.chipDay3, form.chipDay4, form.chipDay5, form.chipDay6, form.chipDay7)
 
     private fun confirmDelete(task: TaskEntity) {
         dialog =
@@ -225,7 +246,7 @@ class PrioritiesFragment : Fragment() {
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)))
     }
 
-    /** My priorities in order with their group, what I didn't start, and My method, as plain text. */
+    /** My priorities in order with their group, and the postponed ones, as plain text. */
     private fun buildShareText(state: PrioritiesUiState): String =
         buildString {
             appendLine(getString(R.string.share_subject))
@@ -240,26 +261,5 @@ class PrioritiesFragment : Fragment() {
                 appendLine(getString(R.string.not_started_title))
                 state.notStarted.forEach { appendLine("• ${it.title}") }
             }
-
-            if (state.method.isNotBlank()) {
-                appendLine()
-                appendLine(getString(R.string.my_method_title))
-                appendLine(state.method)
-            }
         }.trimEnd()
-
-    private fun showMethodDialog() {
-        val input = DialogTextInputBinding.inflate(layoutInflater)
-        input.layoutInput.hint = getString(R.string.my_method_hint)
-        input.editInput.setText(viewModel.uiState.value.method)
-
-        dialog =
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.my_method_title)
-                .setView(input.root)
-                .setPositiveButton(R.string.action_save) { _, _ ->
-                    viewModel.saveMethod(input.editInput.text.toString())
-                }.setNegativeButton(R.string.action_cancel, null)
-                .show()
-    }
 }

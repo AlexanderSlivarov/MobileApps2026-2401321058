@@ -1,33 +1,24 @@
 package com.equilibra.app.data.repository
 
 import com.equilibra.app.data.local.dao.BalanceWheelDao
-import com.equilibra.app.data.local.entity.WheelAssessmentEntity
-import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
-import com.equilibra.app.data.local.entity.WheelRatingEntity
+import com.equilibra.app.data.local.entity.WheelScoreEntity
+import com.equilibra.app.data.local.entity.WheelSector
+import com.equilibra.app.domain.BalanceWheel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/** Dated balance wheel ratings, oldest first, so "before" and "after" can be compared. */
+/** My one rating of the balance wheel. */
 @Singleton
 class BalanceWheelRepository
     @Inject
     constructor(
         private val wheelDao: BalanceWheelDao,
     ) {
-        fun observeAssessments(): Flow<List<WheelAssessmentWithRatings>> = wheelDao.observeAllWithRatings()
+        /** The score of each indicator, or null while I haven't rated yet. */
+        fun observeScores(): Flow<Map<WheelSector, Int>?> = wheelDao.observeScores().map(BalanceWheel::scoresOf)
 
-        suspend fun getAssessment(id: Long): WheelAssessmentWithRatings? = wheelDao.getWithRatings(id)
-
-        suspend fun addAssessment(
-            assessment: WheelAssessmentEntity,
-            ratings: List<WheelRatingEntity>,
-        ): Long = wheelDao.insertWithRatings(assessment, ratings)
-
-        suspend fun updateAssessment(
-            assessment: WheelAssessmentEntity,
-            ratings: List<WheelRatingEntity>,
-        ) = wheelDao.updateWithRatings(assessment, ratings)
-
-        suspend fun deleteAssessment(assessment: WheelAssessmentEntity) = wheelDao.deleteAssessment(assessment)
+        suspend fun saveScores(scores: Map<WheelSector, Int>) =
+            wheelDao.saveScores(scores.map { (sector, score) -> WheelScoreEntity(sector, score) })
     }
