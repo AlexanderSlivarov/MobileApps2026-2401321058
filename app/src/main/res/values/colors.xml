@@ -40,4 +40,16 @@
     <color name="sector_free_time">#C2457A</color>
     <color name="sector_study_efficiency">#2E8B7A</color>
     <color name="sector_rest_quality">#3B7DC4</color>
+
+    <!-- Finding types, decision results and priority groups (day) -->
+    <color name="type_problem">#C0392B</color>
+    <color name="type_habit">#7A4FB3</color>
+    <color name="type_need">#2E8B7A</color>
+    <color name="result_worked">#2E7D4F</color>
+    <color name="result_did_not_work">#C0392B</color>
+    <color name="result_pending">#817567</color>
+    <color name="group_i">#C0392B</color>
+    <color name="group_ii">#3F3A8C</color>
+    <color name="group_iii">#B5651D</color>
+    <color name="group_iv">#817567</color>
 </resources>

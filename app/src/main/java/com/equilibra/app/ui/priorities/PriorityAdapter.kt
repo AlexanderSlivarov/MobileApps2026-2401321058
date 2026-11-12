@@ -2,6 +2,7 @@ package com.equilibra.app.ui.priorities
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -22,6 +23,17 @@ val EisenhowerGroup.labelRes: Int
             EisenhowerGroup.II -> R.string.group_ii
             EisenhowerGroup.III -> R.string.group_iii
             EisenhowerGroup.IV -> R.string.group_iv
+        }
+
+/** Each group has its own color (a lighter one in the night theme, values-night). */
+@get:ColorRes
+val EisenhowerGroup.colorRes: Int
+    get() =
+        when (this) {
+            EisenhowerGroup.I -> R.color.group_i
+            EisenhowerGroup.II -> R.color.group_ii
+            EisenhowerGroup.III -> R.color.group_iii
+            EisenhowerGroup.IV -> R.color.group_iv
         }
 
 /**

@@ -176,22 +176,9 @@
 
     <!-- My system -->
     <string name="rules_title">My balance rules</string>
-    <string name="rules_empty">Write the rules of your final balance system.</string>
-    <string name="rules_hint">My balance rules</string>
+    <string name="rules_hint">What rules do I follow to keep the balance between study and free time?</string>
 
     <!-- Counts on the Balance page -->
-    <plurals name="count_problems">
-        <item quantity="one">%d problem</item>
-        <item quantity="other">%d problems</item>
-    </plurals>
-    <plurals name="count_habits">
-        <item quantity="one">%d habit</item>
-        <item quantity="other">%d habits</item>
-    </plurals>
-    <plurals name="count_needs">
-        <item quantity="one">%d need</item>
-        <item quantity="other">%d needs</item>
-    </plurals>
     <plurals name="count_traced">
         <item quantity="one">%d problem traced with 5 Whys</item>
         <item quantity="other">%d problems traced with 5 Whys</item>
@@ -200,16 +187,33 @@
         <item quantity="one">%d thing I consciously didn\'t start</item>
         <item quantity="other">%d things I consciously didn\'t start</item>
     </plurals>
-    <plurals name="count_worked">
-        <item quantity="one">%d decision worked</item>
-        <item quantity="other">%d decisions worked</item>
+    <string name="decisions_none">No decisions yet.</string>
+    <plurals name="label_problems">
+        <item quantity="one">problem</item>
+        <item quantity="other">problems</item>
     </plurals>
-    <plurals name="count_did_not_work">
-        <item quantity="one">%d decision didn\'t work</item>
-        <item quantity="other">%d decisions didn\'t work</item>
+    <plurals name="label_habits">
+        <item quantity="one">habit</item>
+        <item quantity="other">habits</item>
     </plurals>
-    <plurals name="count_pending">
-        <item quantity="one">%d decision – too early to tell</item>
-        <item quantity="other">%d decisions – too early to tell</item>
+    <plurals name="label_needs">
+        <item quantity="one">need</item>
+        <item quantity="other">needs</item>
+    </plurals>
+    <plurals name="label_worked">
+        <item quantity="one">worked</item>
+        <item quantity="other">worked</item>
+    </plurals>
+    <plurals name="label_did_not_work">
+        <item quantity="one">didn\'t work</item>
+        <item quantity="other">didn\'t work</item>
+    </plurals>
+    <plurals name="label_pending">
+        <item quantity="one">too early</item>
+        <item quantity="other">too early</item>
+    </plurals>
+    <plurals name="decisions_progress">
+        <item quantity="one">%1$d of %2$d decision worked</item>
+        <item quantity="other">%1$d of %2$d decisions worked</item>
     </plurals>
 </resources>

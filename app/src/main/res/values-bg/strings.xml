@@ -175,22 +175,9 @@
 
     <!-- My system -->
     <string name="rules_title">Моите правила за баланс</string>
-    <string name="rules_empty">Напиши правилата на окончателната си система за баланс.</string>
-    <string name="rules_hint">Моите правила за баланс</string>
+    <string name="rules_hint">Какви правила следвам, за да пазя баланса между учене и свободно време?</string>
 
     <!-- Counts on the Balance page -->
-    <plurals name="count_problems">
-        <item quantity="one">%d проблем</item>
-        <item quantity="other">%d проблема</item>
-    </plurals>
-    <plurals name="count_habits">
-        <item quantity="one">%d навик</item>
-        <item quantity="other">%d навика</item>
-    </plurals>
-    <plurals name="count_needs">
-        <item quantity="one">%d потребност</item>
-        <item quantity="other">%d потребности</item>
-    </plurals>
     <plurals name="count_traced">
         <item quantity="one">%d проблем, проследен с „Пет пъти защо?“</item>
         <item quantity="other">%d проблема, проследени с „Пет пъти защо?“</item>
@@ -199,16 +186,33 @@
         <item quantity="one">%d нещо, което съзнателно не започнах</item>
         <item quantity="other">%d неща, които съзнателно не започнах</item>
     </plurals>
-    <plurals name="count_worked">
-        <item quantity="one">%d решение проработи</item>
-        <item quantity="other">%d решения проработиха</item>
+    <string name="decisions_none">Все още няма решения.</string>
+    <plurals name="label_problems">
+        <item quantity="one">проблем</item>
+        <item quantity="other">проблема</item>
     </plurals>
-    <plurals name="count_did_not_work">
-        <item quantity="one">%d решение не проработи</item>
-        <item quantity="other">%d решения не проработиха</item>
+    <plurals name="label_habits">
+        <item quantity="one">навик</item>
+        <item quantity="other">навика</item>
     </plurals>
-    <plurals name="count_pending">
-        <item quantity="one">%d решение – още е рано да се каже</item>
-        <item quantity="other">%d решения – още е рано да се каже</item>
+    <plurals name="label_needs">
+        <item quantity="one">потребност</item>
+        <item quantity="other">потребности</item>
+    </plurals>
+    <plurals name="label_worked">
+        <item quantity="one">проработи</item>
+        <item quantity="other">проработиха</item>
+    </plurals>
+    <plurals name="label_did_not_work">
+        <item quantity="one">не проработи</item>
+        <item quantity="other">не проработиха</item>
+    </plurals>
+    <plurals name="label_pending">
+        <item quantity="one">рано е</item>
+        <item quantity="other">рано е</item>
+    </plurals>
+    <plurals name="decisions_progress">
+        <item quantity="one">%1$d от %2$d решение проработи</item>
+        <item quantity="other">%1$d от %2$d решения проработиха</item>
     </plurals>
 </resources>
