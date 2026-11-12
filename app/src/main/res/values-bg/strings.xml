@@ -258,6 +258,17 @@
     <string name="export_pdf">Запази като PDF</string>
     <string name="pdf_saved">PDF-ът е запазен</string>
 
+    <!-- The report (Save as PDF) -->
+    <string name="report_title">Моят баланс</string>
+    <string name="report_made_format">Създаден на %1$s</string>
+    <string name="report_none">Още няма записи.</string>
+    <string name="report_summary">Накратко</string>
+    <string name="report_kept_format">спазени дни общо: %1$d от %2$d</string>
+    <plurals name="report_priorities">
+        <item quantity="one">%d приоритет</item>
+        <item quantity="other">%d приоритета</item>
+    </plurals>
+
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">
         <item quantity="one">%d проблем, проследен с „Пет пъти защо?“</item>

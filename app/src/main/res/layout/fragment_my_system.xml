@@ -314,7 +314,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Saves this page as a PDF where I choose. The PDF has everything above this button. -->
+        <!-- Saves a report of all my data as a PDF where I choose -->
         <Button
             android:id="@+id/button_save_pdf"
             style="@style/Widget.Material3.Button.TonalButton"

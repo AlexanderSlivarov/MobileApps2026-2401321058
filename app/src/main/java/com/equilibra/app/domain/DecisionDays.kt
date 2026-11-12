@@ -29,6 +29,9 @@ object DecisionDays {
     /** On how many of the 7 days I kept the decision. */
     fun doneCount(days: String): Int = days.take(DAYS).count { it == '1' }
 
+    /** On how many days I kept my decisions, all of them together. */
+    fun keptInAll(allDays: List<String>): Int = allDays.sumOf { doneCount(it) }
+
     /** Which day it is today: 1 on the start day, 0 or less before it, more than 7 after the week. */
     fun dayNumber(
         start: LocalDate,

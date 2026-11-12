@@ -33,11 +33,9 @@ import kotlinx.coroutines.launch
 import com.equilibra.app.domain.WeekPlan
 import com.equilibra.app.ui.priorities.showWeek
 import java.time.LocalDate
-import com.google.android.material.color.MaterialColors
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import java.io.OutputStream
 
 /** Section 5: "What does my final balance system look like?" */
 @AndroidEntryPoint
@@ -151,21 +149,19 @@ class MySystemFragment : Fragment() {
         showTile(binding.tilePending, state.decisionCounts[DecisionResult.PENDING] ?: 0, R.plurals.label_pending, R.color.result_pending)
     }
 
-    /** Draws the page (everything above the "Save as PDF" button) as a PDF into [output]. */
-    private fun writePdf(output: OutputStream) {
-        val content = binding.layoutContent
-        val background = MaterialColors.getColor(content, android.R.attr.colorBackground)
-        BalancePdf.write(content, binding.buttonSavePdf.top, background, output)
-    }
-
     /**
      * "Save as PDF": Android's own "save" screen lets me pick the folder and the name (e.g.
-     * Downloads), then the PDF is written there. No storage permission is needed for this.
+     * Downloads), then the report of all my data is written there as a PDF. No storage
+     * permission is needed for this.
      */
     private fun savePdf(uri: Uri?) {
         if (uri == null) return // the save screen was closed without saving
-        requireContext().contentResolver.openOutputStream(uri)?.use { writePdf(it) }
-        Toast.makeText(requireContext(), R.string.pdf_saved, Toast.LENGTH_SHORT).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            // The report: all the data from every tab, written out on A4 pages.
+            val blocks = BalanceReport.build(requireContext(), viewModel.loadReportData())
+            requireContext().contentResolver.openOutputStream(uri)?.use { ReportPdf(requireContext()).write(blocks, it) }
+            Toast.makeText(requireContext(), R.string.pdf_saved, Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** My week; tapping a day shows its priorities below the strip. */

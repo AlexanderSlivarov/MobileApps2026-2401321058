@@ -270,6 +270,17 @@
     <string name="pdf_file_name" translatable="false">Equilibra %1$s.pdf</string>
     <string name="pdf_saved">PDF saved</string>
 
+    <!-- The report (Save as PDF) -->
+    <string name="report_title">My balance</string>
+    <string name="report_made_format">Made on %1$s</string>
+    <string name="report_none">Nothing yet.</string>
+    <string name="report_summary">In short</string>
+    <string name="report_kept_format">days kept in all: %1$d of %2$d</string>
+    <plurals name="report_priorities">
+        <item quantity="one">%d priority</item>
+        <item quantity="other">%d priorities</item>
+    </plurals>
+
     <!-- Counts on the Balance page -->
     <plurals name="count_traced">
         <item quantity="one">%d problem traced with 5 Whys</item>

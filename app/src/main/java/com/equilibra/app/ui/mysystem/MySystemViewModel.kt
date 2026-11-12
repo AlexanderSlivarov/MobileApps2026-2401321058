@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 /** Everything "My system" shows: one part from each section, plus my final balance rules. */
 data class MySystemUiState(
@@ -44,10 +45,10 @@ data class MySystemUiState(
 class MySystemViewModel
     @Inject
     constructor(
-        wheelRepository: BalanceWheelRepository,
-        habitsRepository: HabitsRepository,
-        taskRepository: TaskRepository,
-        decisionRepository: DecisionRepository,
+        private val wheelRepository: BalanceWheelRepository,
+        private val habitsRepository: HabitsRepository,
+        private val taskRepository: TaskRepository,
+        private val decisionRepository: DecisionRepository,
         private val profileRepository: ProfileRepository,
     ) : ViewModel() {
         /** Recalculated by itself whenever anything changes in any section. */
@@ -72,4 +73,14 @@ class MySystemViewModel
                     selfAnswers = profile.selfAnswers,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MySystemUiState())
+
+        /** Everything in the app, read once, for the report ("Save as PDF"). */
+        suspend fun loadReportData(): ReportData =
+            ReportData(
+                profile = profileRepository.observeProfile().first(),
+                wheels = wheelRepository.observeAssessments().first(),
+                findings = habitsRepository.observeFindings().first(),
+                tasks = taskRepository.observeTasks().first(),
+                decisions = decisionRepository.observeDecisions().first(),
+            )
     }
