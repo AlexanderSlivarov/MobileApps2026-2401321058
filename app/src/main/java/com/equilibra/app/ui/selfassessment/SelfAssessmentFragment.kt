@@ -28,7 +28,6 @@ import com.equilibra.app.domain.SelfAssessment
 import com.equilibra.app.ui.common.colorRes
 import com.equilibra.app.ui.common.SELF_QUESTIONS
 import com.equilibra.app.ui.common.labelRes
-import com.equilibra.app.ui.common.sectorLabel
 import com.equilibra.app.ui.common.toDisplayString
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -121,7 +120,7 @@ class SelfAssessmentFragment : Fragment() {
                 val row = ItemWheelLegendBinding.inflate(layoutInflater, binding.layoutLegend, true)
                 row.viewDot.backgroundTintList =
                     ColorStateList.valueOf(ContextCompat.getColor(requireContext(), sector.colorRes))
-                row.textSector.text = requireContext().sectorLabel(sector)
+                row.textSector.text = requireContext().getString(sector.labelRes)
                 val now = currentScores.getValue(sector)
                 // With a start to compare with, show how the score changed, e.g. "2 → 4".
                 row.textScore.text =

@@ -20,6 +20,7 @@ import android.widget.TextView
 import com.equilibra.app.databinding.ItemDayBinding
 import com.equilibra.app.domain.DecisionDays
 import java.time.LocalDate
+import java.time.format.TextStyle
 
 /** The UI text for each result. */
 @get:StringRes
@@ -117,7 +118,7 @@ class DecisionAdapter(
             val circle = binding.layoutDays.getChildAt(index) as TextView
             val done = DecisionDays.isDone(decision.daysDone, index)
             val canMark = DecisionDays.canMark(index, decision.startDate, today)
-            circle.text = (index + 1).toString()
+            circle.text = circle.shortDayName(decision.startDate.plusDays(index.toLong()))
             circle.backgroundTintList = ColorStateList.valueOf(if (done) kept else notKept)
             circle.setTextColor(if (done) onKept else onNotKept)
             circle.alpha = if (canMark) 1f else FUTURE_ALPHA
@@ -125,6 +126,12 @@ class DecisionAdapter(
             circle.setOnClickListener { onToggleDay(decision, index) }
         }
     }
+
+    /** The short name of a day in the app's language, e.g. "Пн" / "Mon". */
+    private fun TextView.shortDayName(date: LocalDate): String =
+        date.dayOfWeek
+            .getDisplayName(TextStyle.SHORT_STANDALONE, resources.configuration.locales[0])
+            .replaceFirstChar { it.uppercase() }
 
     private companion object {
         const val FUTURE_ALPHA = 0.4f

@@ -20,7 +20,6 @@ import com.equilibra.app.domain.SelfAssessment
 import com.equilibra.app.domain.WeekPlan
 import com.equilibra.app.ui.common.SELF_QUESTIONS
 import com.equilibra.app.ui.common.labelRes
-import com.equilibra.app.ui.common.sectorLabel
 import com.equilibra.app.ui.common.toDisplayString
 import com.equilibra.app.ui.decisions.colorRes
 import com.equilibra.app.ui.decisions.labelRes
@@ -111,7 +110,7 @@ object BalanceReport {
             WheelSector.entries.forEach { sector ->
                 val score = nowScores.getValue(sector)
                 val value = startScores?.let { context.getString(R.string.wheel_change_format, it.getValue(sector), score) } ?: score.toString()
-                blocks += ReportBlock.Row(context.sectorLabel(sector), value)
+                blocks += ReportBlock.Row(context.getString(sector.labelRes), value)
             }
         }
 

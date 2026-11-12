@@ -151,7 +151,6 @@
     <string name="sector_free_time">Free time</string>
     <string name="sector_study_efficiency">Study efficiency</string>
     <string name="sector_rest_quality">Quality of rest</string>
-    <string name="sector_lower_is_better_format">%1$s (lower is better)</string>
 
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">My state</string>

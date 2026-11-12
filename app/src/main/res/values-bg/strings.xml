@@ -151,7 +151,6 @@
     <string name="sector_free_time">Свободно време</string>
     <string name="sector_study_efficiency">Учебна ефективност</string>
     <string name="sector_rest_quality">Качество на почивката</string>
-    <string name="sector_lower_is_better_format">%1$s (по-ниско е по-добре)</string>
 
     <!-- Balance wheel add / edit -->
     <string name="wheel_edit_title">Моето състояние</string>
