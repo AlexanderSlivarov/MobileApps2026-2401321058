@@ -147,6 +147,7 @@ class MainActivity : AppCompatActivity() {
             TAB_TITLES +
                 mapOf(
                     R.id.wheelEditFragment to R.string.wheel_edit_title,
+                    R.id.selfEditFragment to R.string.section_self_assessment,
                     R.id.findingEditFragment to R.string.finding_edit_title,
                     R.id.decisionEditFragment to R.string.decision_edit_title,
                 )

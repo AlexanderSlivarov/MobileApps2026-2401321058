@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One self-assessment question: the question and its 3 options as chips (they wrap to a new line). -->
+<!-- One self-assessment question in its own rounded box (so the questions are easy to tell apart):
+     the question in color and its 3 options as chips (they wrap to a new line). -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:orientation="vertical">
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_rounded_box"
+    android:backgroundTint="?attr/colorSurfaceContainerHigh"
+    android:orientation="vertical"
+    android:paddingHorizontal="14dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/text_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceTitleSmall"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorPrimary"
         tools:text="When is it easiest for me to focus?" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         app:selectionRequired="true"
         app:singleSelection="true" />
 </LinearLayout>

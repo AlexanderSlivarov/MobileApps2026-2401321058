@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.equilibra.app.data.local.EquilibraDatabase
 import com.equilibra.app.data.local.MIGRATION_2_3
+import com.equilibra.app.data.local.MIGRATION_9_10
 import com.equilibra.app.data.local.dao.BalanceWheelDao
 import com.equilibra.app.data.local.dao.DecisionDao
 import com.equilibra.app.data.local.dao.FindingDao
@@ -33,7 +34,7 @@ object DatabaseModule {
             .databaseBuilder(context, EquilibraDatabase::class.java, EquilibraDatabase.NAME)
             // 1 -> 2 and 3 -> 4 up to 7 -> 8 are AutoMigrations (declared on EquilibraDatabase);
             // 2 -> 3 is written by hand.
-            .addMigrations(MIGRATION_2_3)
+            .addMigrations(MIGRATION_2_3, MIGRATION_9_10)
             .build()
 
     @Provides

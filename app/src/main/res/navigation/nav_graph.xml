@@ -14,6 +14,20 @@
         <action
             android:id="@+id/action_selfAssessment_to_wheelEdit"
             app:destination="@id/wheelEditFragment" />
+        <action
+            android:id="@+id/action_selfAssessment_to_selfEdit"
+            app:destination="@id/selfEditFragment" />
+    </fragment>
+
+    <!-- Answer the questions of one half and write my own words. part 0 = "Who am I?", 1 = "How do I manage my time?". -->
+    <fragment
+        android:id="@+id/selfEditFragment"
+        android:name="com.equilibra.app.ui.selfassessment.SelfEditFragment"
+        android:label="@string/section_self_assessment">
+        <argument
+            android:name="part"
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
     <!-- Rate the balance wheel / edit a saved rating. assessmentId = -1 means a new rating. -->

@@ -1,22 +1,22 @@
 package com.equilibra.app.domain
 
 /**
- * The self-assessment questions: 6 questions, 3 options each. The answers are kept as one
+ * The self-assessment questions: 12 questions, 3 options each. The answers are kept as one
  * string with a character per question ("0", "1", "2", or "-" when not answered yet).
- * The first 3 questions are about "who am I", the last 3 about "how I manage my time".
+ * The first 6 questions are about "who am I", the last 6 about "how I manage my time".
  * Plain Kotlin, so it can be unit-tested.
  */
 object SelfAssessment {
-    const val QUESTION_COUNT = 6
+    const val QUESTION_COUNT = 12
     const val OPTION_COUNT = 3
 
     /** Question numbers (0-based) for each half of the section question. */
-    val WHO_AM_I: IntRange = 0..2
-    val HOW_I_MANAGE_TIME: IntRange = 3..5
+    val WHO_AM_I: IntRange = 0..5
+    val HOW_I_MANAGE_TIME: IntRange = 6..11
 
     private const val NOT_ANSWERED = '-'
 
-    /** Always exactly one character per question, e.g. "" becomes "------". */
+    /** Always exactly one character per question, e.g. "" becomes "------------". */
     private fun normalize(answers: String): String = answers.padEnd(QUESTION_COUNT, NOT_ANSWERED).take(QUESTION_COUNT)
 
     /** The chosen option (0-2) of question [index], or null when it isn't answered yet. */

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,33 +15,29 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.equilibra.app.R
+import com.equilibra.app.data.local.entity.ProfileEntity
 import com.equilibra.app.data.local.entity.WheelAssessmentWithRatings
 import com.equilibra.app.data.local.entity.WheelSector
 import com.equilibra.app.databinding.FragmentSelfAssessmentBinding
-import com.equilibra.app.databinding.ItemSelfQuestionBinding
 import com.equilibra.app.databinding.ItemWheelAssessmentBinding
 import com.equilibra.app.databinding.ItemWheelLegendBinding
+import com.equilibra.app.databinding.ViewAnswerTileBinding
+import com.equilibra.app.databinding.ViewSelfPartBinding
 import com.equilibra.app.domain.BalanceWheel
 import com.equilibra.app.domain.SelfAssessment
 import com.equilibra.app.ui.common.colorRes
 import com.equilibra.app.ui.common.SELF_QUESTIONS
 import com.equilibra.app.ui.common.labelRes
 import com.equilibra.app.ui.common.sectorLabel
-import com.equilibra.app.ui.common.selfSummary
 import com.equilibra.app.ui.common.toDisplayString
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/** Section 1: "Who am I and how do I manage my time?" Six questions with a summary, and the balance wheel. */
+/** Section 1: "Who am I and how do I manage my time?" The balance wheel, then my answers and my own words for each half. */
 @AndroidEntryPoint
 class SelfAssessmentFragment : Fragment() {
     private var _binding: FragmentSelfAssessmentBinding? = null
     private val binding get() = _binding!!
-
-    /** For each question: its chip group and the ids of its 3 option chips (created in code). */
-    private val questionViews = mutableListOf<Pair<ChipGroup, List<Int>>>()
 
     private val viewModel: SelfAssessmentViewModel by viewModels()
 
@@ -58,53 +55,48 @@ class SelfAssessmentFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        addQuestions()
+        binding.partWhoAmI.textTitle.setText(R.string.self_who_am_i)
+        binding.partManageTime.textTitle.setText(R.string.self_manage_time)
+        binding.partWhoAmI.buttonEdit.setOnClickListener { openSelfEditor(SelfEditViewModel.PART_WHO_AM_I) }
+        binding.partManageTime.buttonEdit.setOnClickListener { openSelfEditor(SelfEditViewModel.PART_MANAGE_TIME) }
         binding.buttonAddWheel.setOnClickListener { openWheelEditor(WheelEditViewModel.NEW_ASSESSMENT_ID) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.wheels.collect { showWheels(it) } }
-                launch { viewModel.selfAnswers.collect { showAnswers(it) } }
+                launch { viewModel.profile.collect { showProfile(it) } }
             }
         }
     }
 
-    /** One row per question; a tap on an option saves the answer right away. */
-    private fun addQuestions() {
-        SELF_QUESTIONS.forEachIndexed { questionIndex, texts ->
-            val row = ItemSelfQuestionBinding.inflate(layoutInflater, binding.layoutQuestions, true)
-            row.textQuestion.setText(texts.question)
-            val chipIds =
-                texts.options.map { optionText ->
-                    val chip = layoutInflater.inflate(R.layout.item_self_option, row.chipGroupOptions, false) as Chip
-                    chip.id = View.generateViewId()
-                    chip.setText(optionText)
-                    // The saved answer is shown from the database, so Android doesn't need to restore it.
-                    chip.isSaveEnabled = false
-                    row.chipGroupOptions.addView(chip)
-                    chip.id
-                }
-            row.chipGroupOptions.setOnCheckedStateChangeListener { _, checkedIds ->
-                val option = chipIds.indexOf(checkedIds.firstOrNull())
-                if (option >= 0) viewModel.answer(questionIndex, option)
-            }
-            questionViews.add(row.chipGroupOptions to chipIds)
-        }
+    /** The two halves: each answer as a tile, and my own words as a quote. */
+    private fun showProfile(profile: ProfileEntity) {
+        showPart(binding.partWhoAmI, profile.selfAnswers, SelfAssessment.WHO_AM_I, profile.whoAmINote)
+        showPart(binding.partManageTime, profile.selfAnswers, SelfAssessment.HOW_I_MANAGE_TIME, profile.manageTimeNote)
     }
 
-    /** Marks the saved answers and builds the two-part summary from them. */
-    private fun showAnswers(answers: String) {
-        questionViews.forEachIndexed { questionIndex, (group, chipIds) ->
-            SelfAssessment.answerAt(answers, questionIndex)?.let { option -> group.check(chipIds[option]) }
+    private fun showPart(
+        part: ViewSelfPartBinding,
+        answers: String,
+        questions: IntRange,
+        note: String,
+    ) {
+        part.layoutAnswers.removeAllViews()
+        questions.forEach { questionIndex ->
+            val texts = SELF_QUESTIONS[questionIndex]
+            val row = ViewAnswerTileBinding.inflate(layoutInflater, part.layoutAnswers, true)
+            row.textLabel.setText(texts.label)
+            // The chosen option, or a dash when the question isn't answered yet.
+            row.textValue.text =
+                SelfAssessment.answerAt(answers, questionIndex)?.let { getString(texts.options[it]) }
+                    ?: getString(R.string.share_none)
         }
-        val empty = getString(R.string.self_summary_empty)
-        binding.textWhoAmI.text = requireContext().selfSummary(answers, SelfAssessment.WHO_AM_I).ifEmpty { empty }
-        binding.textManageTime.text = requireContext().selfSummary(answers, SelfAssessment.HOW_I_MANAGE_TIME).ifEmpty { empty }
+        part.textNote.isVisible = note.isNotBlank()
+        part.textNote.text = getString(R.string.self_note_format, note)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        questionViews.clear()
         _binding = null
     }
 
@@ -153,6 +145,13 @@ class SelfAssessmentFragment : Fragment() {
             getString(wheel.assessment.kind.labelRes),
             wheel.assessment.date.toDisplayString(),
         )
+
+    private fun openSelfEditor(part: Int) {
+        findNavController().navigate(
+            R.id.action_selfAssessment_to_selfEdit,
+            bundleOf(SelfEditViewModel.ARG_PART to part),
+        )
+    }
 
     private fun openWheelEditor(assessmentId: Long) {
         findNavController().navigate(

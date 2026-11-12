@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One answer on Me: a short label (e.g. "Focus") on the left and the chosen option in color on the right.
+     Added in code, one under the other, so long answers fit without breaking words. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_rounded_box"
+    android:backgroundTint="?attr/colorSurfaceContainerHigh"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="12dp">
+
+    <TextView
+        android:id="@+id/text_label"
+        style="@style/Widget.Equilibra.Eyebrow"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:letterSpacing="0.04"
+        tools:text="@string/self_k_focus" />
+
+    <TextView
+        android:id="@+id/text_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="3"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorPrimary"
+        tools:text="@string/self_q_focus_0" />
+</LinearLayout>

@@ -29,7 +29,7 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 8,
+    version = 10,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
@@ -43,6 +43,9 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         AutoMigration(from = 6, to = 7),
         // 7 -> 8: the self-assessment questions replace the old texts and answers.
         AutoMigration(from = 7, to = 8, spec = Migration7To8::class),
+        // 8 -> 9: my own words for "Who am I?" and "How do I manage my time?". Only new columns.
+        AutoMigration(from = 8, to = 9),
+        // 9 -> 10: MIGRATION_9_10 (by hand, in DatabaseModule) moves the answers to the 12 questions.
     ],
 )
 @TypeConverters(Converters::class)
