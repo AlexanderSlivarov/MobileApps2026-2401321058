@@ -39,6 +39,8 @@ class HabitsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.empty.imageIcon.setImageResource(R.drawable.ic_schedule)
+        binding.empty.textTitle.setText(R.string.habits_empty)
 
         val adapter = FindingAdapter { finding -> openEditor(finding.id) }
         binding.recyclerFindings.adapter = adapter
@@ -48,7 +50,7 @@ class HabitsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.findings.collect { findings ->
                     adapter.submitList(findings)
-                    binding.textEmpty.isVisible = findings.isEmpty()
+                    binding.empty.root.isVisible = findings.isEmpty()
                 }
             }
         }

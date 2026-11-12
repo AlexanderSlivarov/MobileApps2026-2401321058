@@ -24,14 +24,9 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/priorities_list_title" />
 
-            <TextView
-                android:id="@+id/text_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/priorities_empty"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="?attr/colorOnSurfaceVariant" />
+            <include
+                android:id="@+id/empty"
+                layout="@layout/view_empty_state" />
 
             <!-- One section per group, always in this order; empty groups are hidden -->
             <include
@@ -51,19 +46,12 @@
                 layout="@layout/view_priority_group" />
 
             <!-- "I consciously didn't start" -->
+            <!-- Shown only when something is postponed -->
             <TextView
+                android:id="@+id/text_not_started_title"
                 style="@style/Widget.Equilibra.Eyebrow"
                 android:layout_marginTop="28dp"
                 android:text="@string/not_started_title" />
-
-            <TextView
-                android:id="@+id/text_not_started_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/not_started_empty"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_not_started"

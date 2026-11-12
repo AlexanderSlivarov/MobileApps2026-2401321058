@@ -12,14 +12,9 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/text_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/decisions_empty"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant" />
+        <include
+            android:id="@+id/empty"
+            layout="@layout/view_empty_state" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_decisions"

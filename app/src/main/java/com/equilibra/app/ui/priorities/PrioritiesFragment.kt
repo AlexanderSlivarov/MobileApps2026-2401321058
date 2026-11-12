@@ -53,6 +53,8 @@ class PrioritiesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.empty.imageIcon.setImageResource(R.drawable.ic_list)
+        binding.empty.textTitle.setText(R.string.priorities_empty)
 
         // One section per group (I, II, III, IV), each with its own list. Dragging and the arrows
         // work inside one list, so a priority can't leave its group: "Do now" stays on top.
@@ -97,9 +99,10 @@ class PrioritiesFragment : Fragment() {
                         section.root.isVisible = inGroup.isNotEmpty()
                         before += inGroup.size
                     }
-                    binding.textEmpty.isVisible = state.tasks.isEmpty()
+                    binding.empty.root.isVisible = state.tasks.isEmpty()
                     notStartedAdapter.submitList(state.notStarted)
-                    binding.textNotStartedEmpty.isVisible = state.notStarted.isEmpty()
+                    // "Postponed" shows only when something is postponed.
+                    binding.textNotStartedTitle.isVisible = state.notStarted.isNotEmpty()
                     binding.textMethod.text = state.method.ifBlank { getString(R.string.my_method_empty) }
                 }
             }

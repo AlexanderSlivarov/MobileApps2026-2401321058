@@ -29,7 +29,7 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         WheelRatingEntity::class,
         ProfileEntity::class,
     ],
-    version = 12,
+    version = 13,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = Migration1To2::class),
@@ -50,6 +50,8 @@ import com.equilibra.app.data.local.entity.WheelRatingEntity
         AutoMigration(from = 10, to = 11),
         // 11 -> 12: keep / change / stop for a habit and the area of a need replace the 10 -> 11 fields.
         AutoMigration(from = 11, to = 12, spec = Migration11To12::class),
+        // 12 -> 13: the 7 tracked days of a decision replace its three experiment fields.
+        AutoMigration(from = 12, to = 13, spec = Migration12To13::class),
     ],
 )
 @TypeConverters(Converters::class)

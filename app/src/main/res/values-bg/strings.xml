@@ -163,7 +163,7 @@
     <string name="error_wheel_kind_taken">Вече имаш такава оценка. Може да има само една начална и една крайна. Редактирай нея.</string>
 
     <!-- Habit analysis (findings) -->
-    <string name="habits_empty">Все още няма наблюдения. Добави проблемите, навиците и потребностите, които забелязваш в ежедневието си.</string>
+    <string name="habits_empty">Още нямаш наблюдения</string>
     <string name="finding_hint_problem">Какъв проблем откривам?</string>
     <string name="finding_hint_habit">Какъв навик имам?</string>
     <string name="finding_hint_need">От какво имам нужда?</string>
@@ -193,7 +193,7 @@
 
     <!-- Priorities -->
     <string name="priorities_list_title">Моите приоритети</string>
-    <string name="priorities_empty">Все още няма приоритети. Добави ги и ги подреди.</string>
+    <string name="priorities_empty">Още нямаш приоритети</string>
     <string name="add_task">Добави приоритет</string>
     <string name="priority_edit">Редактирай приоритета</string>
     <string name="priority_hint">Приоритет</string>
@@ -209,7 +209,6 @@
     <string name="group_iii">Направи бързо</string>
     <string name="group_iv">Неопределено</string>
     <string name="not_started_title">Отложено</string>
-    <string name="not_started_empty">Тук отиват нещата, които отлагаш, за да имаш време за важното.</string>
     <string name="my_method_title">Моят метод</string>
     <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
     <string name="my_method_hint">Как подреждам приоритетите си</string>
@@ -220,25 +219,25 @@
     <string name="share_subject">Моите приоритети – Equilibra</string>
 
     <!-- Balance tracking (decisions) -->
-    <string name="decisions_empty">Все още няма решения. Добави решение и по-късно отбележи дали е проработило.</string>
-    <string name="decision_result_format">%1$s · от %2$s</string>
-    <string name="result_pending">Още е рано да се каже</string>
-    <string name="result_worked">Проработи</string>
-    <string name="result_did_not_work">Не проработи</string>
+    <string name="decisions_empty">Още нямаш решения</string>
+    <string name="decision_since_format">от %1$s</string>
+    <string name="result_pending">В ход</string>
+    <string name="result_worked">Получи се</string>
+    <string name="result_did_not_work">Не се получи</string>
 
     <!-- Decision add / edit -->
     <string name="decision_edit_title">Решение</string>
-    <string name="decision_hint">Моето решение, напр. без телефон след 23:00</string>
-    <string name="decision_date">От</string>
+    <string name="decision_hint">Моето решение</string>
+    <string name="decision_date">Започвам</string>
     <string name="decision_result">Резултат</string>
-    <string name="decision_note_hint">Какво се случи? (по избор)</string>
-    <string name="time_lab_title">Моята лаборатория за време</string>
-    <string name="time_lab_hint">Превърни решението в малък експеримент: какво очакваш, провери го 7 дни и сравни.</string>
-    <string name="hypothesis_hint">Хипотеза: какво очаквам да се промени?</string>
-    <string name="smart_goal_hint">Моята SMART цел за 7 дни</string>
-    <string name="smart_goal_helper">Конкретна, измерима, постижима, релевантна и ограничена във времето</string>
-    <string name="progress_sign_hint">По какво ще разпозная напредък?</string>
-    <string name="smart_goal_format">Цел (7 дни): %1$s</string>
+    <string name="decision_note_hint">Какво се промени?</string>
+    <string name="date_today">Днес</string>
+    <string name="date_tomorrow">Утре</string>
+    <string name="date_other">Друга дата</string>
+    <string name="decision_day_format">ден %1$d от 7</string>
+    <string name="decision_starts_format">започва на %1$s</string>
+    <string name="decision_kept_format">Спазено %1$d от 7 дни</string>
+    <string name="change_title">Какво се промени</string>
     <string name="decision_delete">Изтрий решението</string>
     <string name="decision_delete_confirm">Да изтрия ли това решение? Това не може да бъде отменено.</string>
 
@@ -269,19 +268,19 @@
         <item quantity="other">потребности</item>
     </plurals>
     <plurals name="label_worked">
-        <item quantity="one">проработи</item>
-        <item quantity="other">проработиха</item>
+        <item quantity="one">се получи</item>
+        <item quantity="other">се получиха</item>
     </plurals>
     <plurals name="label_did_not_work">
-        <item quantity="one">не проработи</item>
-        <item quantity="other">не проработиха</item>
+        <item quantity="one">не се получи</item>
+        <item quantity="other">не се получиха</item>
     </plurals>
     <plurals name="label_pending">
-        <item quantity="one">рано е</item>
-        <item quantity="other">рано е</item>
+        <item quantity="one">в ход</item>
+        <item quantity="other">в ход</item>
     </plurals>
     <plurals name="decisions_progress">
-        <item quantity="one">%1$d от %2$d решение проработи</item>
-        <item quantity="other">%1$d от %2$d решения проработиха</item>
+        <item quantity="one">%1$d от %2$d решение се получи</item>
+        <item quantity="other">%1$d от %2$d решения се получиха</item>
     </plurals>
 </resources>

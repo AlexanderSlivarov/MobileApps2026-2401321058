@@ -12,14 +12,11 @@ import javax.inject.Inject
 /** What the user filled in on the decision form (the date is kept in the ViewModel). */
 data class DecisionForm(
     val text: String,
-    val hypothesis: String,
-    val smartGoal: String,
-    val progressSign: String,
     val result: DecisionResult,
     val note: String,
 )
 
-/** Create, edit and delete one decision, a small "time lab" experiment (the C, U and D of CRUD). */
+/** Create, edit and delete one decision (the C, U and D of CRUD). The 7 days are marked on the list. */
 @HiltViewModel
 class DecisionEditViewModel
     @Inject
@@ -50,6 +47,8 @@ class DecisionEditViewModel
         }
 
         suspend fun save(form: DecisionForm) {
+            // An existing decision keeps the days already marked.
+            val stored = if (isNewDecision) null else decisionRepository.getDecision(decisionId)
             val decision =
                 DecisionEntity(
                     id = if (isNewDecision) 0 else decisionId,
@@ -57,9 +56,7 @@ class DecisionEditViewModel
                     startDate = date,
                     result = form.result,
                     note = form.note.trim(),
-                    hypothesis = form.hypothesis.trim(),
-                    smartGoal = form.smartGoal.trim(),
-                    progressSign = form.progressSign.trim(),
+                    daysDone = stored?.daysDone ?: "",
                 )
             if (isNewDecision) decisionRepository.addDecision(decision) else decisionRepository.updateDecision(decision)
         }

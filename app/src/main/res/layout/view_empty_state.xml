@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shown on a tab while it has nothing yet: an icon in a colored circle and a short title.
+     The icon and the title are set in code for each tab. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingVertical="56dp">
+
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_number_circle"
+        android:backgroundTint="?attr/colorPrimaryContainer">
+
+        <ImageView
+            android:id="@+id/image_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="?attr/colorOnPrimaryContainer"
+            tools:src="@drawable/ic_edit" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        tools:text="No decisions yet" />
+</LinearLayout>

@@ -39,8 +39,10 @@ class DecisionsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.empty.imageIcon.setImageResource(R.drawable.ic_edit)
+        binding.empty.textTitle.setText(R.string.decisions_empty)
 
-        val adapter = DecisionAdapter { decision -> openEditor(decision.id) }
+        val adapter = DecisionAdapter(onClick = { decision -> openEditor(decision.id) }, onToggleDay = viewModel::toggleDay)
         binding.recyclerDecisions.adapter = adapter
         binding.fabAddDecision.setOnClickListener { openEditor(DecisionEditViewModel.NEW_DECISION_ID) }
 
@@ -48,7 +50,7 @@ class DecisionsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.decisions.collect { decisions ->
                     adapter.submitList(decisions)
-                    binding.textEmpty.isVisible = decisions.isEmpty()
+                    binding.empty.root.isVisible = decisions.isEmpty()
                 }
             }
         }

@@ -163,7 +163,7 @@
     <string name="error_wheel_kind_taken">You already have this rating. There can be only one Start and one Final. Edit that one instead.</string>
 
     <!-- Habit analysis (findings) -->
-    <string name="habits_empty">No observations yet. Add the problems, habits and needs you notice in your daily life.</string>
+    <string name="habits_empty">No observations yet</string>
     <string name="finding_hint_problem">What problem do I find?</string>
     <string name="finding_hint_habit">What habit do I have?</string>
     <string name="finding_hint_need">What do I need?</string>
@@ -185,6 +185,7 @@
     <string name="tag_keep_format" translatable="false">✓ %1$s</string>
     <string name="tag_change_format" translatable="false">↻ %1$s</string>
     <string name="tag_stop_format" translatable="false">✕ %1$s</string>
+    <string name="tag_pending_format" translatable="false">… %1$s</string>
 
     <!-- Finding add / edit, with the 5 Whys (Lecture 2) -->
     <string name="finding_edit_title">Observation</string>
@@ -196,7 +197,7 @@
 
     <!-- Priorities -->
     <string name="priorities_list_title">My priorities</string>
-    <string name="priorities_empty">No priorities yet. Add them and put them in your order.</string>
+    <string name="priorities_empty">No priorities yet</string>
     <string name="add_task">Add priority</string>
     <string name="priority_edit">Edit priority</string>
     <string name="priority_hint">Priority</string>
@@ -212,7 +213,6 @@
     <string name="group_iii">Do it quickly</string>
     <string name="group_iv">Undecided</string>
     <string name="not_started_title">Postponed</string>
-    <string name="not_started_empty">Things you postpone go here, so you have time for what matters.</string>
     <string name="my_method_title">My method</string>
     <string name="my_method_empty">Describe how you decide what comes first.</string>
     <string name="my_method_hint">How I order my priorities</string>
@@ -229,25 +229,25 @@
     <string name="number_5" translatable="false">5</string>
 
     <!-- Balance tracking (decisions) -->
-    <string name="decisions_empty">No decisions yet. Add a decision and later mark whether it worked.</string>
-    <string name="decision_result_format">%1$s · since %2$s</string>
-    <string name="result_pending">Too early to tell</string>
-    <string name="result_worked">Worked</string>
-    <string name="result_did_not_work">Didn\'t work</string>
+    <string name="decisions_empty">No decisions yet</string>
+    <string name="decision_since_format">since %1$s</string>
+    <string name="result_pending">In progress</string>
+    <string name="result_worked">It worked out</string>
+    <string name="result_did_not_work">It didn\'t work out</string>
 
     <!-- Decision add / edit -->
     <string name="decision_edit_title">Decision</string>
-    <string name="decision_hint">My decision, e.g. no phone after 23:00</string>
-    <string name="decision_date">Since</string>
+    <string name="decision_hint">My decision</string>
+    <string name="decision_date">I start</string>
     <string name="decision_result">Result</string>
-    <string name="decision_note_hint">What happened? (optional)</string>
-    <string name="time_lab_title">My time lab</string>
-    <string name="time_lab_hint">Turn the decision into a small experiment: what do you expect, test it for 7 days, then compare.</string>
-    <string name="hypothesis_hint">Hypothesis: what do I expect to change?</string>
-    <string name="smart_goal_hint">My SMART goal for 7 days</string>
-    <string name="smart_goal_helper">Specific, measurable, achievable, relevant and time-bound</string>
-    <string name="progress_sign_hint">How will I recognize progress?</string>
-    <string name="smart_goal_format">Goal (7 days): %1$s</string>
+    <string name="decision_note_hint">What changed?</string>
+    <string name="date_today">Today</string>
+    <string name="date_tomorrow">Tomorrow</string>
+    <string name="date_other">Another date</string>
+    <string name="decision_day_format">day %1$d of 7</string>
+    <string name="decision_starts_format">starts %1$s</string>
+    <string name="decision_kept_format">Kept %1$d of 7 days</string>
+    <string name="change_title">What changed</string>
     <string name="decision_delete">Delete decision</string>
     <string name="decision_delete_confirm">Delete this decision? This can\'t be undone.</string>
 
@@ -278,19 +278,19 @@
         <item quantity="other">needs</item>
     </plurals>
     <plurals name="label_worked">
-        <item quantity="one">worked</item>
-        <item quantity="other">worked</item>
+        <item quantity="one">worked out</item>
+        <item quantity="other">worked out</item>
     </plurals>
     <plurals name="label_did_not_work">
-        <item quantity="one">didn\'t work</item>
-        <item quantity="other">didn\'t work</item>
+        <item quantity="one">didn\'t work out</item>
+        <item quantity="other">didn\'t work out</item>
     </plurals>
     <plurals name="label_pending">
-        <item quantity="one">too early</item>
-        <item quantity="other">too early</item>
+        <item quantity="one">in progress</item>
+        <item quantity="other">in progress</item>
     </plurals>
     <plurals name="decisions_progress">
-        <item quantity="one">%1$d of %2$d decision worked</item>
-        <item quantity="other">%1$d of %2$d decisions worked</item>
+        <item quantity="one">%1$d of %2$d decision worked out</item>
+        <item quantity="other">%1$d of %2$d decisions worked out</item>
     </plurals>
 </resources>

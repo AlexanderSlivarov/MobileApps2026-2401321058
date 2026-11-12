@@ -59,7 +59,9 @@ class DecisionEditFragment : Fragment() {
         }
 
         binding.editDecision.doAfterTextChanged { binding.layoutDecision.error = null }
-        binding.buttonDate.setOnClickListener { pickDate() }
+        binding.chipToday.setOnClickListener { setDate(LocalDate.now()) }
+        binding.chipTomorrow.setOnClickListener { setDate(LocalDate.now().plusDays(1)) }
+        binding.chipOtherDate.setOnClickListener { pickDate() }
         binding.buttonSave.setOnClickListener { save() }
         binding.buttonDelete.setOnClickListener { confirmDelete() }
     }
@@ -75,15 +77,27 @@ class DecisionEditFragment : Fragment() {
     private fun fillForm(decision: DecisionEntity) {
         showDate()
         binding.editDecision.setText(decision.text)
-        binding.editHypothesis.setText(decision.hypothesis)
-        binding.editSmartGoal.setText(decision.smartGoal)
-        binding.editProgressSign.setText(decision.progressSign)
         binding.chipGroupResult.check(chipOf(decision.result))
         binding.editNote.setText(decision.note)
     }
 
+    private fun setDate(date: LocalDate) {
+        viewModel.date = date
+        showDate()
+    }
+
+    /** Checks "Today" or "Tomorrow" for those days; any other date shows on the third chip. */
     private fun showDate() {
-        binding.buttonDate.text = viewModel.date.toDisplayString()
+        val date = viewModel.date
+        val today = LocalDate.now()
+        val chip =
+            when (date) {
+                today -> binding.chipToday
+                today.plusDays(1) -> binding.chipTomorrow
+                else -> binding.chipOtherDate
+            }
+        binding.chipGroupDate.check(chip.id)
+        binding.chipOtherDate.text = if (chip == binding.chipOtherDate) date.toDisplayString() else getString(R.string.date_other)
     }
 
     private fun pickDate() {
@@ -92,14 +106,15 @@ class DecisionEditFragment : Fragment() {
         dialog =
             DatePickerDialog(
                 requireContext(),
-                { _, year, month, day ->
-                    viewModel.date = LocalDate.of(year, month + 1, day)
-                    showDate()
-                },
+                { _, year, month, day -> setDate(LocalDate.of(year, month + 1, day)) },
                 current.year,
                 current.monthValue - 1,
                 current.dayOfMonth,
-            ).apply { show() }
+            ).apply {
+                // Closing the calendar without a date keeps the chip of the date chosen before.
+                setOnCancelListener { showDate() }
+                show()
+            }
     }
 
     private fun chipOf(result: DecisionResult): Int =
@@ -125,9 +140,6 @@ class DecisionEditFragment : Fragment() {
         val form =
             DecisionForm(
                 text = text,
-                hypothesis = binding.editHypothesis.text.toString(),
-                smartGoal = binding.editSmartGoal.text.toString(),
-                progressSign = binding.editProgressSign.text.toString(),
                 result = resultOf(binding.chipGroupResult.checkedChipId),
                 note = binding.editNote.text.toString(),
             )

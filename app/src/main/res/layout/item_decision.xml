@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One decision: what I decided, its result and since when, and what happened. -->
+<!-- One decision: its result as a colored tag and which day of the 7 it is, what I decided,
+     the 7 days as circles (tap one to mark that I kept the decision that day), and what
+     changed after it in a tinted box. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Material3.CardView.Elevated"
@@ -11,42 +13,89 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_box"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                tools:backgroundTint="@color/result_pending"
+                tools:text="In progress" />
+
+            <TextView
+                android:id="@+id/text_since"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="day 5 of 7" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_decision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:textAppearance="?attr/textAppearanceTitleMedium"
-            tools:text="No phone after 23:00" />
+            tools:text="I go to bed by 23:00" />
 
-        <TextView
-            android:id="@+id/text_result"
+        <!-- The 7 days, one circle each; added in code -->
+        <LinearLayout
+            android:id="@+id/layout_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorPrimary"
-            tools:text="Worked · since Nov 1, 2026" />
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal" />
 
         <TextView
-            android:id="@+id/text_goal"
+            android:id="@+id/text_kept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="Kept 4 of 7 days" />
+
+        <!-- What changed after the decision, only when written -->
+        <LinearLayout
+            android:id="@+id/layout_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded_box"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:orientation="vertical"
+            android:padding="14dp"
             android:visibility="gone"
-            tools:text="Goal (7 days): phone away by 23:00 on 6 of 7 nights"
-            tools:visibility="visible" />
+            tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/text_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textStyle="italic"
-            tools:text="I fall asleep faster." />
+            <TextView
+                style="@style/Widget.Equilibra.Eyebrow"
+                android:text="@string/change_title"
+                android:textColor="?attr/colorOnPrimaryContainer" />
+
+            <TextView
+                android:id="@+id/text_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                tools:text="I wake up rested." />
+        </LinearLayout>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

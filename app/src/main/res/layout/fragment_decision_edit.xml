@@ -12,35 +12,75 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_decision"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        <!-- The decision and since when -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/decision_hint">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_decision"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- Since when -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/decision_date" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_decision"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/decision_hint">
 
-        <Button
-            android:id="@+id/button_date"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Nov 5, 2026" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_decision"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- My time lab (Lecture 1): the decision as a small experiment -->
+                <TextView
+                    style="@style/Widget.Equilibra.Eyebrow"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/decision_date" />
+
+                <!-- Today, tomorrow, or another date from the calendar (the chip then shows it) -->
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_today"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_today" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_tomorrow"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_tomorrow" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_other_date"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_other"
+                        app:chipIcon="@drawable/ic_calendar"
+                        app:chipIconVisible="true" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- The result and what changed -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Outlined"
+            style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
@@ -49,118 +89,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time_lab_title"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    style="@style/Widget.Equilibra.Eyebrow"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/decision_result" />
 
-                <TextView
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/time_lab_hint"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
+                    app:checkedChip="@id/chip_pending"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_pending"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/result_pending" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_worked"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/result_worked" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_did_not_work"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/result_did_not_work" />
+                </com.google.android.material.chip.ChipGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/hypothesis_hint">
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/decision_note_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_hypothesis"
+                        android:id="@+id/edit_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textCapSentences" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/smart_goal_hint"
-                    app:helperText="@string/smart_goal_helper"
-                    app:helperTextEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_smart_goal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textCapSentences" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/progress_sign_hint">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_progress_sign"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textCapSentences" />
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:minLines="2" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- The result -->
-        <TextView
-            style="@style/Widget.Equilibra.SectionLabel"
-            android:text="@string/decision_result" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:checkedChip="@id/chip_pending"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_pending"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/result_pending" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_worked"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/result_worked" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_did_not_work"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/result_did_not_work" />
-        </com.google.android.material.chip.ChipGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/decision_note_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/button_save"
