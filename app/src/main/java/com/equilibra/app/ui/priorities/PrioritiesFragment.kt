@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.equilibra.app.R
 import com.equilibra.app.data.local.entity.TaskEntity
 import com.equilibra.app.databinding.DialogPriorityBinding
@@ -21,6 +23,9 @@ import com.equilibra.app.domain.Eisenhower
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import android.content.res.ColorStateList
+import androidx.core.content.ContextCompat
+import com.equilibra.app.domain.EisenhowerGroup
 
 /** Section 3: "How do I order my priorities?" */
 @AndroidEntryPoint
@@ -49,8 +54,26 @@ class PrioritiesFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = PriorityAdapter(showOrder = true, onClick = ::showTaskDialog, onMove = viewModel::move)
-        binding.recyclerPriorities.adapter = adapter
+        // One section per group (I, II, III, IV), each with its own list. Dragging and the arrows
+        // work inside one list, so a priority can't leave its group: "Do now" stays on top.
+        val sections =
+            mapOf(
+                EisenhowerGroup.I to binding.groupI,
+                EisenhowerGroup.II to binding.groupIi,
+                EisenhowerGroup.III to binding.groupIii,
+                EisenhowerGroup.IV to binding.groupIv,
+            )
+        val adapters =
+            sections.mapValues { (group, section) ->
+                val color = ContextCompat.getColor(requireContext(), group.colorRes)
+                section.viewDot.backgroundTintList = ColorStateList.valueOf(color)
+                section.textGroupTitle.setText(group.labelRes)
+                section.textGroupTitle.setTextColor(color)
+                val adapter = PriorityAdapter(showOrder = true, onClick = ::showTaskDialog, onMove = viewModel::move)
+                section.recyclerGroup.adapter = adapter
+                attachDrag(section.recyclerGroup, adapter)
+                adapter
+            }
         // "I consciously didn't start": same cards, without numbers and up/down buttons.
         val notStartedAdapter = PriorityAdapter(showOrder = false, onClick = ::showTaskDialog, onMove = viewModel::move)
         binding.recyclerNotStarted.adapter = notStartedAdapter
@@ -63,9 +86,17 @@ class PrioritiesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
-                    // Each card's number and up/down buttons depend on its place in the list,
-                    // so after the list changes all visible cards are drawn again.
-                    adapter.submitList(state.tasks) { adapter.notifyItemRangeChanged(0, adapter.itemCount) }
+                    // Each card's number and up/down buttons depend on its place, so after the
+                    // lists change all visible cards are drawn again. Numbers go on across groups.
+                    var before = 0
+                    sections.forEach { (group, section) ->
+                        val inGroup = state.tasks.filter { Eisenhower.groupOf(it) == group }
+                        val adapter = adapters.getValue(group)
+                        adapter.numberOffset = before
+                        adapter.submitList(inGroup) { adapter.notifyItemRangeChanged(0, adapter.itemCount) }
+                        section.root.isVisible = inGroup.isNotEmpty()
+                        before += inGroup.size
+                    }
                     binding.textEmpty.isVisible = state.tasks.isEmpty()
                     notStartedAdapter.submitList(state.notStarted)
                     binding.textNotStartedEmpty.isVisible = state.notStarted.isEmpty()
@@ -73,6 +104,43 @@ class PrioritiesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Long-press a priority and drag it up or down inside its group (the arrows still work).
+     * While dragging, the list on screen is changed; when the card is let go, the new order is saved.
+     */
+    private fun attachDrag(
+        recyclerView: RecyclerView,
+        adapter: PriorityAdapter,
+    ) {
+        val callback =
+            object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder,
+                ): Boolean {
+                    val list = adapter.currentList.toMutableList()
+                    list.add(target.adapterPosition, list.removeAt(viewHolder.adapterPosition))
+                    adapter.submitList(list)
+                    return true
+                }
+
+                override fun onSwiped(
+                    viewHolder: RecyclerView.ViewHolder,
+                    direction: Int,
+                ) = Unit
+
+                override fun clearView(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                ) {
+                    super.clearView(recyclerView, viewHolder)
+                    viewModel.saveOrder(adapter.currentList)
+                }
+            }
+        ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroyView() {

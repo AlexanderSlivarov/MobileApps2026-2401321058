@@ -24,6 +24,12 @@ object Eisenhower {
 
     fun groupOf(task: TaskEntity): EisenhowerGroup = groupOf(task.isImportant, task.isUrgent)
 
+    /**
+     * My priorities with the groups always in the order I, II, III, IV; inside a group they
+     * keep my own order (sortedBy is stable). So "Do now" is always above "Plan it", and so on.
+     */
+    fun inGroupOrder(tasks: List<TaskEntity>): List<TaskEntity> = tasks.sortedBy { groupOf(it).ordinal }
+
     /** How many of my priorities are in each group. Every group is present, 0 if empty. */
     fun countByGroup(tasks: List<TaskEntity>): Map<EisenhowerGroup, Int> =
         EisenhowerGroup.entries.associateWith { group -> tasks.count { groupOf(it) == group } }

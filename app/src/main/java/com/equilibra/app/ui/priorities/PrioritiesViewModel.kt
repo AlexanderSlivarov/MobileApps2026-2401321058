@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.equilibra.app.data.local.entity.TaskEntity
 import com.equilibra.app.data.repository.ProfileRepository
 import com.equilibra.app.data.repository.TaskRepository
+import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.PriorityOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,7 +50,7 @@ class PrioritiesViewModel
             combine(taskRepository.observeTasks(), profileRepository.observeProfile()) { tasks, profile ->
                 // partition splits one list in two: (not started, the rest), both still in my order.
                 val (notStarted, active) = tasks.partition { it.isNotStarted }
-                PrioritiesUiState(tasks = active, notStarted = notStarted, method = profile.prioritizationMethod)
+                PrioritiesUiState(tasks = Eisenhower.inGroupOrder(active), notStarted = notStarted, method = profile.prioritizationMethod)
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PrioritiesUiState())
 
         /** Adds a new priority when [existing] is null, otherwise saves the changes to it. */
@@ -73,13 +74,23 @@ class PrioritiesViewModel
             viewModelScope.launch { taskRepository.deleteTask(task) }
         }
 
-        /** Moves a priority one place up or down in my order. */
+        /** Moves a priority one place up or down in my order, only inside its own group. */
         fun move(
             task: TaskEntity,
             up: Boolean,
         ) {
             viewModelScope.launch {
-                val changed = PriorityOrder.move(uiState.value.tasks, task.id, up)
+                val group = Eisenhower.groupOf(task)
+                val sameGroup = uiState.value.tasks.filter { Eisenhower.groupOf(it) == group }
+                val changed = PriorityOrder.move(sameGroup, task.id, up)
+                if (changed.isNotEmpty()) taskRepository.updateTasks(changed)
+            }
+        }
+
+        /** Saves my order after a priority was dragged inside its group; [ordered] is that group as it looks now. */
+        fun saveOrder(ordered: List<TaskEntity>) {
+            viewModelScope.launch {
+                val changed = PriorityOrder.renumber(ordered)
                 if (changed.isNotEmpty()) taskRepository.updateTasks(changed)
             }
         }

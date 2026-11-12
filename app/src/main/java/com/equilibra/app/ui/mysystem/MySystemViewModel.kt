@@ -13,6 +13,7 @@ import com.equilibra.app.data.repository.ProfileRepository
 import com.equilibra.app.data.repository.TaskRepository
 import com.equilibra.app.domain.BalanceOverview
 import com.equilibra.app.domain.BalanceWheel
+import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.FiveWhys
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,6 +36,8 @@ data class MySystemUiState(
     val notStartedCount: Int = 0,
     val decisionCounts: Map<DecisionResult, Int> = emptyMap(),
     val finalRules: String = "",
+    /** "My method": how I order my priorities, written on Priorities. */
+    val method: String = "",
     /** The self-assessment answers, shown as the starting point. */
     val selfAnswers: String = "",
 )
@@ -65,10 +68,11 @@ class MySystemViewModel
                     wheelStart = start,
                     findingCounts = BalanceOverview.countFindings(findings),
                     analyzedProblems = FiveWhys.countAnalyzed(findings),
-                    priorities = tasks.filter { !it.isNotStarted },
+                    priorities = Eisenhower.inGroupOrder(tasks.filter { !it.isNotStarted }),
                     notStartedCount = tasks.count { it.isNotStarted },
                     decisionCounts = BalanceOverview.countDecisions(decisions),
                     finalRules = profile.finalRules,
+                    method = profile.prioritizationMethod,
                     selfAnswers = profile.selfAnswers,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MySystemUiState())

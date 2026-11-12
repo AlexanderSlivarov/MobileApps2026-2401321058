@@ -108,7 +108,10 @@ class MySystemFragment : Fragment() {
         showTile(binding.tileNeeds, state.findingCounts[FindingType.NEED] ?: 0, R.plurals.label_needs, R.color.type_need)
         binding.textTraced.text = count(R.plurals.count_traced, state.analyzedProblems)
 
-        // 3. Prioritization: one row per priority, in my order, with its group in the group's color.
+        // 3. Prioritization: My method (if written), then one row per priority, in my order,
+        // with its group in the group's color.
+        binding.layoutMethod.isVisible = state.method.isNotBlank()
+        binding.textMethod.text = state.method
         binding.textPrioritiesEmpty.isVisible = state.priorities.isEmpty()
         binding.layoutPriorities.removeAllViews()
         state.priorities.forEachIndexed { index, task ->

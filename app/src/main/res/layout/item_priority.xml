@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One priority: its number in my order, the title and the up/down buttons. -->
+<!-- One priority: its number in my order in a circle of its group's color, the title,
+     the group in the same color, and the up/down buttons. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="56dp"
+        android:minHeight="64dp"
         android:orientation="horizontal"
-        android:paddingVertical="4dp"
+        android:paddingVertical="10dp"
         android:paddingStart="16dp"
         android:paddingEnd="4dp">
 
         <TextView
             android:id="@+id/text_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="24dp"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textColor="?attr/colorPrimary"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/bg_number_circle"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            tools:backgroundTint="@color/group_i"
             tools:text="1" />
 
-        <!-- Title and Eisenhower group, e.g. "II · Plan" -->
+        <!-- Title and its group, e.g. "Do now · important and urgent" -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -39,16 +41,17 @@
                 android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
                 tools:text="Prepare for the exam" />
 
             <TextView
                 android:id="@+id/text_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                tools:text="II · Plan" />
+                android:layout_marginTop="2dp"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                tools:text="Do now · important and urgent"
+                tools:textColor="@color/group_i" />
         </LinearLayout>
 
         <Button

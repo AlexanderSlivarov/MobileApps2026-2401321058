@@ -222,6 +222,33 @@
                     style="@style/Widget.Equilibra.Eyebrow"
                     android:text="@string/section_priorities" />
 
+                <!-- My method, in a tinted box; hidden when not written -->
+                <LinearLayout
+                    android:id="@+id/layout_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_rounded_box"
+                    android:backgroundTint="?attr/colorSurfaceContainerHigh"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        style="@style/Widget.Equilibra.Eyebrow"
+                        android:text="@string/my_method_title" />
+
+                    <TextView
+                        android:id="@+id/text_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        tools:text="I start with what has a deadline." />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/text_priorities_empty"
                     android:layout_width="match_parent"

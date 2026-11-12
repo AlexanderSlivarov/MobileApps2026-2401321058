@@ -192,7 +192,7 @@
     <string name="root_cause_title">Най-дълбока причина</string>
 
     <!-- Priorities -->
-    <string name="priorities_list_title">Моите приоритети, най-важното първо</string>
+    <string name="priorities_list_title">Моите приоритети</string>
     <string name="priorities_empty">Все още няма приоритети. Добави ги и ги подреди.</string>
     <string name="add_task">Добави приоритет</string>
     <string name="priority_edit">Редактирай приоритета</string>
@@ -201,15 +201,15 @@
     <string name="move_down">Премести надолу</string>
     <string name="task_delete_confirm">Да изтрия ли този приоритет? Това не може да бъде отменено.</string>
     <string name="error_title_required">Моля, въведи заглавие</string>
-    <string name="priority_important">Важно (принос към цел, задължение или потребност)</string>
-    <string name="priority_urgent">Спешно (реален близък срок)</string>
-    <string name="priority_not_started">Съзнателно не започвам това</string>
+    <string name="priority_important">Важно</string>
+    <string name="priority_urgent">Спешно</string>
+    <string name="priority_not_started">Отложи</string>
     <string name="group_i">Направи сега · важно и спешно</string>
-    <string name="group_ii">Планирай · важно, не спешно</string>
-    <string name="group_iii">Делегирай или съкрати · спешно, не важно</string>
-    <string name="group_iv">Откажи се · нито важно, нито спешно</string>
-    <string name="not_started_title">Съзнателно не започнах</string>
-    <string name="not_started_empty">Нещата, които реши да не започваш, за да запазиш важното и почивката си.</string>
+    <string name="group_ii">Планирай · важно</string>
+    <string name="group_iii">Направи бързо</string>
+    <string name="group_iv">Неопределено</string>
+    <string name="not_started_title">Отложено</string>
+    <string name="not_started_empty">Тук отиват нещата, които отлагаш, за да имаш време за важното.</string>
     <string name="my_method_title">Моят метод</string>
     <string name="my_method_empty">Опиши как решаваш кое е първо.</string>
     <string name="my_method_hint">Как подреждам приоритетите си</string>
@@ -252,8 +252,8 @@
         <item quantity="other">%d проблема, проследени с „Пет пъти защо?“</item>
     </plurals>
     <plurals name="count_not_started">
-        <item quantity="one">%d нещо, което съзнателно не започнах</item>
-        <item quantity="other">%d неща, които съзнателно не започнах</item>
+        <item quantity="one">%d отложено нещо</item>
+        <item quantity="other">%d отложени неща</item>
     </plurals>
     <string name="decisions_none">Все още няма решения.</string>
     <plurals name="label_problems">

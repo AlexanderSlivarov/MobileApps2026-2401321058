@@ -1,9 +1,11 @@
 package com.equilibra.app.ui.priorities
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,6 +15,7 @@ import com.equilibra.app.data.local.entity.TaskEntity
 import com.equilibra.app.databinding.ItemPriorityBinding
 import com.equilibra.app.domain.Eisenhower
 import com.equilibra.app.domain.EisenhowerGroup
+import com.google.android.material.color.MaterialColors
 
 /** The UI text for each Eisenhower group: its number and the action from the lectures. */
 @get:StringRes
@@ -46,6 +49,9 @@ class PriorityAdapter(
     private val onClick: (TaskEntity) -> Unit,
     private val onMove: (TaskEntity, Boolean) -> Unit,
 ) : ListAdapter<TaskEntity, PriorityAdapter.ViewHolder>(DIFF) {
+    /** How many priorities come before this list (the groups above), so the numbers go on 1, 2, 3... */
+    var numberOffset = 0
+
     class ViewHolder(
         val binding: ItemPriorityBinding,
     ) : RecyclerView.ViewHolder(binding.root)
@@ -61,13 +67,21 @@ class PriorityAdapter(
     ) {
         val task = getItem(position)
         val binding = holder.binding
+        val context = binding.root.context
+        val groupColor = ContextCompat.getColor(context, Eisenhower.groupOf(task).colorRes)
         binding.textTitle.text = task.title
         binding.textGroup.setText(Eisenhower.groupOf(task).labelRes)
+        binding.textGroup.setTextColor(groupColor)
+        // The number sits in a circle of the group's color; the page color reads well on it.
+        binding.textNumber.backgroundTintList = ColorStateList.valueOf(groupColor)
+        binding.textNumber.setTextColor(MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSurface))
 
         binding.textNumber.isVisible = showOrder
         binding.buttonUp.isVisible = showOrder
         binding.buttonDown.isVisible = showOrder
-        binding.textNumber.text = (position + 1).toString()
+        binding.textNumber.text = (numberOffset + position + 1).toString()
+        // In my ordered list the group is the section's title, so the card shows it only in "Postponed".
+        binding.textGroup.isVisible = !showOrder
         // The first can't go up and the last can't go down.
         binding.buttonUp.isEnabled = position > 0
         binding.buttonDown.isEnabled = position < itemCount - 1

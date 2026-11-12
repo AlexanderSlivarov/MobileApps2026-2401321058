@@ -195,7 +195,7 @@
     <string name="root_cause_title">Deepest cause</string>
 
     <!-- Priorities -->
-    <string name="priorities_list_title">My priorities, most important first</string>
+    <string name="priorities_list_title">My priorities</string>
     <string name="priorities_empty">No priorities yet. Add them and put them in your order.</string>
     <string name="add_task">Add priority</string>
     <string name="priority_edit">Edit priority</string>
@@ -204,15 +204,15 @@
     <string name="move_down">Move down</string>
     <string name="task_delete_confirm">Delete this priority? This can\'t be undone.</string>
     <string name="error_title_required">Please enter a title</string>
-    <string name="priority_important">Important (contributes to a goal, duty or need)</string>
-    <string name="priority_urgent">Urgent (real deadline soon)</string>
-    <string name="priority_not_started">I consciously don\'t start this</string>
+    <string name="priority_important">Important</string>
+    <string name="priority_urgent">Urgent</string>
+    <string name="priority_not_started">Postpone</string>
     <string name="group_i">Do now · important and urgent</string>
-    <string name="group_ii">Plan it · important, not urgent</string>
-    <string name="group_iii">Delegate or shorten · urgent, not important</string>
-    <string name="group_iv">Drop it · neither</string>
-    <string name="not_started_title">I consciously didn\'t start</string>
-    <string name="not_started_empty">Things you decided not to start, to protect what matters and your rest.</string>
+    <string name="group_ii">Plan it · important</string>
+    <string name="group_iii">Do it quickly</string>
+    <string name="group_iv">Undecided</string>
+    <string name="not_started_title">Postponed</string>
+    <string name="not_started_empty">Things you postpone go here, so you have time for what matters.</string>
     <string name="my_method_title">My method</string>
     <string name="my_method_empty">Describe how you decide what comes first.</string>
     <string name="my_method_hint">How I order my priorities</string>
@@ -261,8 +261,8 @@
         <item quantity="other">%d problems traced with 5 Whys</item>
     </plurals>
     <plurals name="count_not_started">
-        <item quantity="one">%d thing I consciously didn\'t start</item>
-        <item quantity="other">%d things I consciously didn\'t start</item>
+        <item quantity="one">%d postponed thing</item>
+        <item quantity="other">%d postponed things</item>
     </plurals>
     <string name="decisions_none">No decisions yet.</string>
     <plurals name="label_problems">
